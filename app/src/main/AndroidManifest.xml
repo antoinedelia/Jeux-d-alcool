@@ -18,6 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".Rules"
+            android:theme="@style/AppTheme.RulesTheme"
+            ></activity>
     </application>
 
 </manifest>
