@@ -1,6 +1,5 @@
 package com.antoinedelia.lebarbu_versionalcool;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,7 +12,19 @@ public class Deck {
     //private List<String> cartes;
     //private String[] cartes = {"ace_of_clubs", "ace_of_spades", "ace_of_diamonds", "ace_of_hearts"};
     private List<String> cartes = new ArrayList<String>();
-    private String actual_card;
+    private String[] textRules = {"Tout le monde boit % Tous les joueurs prennent leur verre et boivent une gorgée",
+    "Boit deux gorgées % Le joueur ayant tiré la carte doit boire deux gorgées",
+            "Boit trois gorgées % Le joueur ayant tiré la carte doit boire trois gorgées",
+            "Boit quatre gorgées % Le joueur ayant tiré la carte doit boire quatre gorgées",
+            "Boit cinq gorgées % Le joueur ayant tiré la carte doit boire cinq gorgées",
+            "Boit six gorgées % Le joueur ayant tiré la carte doit boire six gorgées",
+            "J'ai déjà / Je n'ai jamais % Le joueur ayant tiré la carte doit dire quelque chose qu'il a déjà ou n'a jamais fait. Tous les autres joueurs doivent boire une gorgée s'ils ne se trouvent pas dans le cas du joueur",
+            "Dans ma valise % Le joueur ayant tiré la carte commence le jeu en disant \"Dans ma valise, j'ai \" et ajoute un objet ou une personne. Le joueur suivant doit compléter la valise et ainsi de suite",
+            "Les rimes % Le joueur ayant tiré la carte prononce un mot. Les autres joueurs devront dire un mot rimant avec celui du premier joueur jusqu'à ce que l'un d'entre eux se trompe",
+            "Les thèmes % Le joueur ayant tiré la carte choisi un thème (ex : les marques d'alcool). Chaque joueur doit compléter ce thème.",
+            "Snake eyes % Le joueur ayant tiré la carte peut dire \"Snake eyes !\" si un joueur le regarde dans les yeux. Ce joueur boit ainsi une gorgée",
+            "La reine des questions % Toute personne répondant à une question de la reine des questions doit boire une gorgée",
+            "Invente une règle% Le joueur ayant tiré la carte doit créer une règle qui s'appliquera jusqu'à la fin du jeu ou jusqu'à ce qu'un joueur annule sa règle en tirant un autre roi"};
 
     public Deck()
     {
@@ -89,22 +100,56 @@ public class Deck {
     }
 
 
-    public String getNextCard()
+    public String[] getNextCard()
     {
         int number = 0;
+        String actual_card = "";
+        String rules = "";
+        String[] cardAndRules = new String[2];
         if(!cartes.isEmpty()) {
             do {
                 number = new Random().nextInt(cartes.size());
             } while (cartes.get(number) == null);
             actual_card = cartes.get(number);
             cartes.remove(number);
+            if (actual_card.substring(0, 3).equals("ace"))
+                rules = textRules[0];
+            else if (actual_card.substring(0, 3).equals("two"))
+                rules = textRules[1];
+            else if (actual_card.substring(0, 3).equals("thr"))
+                rules = textRules[2];
+            else if (actual_card.substring(0, 3).equals("fou"))
+                rules = textRules[3];
+            else if (actual_card.substring(0, 3).equals("fiv"))
+                rules = textRules[4];
+            else if (actual_card.substring(0, 3).equals("six"))
+                rules = textRules[5];
+            else if (actual_card.substring(0, 3).equals("sev"))
+                rules = textRules[6];
+            else if (actual_card.substring(0, 3).equals("eig"))
+                rules = textRules[7];
+            else if (actual_card.substring(0, 3).equals("nin"))
+                rules = textRules[8];
+            else if (actual_card.substring(0, 3).equals("ten"))
+                rules = textRules[9];
+            else if (actual_card.substring(0, 3).equals("jac"))
+                rules = textRules[10];
+            else if (actual_card.substring(0, 3).equals("que"))
+                rules = textRules[11];
+            else if (actual_card.substring(0, 3).equals("kin"))
+                rules = textRules[12];
+            else
+                rules = "";
         }
         else
         {
             System.out.println("Fin du deck");
             actual_card = "FIN";
+            rules = "Fin";
         }
-        return actual_card;
+        cardAndRules[0] = actual_card;
+        cardAndRules[1] = rules;
+        return cardAndRules;
 
 //        int number;
 //        do {

@@ -17,35 +17,52 @@ public class MainActivity extends AppCompatActivity {
 
     private Menu menu;
     private MenuItem item;
+    private String rulesDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Deck deck = new Deck();
-        String actualCard = deck.getNextCard();
-        int remainingCards = deck.getRemainingCards();
+        String[] cardAndRules = deck.getNextCard();
+        //int remainingCards = deck.getRemainingCards();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
         //TextView textView = (TextView) findViewById(R.id.textViewRules);
+
+
+        final ImageView imageViewCarte = (ImageView)findViewById(R.id.imageViewCarte);
+        int resourceId = this.getResources().getIdentifier(cardAndRules[0], "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        imageViewCarte.setImageResource(resourceId);
+
+        final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
+        textViewRules.setText(cardAndRules[1].substring(0, cardAndRules[1].lastIndexOf("%")));
+
+//        final TextView textViewRulesDetails = (TextView) findViewById(R.id.textViewRulesDetails);
+        rulesDetails = cardAndRules[1].substring(cardAndRules[1].lastIndexOf("%")+2, cardAndRules[1].length());
+//        textViewRulesDetails.setText(test);
+
         linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Rules.class));
+                Intent intent = new Intent(MainActivity.this, Rules.class);
+                intent.putExtra("textRulesDetails", rulesDetails);
+                startActivity(intent);
             }
         });
 
-        final ImageView imageViewCarte = (ImageView)findViewById(R.id.imageViewCarte);
-        int resourceId = this.getResources().getIdentifier(actualCard, "drawable", "com.antoinedelia.lebarbu_versionalcool");
-        imageViewCarte.setImageResource(resourceId);
         imageViewCarte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String actualCard = deck.getNextCard();
-                int resourceId = MainActivity.this.getResources().getIdentifier(actualCard, "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                String[] cardAndRules = deck.getNextCard();
+                int resourceId = MainActivity.this.getResources().getIdentifier(cardAndRules[0], "drawable", "com.antoinedelia.lebarbu_versionalcool");
                 imageViewCarte.setImageResource(resourceId);
+
+                textViewRules.setText(cardAndRules[1].substring(0, cardAndRules[1].lastIndexOf("%")));
+                rulesDetails = cardAndRules[1].substring(cardAndRules[1].lastIndexOf("%")+2, cardAndRules[1].length());
+
                 int remainingCards = deck.getRemainingCards();
                 String cards = remainingCards>1 ? " cards" : " card";
                 item.setTitle(String.valueOf(remainingCards) + cards);
@@ -78,4 +95,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
