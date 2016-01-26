@@ -15,6 +15,9 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Menu menu;
+    private MenuItem item;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         final Deck deck = new Deck();
         String actualCard = deck.getNextCard();
         int remainingCards = deck.getRemainingCards();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
@@ -42,15 +46,21 @@ public class MainActivity extends AppCompatActivity {
                 String actualCard = deck.getNextCard();
                 int resourceId = MainActivity.this.getResources().getIdentifier(actualCard, "drawable", "com.antoinedelia.lebarbu_versionalcool");
                 imageViewCarte.setImageResource(resourceId);
+                int remainingCards = deck.getRemainingCards();
+                String cards = remainingCards>1 ? " cards" : " card";
+                item.setTitle(String.valueOf(remainingCards) + cards);
             }
         });
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        item = menu.findItem(R.id.action_cardsRemaining);
         return true;
     }
 
@@ -62,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_retry) {
             return true;
         }
 

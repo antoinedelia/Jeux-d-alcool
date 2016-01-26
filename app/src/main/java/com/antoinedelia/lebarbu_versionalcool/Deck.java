@@ -37,11 +37,6 @@ public class Deck {
         cartes.add("four_of_diamonds");
         cartes.add("four_of_hearts");
 
-        cartes.add("four_of_clubs");
-        cartes.add("four_of_spades");
-        cartes.add("four_of_diamonds");
-        cartes.add("four_of_hearts");
-
         cartes.add("jack_of_clubs");
         cartes.add("jack_of_spades");
         cartes.add("jack_of_diamonds");

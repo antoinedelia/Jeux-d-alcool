@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">Le Barbu - Version Alcool</string>
+    <string name="app_name">Le Barbu</string>
     <string name="action_settings">Settings</string>
+    <string name="action_retry">Retry</string>
+    <string name="action_cardsRemaining">51 cards</string>
+
 </resources>
