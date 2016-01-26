@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,15 +19,32 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        final Deck deck = new Deck();
+        String actualCard = deck.getNextCard();
+        int remainingCards = deck.getRemainingCards();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        TextView textView = (TextView) findViewById(R.id.textViewRules);
-        textView.setOnClickListener(new View.OnClickListener() {
+        LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
+        //TextView textView = (TextView) findViewById(R.id.textViewRules);
+        linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, Rules.class));
             }
         });
+
+        final ImageView imageViewCarte = (ImageView)findViewById(R.id.imageViewCarte);
+        int resourceId = this.getResources().getIdentifier(actualCard, "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        imageViewCarte.setImageResource(resourceId);
+        imageViewCarte.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String actualCard = deck.getNextCard();
+                int resourceId = MainActivity.this.getResources().getIdentifier(actualCard, "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                imageViewCarte.setImageResource(resourceId);
+            }
+        });
+
     }
 
     @Override
