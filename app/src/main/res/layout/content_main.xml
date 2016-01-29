@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.antoinedelia.lebarbu_versionalcool.MainActivity"
     tools:showIn="@layout/activity_main"
-    android:background="#9DA1D1">
+    android:background="#ffffff">
 
     <LinearLayout
         android:id="@+id/containerImage"
@@ -42,11 +42,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="36dp"
         android:layout_alignRight="@+id/containerImage"
         android:layout_alignEnd="@+id/containerImage"
         android:layout_centerInParent="true"
-        android:background="#FF6D6D">
+        android:background="@drawable/shapes">
 
     <TextView
         android:layout_width="match_parent"
