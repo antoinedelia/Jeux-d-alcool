@@ -2,13 +2,13 @@ package com.antoinedelia.lebarbu_versionalcool;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.widget.TextView;
 
-/**
- * Created by Antoine on 20/01/2016.
- */
+
 public class Rules extends Activity{
 
     @Override
@@ -25,6 +25,7 @@ public class Rules extends Activity{
 
         int width =  displayMetrics.widthPixels;
         int height = displayMetrics.heightPixels;
-        getWindow().setLayout((int)(width*0.8),(int) (height*0.8));
+        getWindow().setLayout((int)(width*0.7),(int) (height*0.7));
+        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 }
