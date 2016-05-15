@@ -1,97 +1,79 @@
 package com.antoinedelia.lebarbu_versionalcool;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Antoine on 26/01/2016. !
- */
 public class Deck {
 
-    //private List<String> cartes;
-    //private String[] cartes = {"ace_of_clubs", "ace_of_spades", "ace_of_diamonds", "ace_of_hearts"};
-    private List<String> cartes = new ArrayList<String>();
-    private String[] textRules = {"Tout le monde boit % Tous les joueurs prennent leur verre et boivent une gorgée",
-    "Boit deux gorgées % Le joueur ayant tiré la carte doit boire deux gorgées",
-            "Boit trois gorgées % Le joueur ayant tiré la carte doit boire trois gorgées",
-            "Boit quatre gorgées % Le joueur ayant tiré la carte doit boire quatre gorgées",
-            "Boit cinq gorgées % Le joueur ayant tiré la carte doit boire cinq gorgées",
-            "Boit six gorgées % Le joueur ayant tiré la carte doit boire six gorgées",
-            "J'ai déjà / Je n'ai jamais % Le joueur ayant tiré la carte doit dire quelque chose qu'il a déjà ou n'a jamais fait. Tous les autres joueurs doivent boire une gorgée s'ils ne se trouvent pas dans le cas du joueur",
-            "Dans ma valise % Le joueur ayant tiré la carte commence le jeu en disant \"Dans ma valise, j'ai \" et ajoute un objet ou une personne. Le joueur suivant doit compléter la valise et ainsi de suite",
-            "Les rimes % Le joueur ayant tiré la carte prononce un mot. Les autres joueurs devront dire un mot rimant avec celui du premier joueur jusqu'à ce que l'un d'entre eux se trompe",
-            "Les thèmes % Le joueur ayant tiré la carte choisi un thème (ex : les marques d'alcool). Chaque joueur doit compléter ce thème.",
-            "Snake eyes % Le joueur ayant tiré la carte peut dire \"Snake eyes !\" si un joueur le regarde dans les yeux. Ce joueur boit ainsi une gorgée",
-            "La reine des questions % Toute personne répondant à une question de la reine des questions doit boire une gorgée",
-            "Invente une règle% Le joueur ayant tiré la carte doit créer une règle qui s'appliquera jusqu'à la fin du jeu ou jusqu'à ce qu'un joueur annule sa règle en tirant un autre roi"};
-
+    private List<AbstractMap.SimpleEntry<String, Cards>> cartes = new ArrayList<>();
     public Deck()
     {
-        cartes.add("ace_of_clubs");
-        cartes.add("ace_of_spades");
-        cartes.add("ace_of_diamonds");
-        cartes.add("ace_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("ace_of_clubs", Cards.ACE));
+        cartes.add(new AbstractMap.SimpleEntry<>("ace_of_spades", Cards.ACE));
+        cartes.add(new AbstractMap.SimpleEntry<>("ace_of_diamonds", Cards.ACE));
+        cartes.add(new AbstractMap.SimpleEntry<>("ace_of_hearts", Cards.ACE));
 
-        cartes.add("eight_of_clubs");
-        cartes.add("eight_of_spades");
-        cartes.add("eight_of_diamonds");
-        cartes.add("eight_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("eight_of_clubs", Cards.EIGHT));
+        cartes.add(new AbstractMap.SimpleEntry<>("eight_of_spades", Cards.EIGHT));
+        cartes.add(new AbstractMap.SimpleEntry<>("eight_of_diamonds", Cards.EIGHT));
+        cartes.add(new AbstractMap.SimpleEntry<>("eight_of_hearts", Cards.EIGHT));
 
-        cartes.add("five_of_clubs");
-        cartes.add("five_of_spades");
-        cartes.add("five_of_diamonds");
-        cartes.add("five_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("five_of_clubs", Cards.FIVE));
+        cartes.add(new AbstractMap.SimpleEntry<>("five_of_spades", Cards.FIVE));
+        cartes.add(new AbstractMap.SimpleEntry<>("five_of_diamonds", Cards.FIVE));
+        cartes.add(new AbstractMap.SimpleEntry<>("five_of_hearts", Cards.FIVE));
 
-        cartes.add("four_of_clubs");
-        cartes.add("four_of_spades");
-        cartes.add("four_of_diamonds");
-        cartes.add("four_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("four_of_clubs", Cards.FOUR));
+        cartes.add(new AbstractMap.SimpleEntry<>("four_of_spades", Cards.FOUR));
+        cartes.add(new AbstractMap.SimpleEntry<>("four_of_diamonds", Cards.FOUR));
+        cartes.add(new AbstractMap.SimpleEntry<>("four_of_hearts", Cards.FOUR));
 
-        cartes.add("jack_of_clubs");
-        cartes.add("jack_of_spades");
-        cartes.add("jack_of_diamonds");
-        cartes.add("jack_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("jack_of_clubs", Cards.JACK));
+        cartes.add(new AbstractMap.SimpleEntry<>("jack_of_spades", Cards.JACK));
+        cartes.add(new AbstractMap.SimpleEntry<>("jack_of_diamonds", Cards.JACK));
+        cartes.add(new AbstractMap.SimpleEntry<>("jack_of_hearts", Cards.JACK));
 
-        cartes.add("king_of_clubs");
-        cartes.add("king_of_spades");
-        cartes.add("king_of_diamonds");
-        cartes.add("king_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("king_of_clubs", Cards.KING));
+        cartes.add(new AbstractMap.SimpleEntry<>("king_of_spades", Cards.KING));
+        cartes.add(new AbstractMap.SimpleEntry<>("king_of_diamonds", Cards.KING));
+        cartes.add(new AbstractMap.SimpleEntry<>("king_of_hearts", Cards.KING));
 
-        cartes.add("nine_of_clubs");
-        cartes.add("nine_of_spades");
-        cartes.add("nine_of_diamonds");
-        cartes.add("nine_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("nine_of_clubs", Cards.NINE));
+        cartes.add(new AbstractMap.SimpleEntry<>("nine_of_spades", Cards.NINE));
+        cartes.add(new AbstractMap.SimpleEntry<>("nine_of_diamonds", Cards.NINE));
+        cartes.add(new AbstractMap.SimpleEntry<>("nine_of_hearts", Cards.NINE));
 
-        cartes.add("queen_of_clubs");
-        cartes.add("queen_of_spades");
-        cartes.add("queen_of_diamonds");
-        cartes.add("queen_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("queen_of_clubs", Cards.QUEEN));
+        cartes.add(new AbstractMap.SimpleEntry<>("queen_of_spades", Cards.QUEEN));
+        cartes.add(new AbstractMap.SimpleEntry<>("queen_of_diamonds", Cards.QUEEN));
+        cartes.add(new AbstractMap.SimpleEntry<>("queen_of_hearts", Cards.QUEEN));
 
-        cartes.add("seven_of_clubs");
-        cartes.add("seven_of_spades");
-        cartes.add("seven_of_diamonds");
-        cartes.add("seven_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("seven_of_clubs", Cards.SEVEN));
+        cartes.add(new AbstractMap.SimpleEntry<>("seven_of_spades", Cards.SEVEN));
+        cartes.add(new AbstractMap.SimpleEntry<>("seven_of_diamonds", Cards.SEVEN));
+        cartes.add(new AbstractMap.SimpleEntry<>("seven_of_hearts", Cards.SEVEN));
 
-        cartes.add("six_of_clubs");
-        cartes.add("six_of_spades");
-        cartes.add("six_of_diamonds");
-        cartes.add("six_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("six_of_clubs", Cards.SIX));
+        cartes.add(new AbstractMap.SimpleEntry<>("six_of_spades", Cards.SIX));
+        cartes.add(new AbstractMap.SimpleEntry<>("six_of_diamonds", Cards.SIX));
+        cartes.add(new AbstractMap.SimpleEntry<>("six_of_hearts", Cards.SIX));
 
-        cartes.add("ten_of_clubs");
-        cartes.add("ten_of_spades");
-        cartes.add("ten_of_diamonds");
-        cartes.add("ten_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("ten_of_clubs", Cards.TEN));
+        cartes.add(new AbstractMap.SimpleEntry<>("ten_of_spades", Cards.TEN));
+        cartes.add(new AbstractMap.SimpleEntry<>("ten_of_diamonds", Cards.TEN));
+        cartes.add(new AbstractMap.SimpleEntry<>("ten_of_hearts", Cards.TEN));
 
-        cartes.add("three_of_clubs");
-        cartes.add("three_of_spades");
-        cartes.add("three_of_diamonds");
-        cartes.add("three_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("three_of_clubs", Cards.THREE));
+        cartes.add(new AbstractMap.SimpleEntry<>("three_of_spades", Cards.THREE));
+        cartes.add(new AbstractMap.SimpleEntry<>("three_of_diamonds", Cards.THREE));
+        cartes.add(new AbstractMap.SimpleEntry<>("three_of_hearts", Cards.THREE));
 
-        cartes.add("two_of_clubs");
-        cartes.add("two_of_spades");
-        cartes.add("two_of_diamonds");
-        cartes.add("two_of_hearts");
+        cartes.add(new AbstractMap.SimpleEntry<>("two_of_clubs", Cards.TWO));
+        cartes.add(new AbstractMap.SimpleEntry<>("two_of_spades", Cards.TWO));
+        cartes.add(new AbstractMap.SimpleEntry<>("two_of_diamonds", Cards.TWO));
+        cartes.add(new AbstractMap.SimpleEntry<>("two_of_hearts", Cards.TWO));
     }
 
     public int getRemainingCards()
@@ -100,65 +82,37 @@ public class Deck {
     }
 
 
-    public String[] getNextCard()
+    public AbstractMap.SimpleEntry<String, Cards> getNextCard()
     {
-        int number = 0;
-        String actual_card = "";
-        String rules = "";
-        String[] cardAndRules = new String[2];
+        int number;
+        AbstractMap.SimpleEntry<String, Cards> card = null;
         if(!cartes.isEmpty()) {
             do {
                 number = new Random().nextInt(cartes.size());
             } while (cartes.get(number) == null);
-            actual_card = cartes.get(number);
+            card = new AbstractMap.SimpleEntry<>(cartes.get(number).getKey(), cartes.get(number).getValue());
             cartes.remove(number);
-            if (actual_card.substring(0, 3).equals("ace"))
-                rules = textRules[0];
-            else if (actual_card.substring(0, 3).equals("two"))
-                rules = textRules[1];
-            else if (actual_card.substring(0, 3).equals("thr"))
-                rules = textRules[2];
-            else if (actual_card.substring(0, 3).equals("fou"))
-                rules = textRules[3];
-            else if (actual_card.substring(0, 3).equals("fiv"))
-                rules = textRules[4];
-            else if (actual_card.substring(0, 3).equals("six"))
-                rules = textRules[5];
-            else if (actual_card.substring(0, 3).equals("sev"))
-                rules = textRules[6];
-            else if (actual_card.substring(0, 3).equals("eig"))
-                rules = textRules[7];
-            else if (actual_card.substring(0, 3).equals("nin"))
-                rules = textRules[8];
-            else if (actual_card.substring(0, 3).equals("ten"))
-                rules = textRules[9];
-            else if (actual_card.substring(0, 3).equals("jac"))
-                rules = textRules[10];
-            else if (actual_card.substring(0, 3).equals("que"))
-                rules = textRules[11];
-            else if (actual_card.substring(0, 3).equals("kin"))
-                rules = textRules[12];
-            else
-                rules = "";
         }
         else
-        {
             System.out.println("Fin du deck");
-            actual_card = "FIN";
-            rules = "Fin";
-        }
-        cardAndRules[0] = actual_card;
-        cardAndRules[1] = rules;
-        return cardAndRules;
 
-//        int number;
-//        do {
-//            number = new Random().nextInt(cartes.length);
-//        }while(cartes[number] == null);
-//
-//        actual_card = cartes[number];
-//        cartes[number] = null;
-//        return actual_card;
+        return card;
     }
 
+    public enum Cards {
+        ACE(0), TWO(1), THREE(2), FOUR(3),
+        FIVE(4), SIX(5), SEVEN(6), EIGHT(7),
+        NINE(8), TEN(9), JACK(10),
+        QUEEN(11), KING(12);
+
+        private int numVal;
+
+        Cards(int numVal) {
+            this.numVal = numVal;
+        }
+
+        public int getNumVal() {
+            return numVal;
+        }
+    }
 }

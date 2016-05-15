@@ -1,7 +1,23 @@
 <resources>
-    <string name="app_name">Le Barbu</string>
+    <string name="app_name">Drinking games</string>
+    <string name="Barbu">Barbu</string>
     <string name="action_settings">Settings</string>
     <string name="action_retry">Retry</string>
     <string name="action_cardsRemaining">51 cards</string>
+    <string-array name="rules">
+        <item>Everyone drinks % All players must drink a sip</item>
+        <item>Drink two sips % The player who draws this card must drink two sips</item>
+        <item>Drink three sips % The player who draws this card must drink three sips</item>
+        <item>Drink four sips % The player who draws this card must drink four sips</item>
+        <item>Drink five sips % The player who draws this card must drink five sips</item>
+        <item>Drink six sips % The player who draws this card must drink six sips</item>
+        <item>I have already / I have never % The player who draws this card must say something he already did or never done. All the other players must drink one sip if they are not in the case of the player</item>
+        <item>In my suitcase % The player who draws this card start the game by saying \"In my suitcase, I have \" and add an object or a person. The next player must add another object and so on until one of the players forget the contents of the suitcase</item>
+        <item>Rhymes % The player who draws this card say a word. the other players must say another word rhyming with the first one until one of them fail</item>
+        <item>Themes % The player who draws this card choose a theme (ex : brands). Every player must choose a valid word.</item>
+        <item>Snake eyes % The player who draws this card can say \"Snake eyes !\" if he looks right into the eyes of another player. That player must drink one sip</item>
+        <item>"Questions' queen % If a player answers the queen, he must drink a sip"</item>
+        <item>Make up a rule % The player who draws this card make up a new rule until the end of the game</item>
+    </string-array>
 
 </resources>
