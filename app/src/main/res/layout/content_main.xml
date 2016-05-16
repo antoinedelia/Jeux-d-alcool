@@ -9,8 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.antoinedelia.lebarbu_versionalcool.MainActivity"
-    tools:showIn="@layout/activity_main"
+    tools:context="com.antoinedelia.lebarbu_versionalcool.Barbu"
+    tools:showIn="@layout/barbu"
     android:background="#ffffff">
 
     <LinearLayout
@@ -28,8 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/imageViewCarte"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
             android:scaleType="centerInside"
             android:layout_margin="20dp"
             android:padding="10dp"/>
@@ -51,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Test"
+        android:text=""
         android:id="@+id/textViewRules"
         android:textColor="#ffffff"
         android:gravity="center" />
