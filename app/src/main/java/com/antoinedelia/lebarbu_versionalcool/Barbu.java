@@ -37,6 +37,7 @@ public class Barbu extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
         //TextView textView = (TextView) findViewById(R.id.textViewRules);
 
@@ -74,8 +75,8 @@ public class Barbu extends AppCompatActivity {
                     rulesDetails = rules.substring(rules.lastIndexOf("%")+2, rules.length());
 
                     int remainingCards = deck.getRemainingCards();
-                    String cards = remainingCards>1 ? " cards" : " card";
-                    item.setTitle(String.valueOf(remainingCards) + cards);
+                    String cards = getResources().getString(R.string.card) + (remainingCards>1 ? "s" : "");
+                    item.setTitle(String.valueOf(remainingCards) + " " + cards);
                 }
                 else
                 {
@@ -110,7 +111,6 @@ public class Barbu extends AppCompatActivity {
             newGame();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -125,8 +125,8 @@ public class Barbu extends AppCompatActivity {
         textViewRules.setText(rules.substring(0, rules.lastIndexOf("%")));
         rulesDetails = rules.substring(rules.lastIndexOf("%")+2, rules.length());
         int remainingCards = deck.getRemainingCards();
-        String cards = remainingCards>1 ? " cards" : " card";
-        item.setTitle(String.valueOf(remainingCards) + cards);
+        String cards = getResources().getString(R.string.card) + (remainingCards>1 ? "s" : "");
+        item.setTitle(String.valueOf(remainingCards) + " " + cards);
     }
 
 }

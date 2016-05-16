@@ -4,6 +4,12 @@
     <string name="action_settings">Settings</string>
     <string name="action_retry">Retry</string>
     <string name="action_cardsRemaining">51 cards</string>
+    <string name="card">card</string>
+    <string name="player">Player</string>
+    <string name="players">Players</string>
+    <string name="addPlayer">Add a player</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
     <string-array name="rules">
         <item>Everyone drinks % All players must drink a sip</item>
         <item>Drink two sips % The player who draws this card must drink two sips</item>

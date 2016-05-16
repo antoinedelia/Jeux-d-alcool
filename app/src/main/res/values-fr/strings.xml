@@ -4,6 +4,12 @@
     <string name="action_settings">Réglages</string>
     <string name="action_retry">Nouveau</string>
     <string name="action_cardsRemaining">51 cartes</string>
+    <string name="card">carte</string>
+    <string name="player">Joueur</string>
+    <string name="players">Joueurs</string>
+    <string name="addPlayer">Ajouter un joueur</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annuler</string>
     <string-array name="rules">
         <item>Tout le monde boit % Tous les joueurs prennent leur verre et boivent une gorgée</item>
         <item>Boit deux gorgées % Le joueur ayant tiré la carte doit boire deux gorgées</item>
