@@ -2,6 +2,7 @@ package com.antoinedelia.lebarbu_versionalcool;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -37,6 +38,12 @@ public class Barbu extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
 
         LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
         //TextView textView = (TextView) findViewById(R.id.textViewRules);

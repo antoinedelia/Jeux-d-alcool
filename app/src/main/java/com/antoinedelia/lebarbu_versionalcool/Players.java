@@ -5,7 +5,10 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -15,6 +18,7 @@ import android.widget.EditText;
 import java.util.ArrayList;
 
 public class Players extends ListActivity {
+
 
     //TODO save players list in application
     private ArrayList<String> listPlayers = new ArrayList<>();

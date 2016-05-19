@@ -26,7 +26,8 @@
             android:configChanges="orientation"
             android:label="@string/Barbu"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName="com.antoinedelia.lebarbu_versionalcool.Menu" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.antoinedelia.lebarbu_versionalcool.Menu" />
@@ -36,10 +37,11 @@
             android:configChanges="orientation"
             android:label="@string/players"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName="com.antoinedelia.lebarbu_versionalcool.Menu">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Menu"/>
+                android:value="com.antoinedelia.lebarbu_versionalcool.Menu"/>
         </activity>
 
         <activity
