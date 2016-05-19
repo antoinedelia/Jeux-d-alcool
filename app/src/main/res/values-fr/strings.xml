@@ -12,6 +12,7 @@
     <string name="cancel">Annuler</string>
     <string name="rename">Renommer</string>
     <string name="delete">Supprimer</string>
+    <string name="playerEmpty">Aucun joueur ajouté (vous n\'avez rien entré)</string>
     <string-array name="rules">
         <item>Tout le monde boit % Tous les joueurs prennent leur verre et boivent une gorgée</item>
         <item>Boit deux gorgées % Le joueur ayant tiré la carte doit boire deux gorgées</item>

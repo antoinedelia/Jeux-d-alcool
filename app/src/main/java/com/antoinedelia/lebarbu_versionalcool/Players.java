@@ -2,22 +2,21 @@ package com.antoinedelia.lebarbu_versionalcool;
 
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class Players extends ListActivity {
+public class Players extends AppCompatActivity {
 
 
     //TODO save players list in application
@@ -26,17 +25,19 @@ public class Players extends ListActivity {
     private ArrayAdapter<String> adapter;
 
     @Override
-    public void onCreate(Bundle icicle) {
-        super.onCreate(icicle);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.players);
+
+        ListView listview = (ListView) findViewById(R.id.listView);
 
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
                 listPlayers);
-        setListAdapter(adapter);
+        listview.setAdapter(adapter);
 
-
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //Rename player
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Players.this);
@@ -52,7 +53,9 @@ public class Players extends ListActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         playerName = input.getText().toString();
-                        listPlayers.set(position, playerName);
+                        //If name is blank, remove it
+                        if(!playerName.isEmpty())
+                            listPlayers.set(position, playerName);
                         adapter.notifyDataSetChanged();
                     }
                 });
@@ -76,7 +79,8 @@ public class Players extends ListActivity {
             }
         });
 
-        getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        //Delete player
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Players.this);
@@ -104,18 +108,6 @@ public class Players extends ListActivity {
         });
     }
 
-
-
-
-
-    //TODO Add the action bar
-    @Override
-    public boolean onCreateOptionsMenu(android.view.Menu menu) {
-        // Inflate the menu items for use in the action bar
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
     public void addPlayer(View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(getResources().getString(R.string.addPlayer));
@@ -128,8 +120,16 @@ public class Players extends ListActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 playerName = input.getText().toString();
-                listPlayers.add(playerName);
-                adapter.notifyDataSetChanged();
+                //Check if player's name isn't empty
+                if(!playerName.isEmpty())
+                {
+                    listPlayers.add(playerName);
+                    adapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    Toast.makeText(Players.this, getResources().getString(R.string.playerEmpty),Toast.LENGTH_SHORT).show();
+                }
             }
         });
         builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
