@@ -10,6 +10,8 @@
     <string name="addPlayer">Add a player</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="rename">Rename</string>
+    <string name="delete">Delete</string>
     <string-array name="rules">
         <item>Everyone drinks % All players must drink a sip</item>
         <item>Drink two sips % The player who draws this card must drink two sips</item>
