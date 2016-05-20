@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 
 public class Barbu extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class Barbu extends AppCompatActivity {
     private AbstractMap.SimpleEntry<String, Deck.Cards> card;
     private String rules;
     private String[] textRules;
+    private ArrayList<String> listPlayers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,9 @@ public class Barbu extends AppCompatActivity {
         setContentView(R.layout.barbu);
         //Change language (dev only)
         //LocaleHelper.setLocale(this, "en");
+
+        Intent intent = getIntent();
+        listPlayers = intent.getStringArrayListExtra("listPlayers");
         deck = new Deck();
         card = deck.getNextCard();
         textRules = getResources().getStringArray(R.array.rules);
@@ -43,19 +48,20 @@ public class Barbu extends AppCompatActivity {
         ActionBar ab = getSupportActionBar();
 
         // Enable the Up button
-        ab.setDisplayHomeAsUpEnabled(true);
+        if (ab != null)
+            ab.setDisplayHomeAsUpEnabled(true);
 
         LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
         //TextView textView = (TextView) findViewById(R.id.textViewRules);
 
 
-        final ImageView imageViewCarte = (ImageView)findViewById(R.id.imageViewCarte);
+        final ImageView imageViewCarte = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getKey(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         imageViewCarte.setImageResource(resourceId);
 
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
         textViewRules.setText(rules.substring(0, rules.lastIndexOf("%")));
-        rulesDetails = rules.substring(rules.lastIndexOf("%")+2, rules.length());
+        rulesDetails = rules.substring(rules.lastIndexOf("%") + 2, rules.length());
 
         linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,23 +76,20 @@ public class Barbu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int cardsLeft = deck.getRemainingCards();
-                if(cardsLeft > 0)
-                {
+                if (cardsLeft > 0) {
                     card = deck.getNextCard();
-                    //TODO End game if card == null
+                    //TODO End game if card == null + show scoreboard
                     rules = textRules[card.getValue().getNumVal()];
                     int resourceId = Barbu.this.getResources().getIdentifier(card.getKey(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
                     imageViewCarte.setImageResource(resourceId);
 
                     textViewRules.setText(rules.substring(0, rules.lastIndexOf("%")));
-                    rulesDetails = rules.substring(rules.lastIndexOf("%")+2, rules.length());
+                    rulesDetails = rules.substring(rules.lastIndexOf("%") + 2, rules.length());
 
                     int remainingCards = deck.getRemainingCards();
-                    String cards = getResources().getString(R.string.card) + (remainingCards>1 ? "s" : "");
+                    String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
                     item.setTitle(String.valueOf(remainingCards) + " " + cards);
-                }
-                else
-                {
+                } else {
                     imageViewCarte.clearAnimation();
                     textViewRules.clearAnimation();
                     newGame();
@@ -108,32 +111,42 @@ public class Barbu extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_retry) {
-            newGame();
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_retry:
+                newGame();
+                break;
+            case android.R.id.home:
+                Intent intent = new Intent();
+                //We send back the list of the players
+                intent.putExtra("listPlayers", listPlayers);
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     private void newGame() {
         deck = new Deck();
         card = deck.getNextCard();
         rules = textRules[card.getValue().getNumVal()];
-        final ImageView imageViewCarte = (ImageView)findViewById(R.id.imageViewCarte);
+        final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getKey(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-        imageViewCarte.setImageResource(resourceId);
+        imageViewCard.setImageResource(resourceId);
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
         textViewRules.setText(rules.substring(0, rules.lastIndexOf("%")));
-        rulesDetails = rules.substring(rules.lastIndexOf("%")+2, rules.length());
+        rulesDetails = rules.substring(rules.lastIndexOf("%") + 2, rules.length());
         int remainingCards = deck.getRemainingCards();
-        String cards = getResources().getString(R.string.card) + (remainingCards>1 ? "s" : "");
+        String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
         item.setTitle(String.valueOf(remainingCards) + " " + cards);
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        //We send back the list of the players
+        intent.putExtra("listPlayers", listPlayers);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
 }

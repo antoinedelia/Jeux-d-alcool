@@ -1,11 +1,12 @@
 package com.antoinedelia.lebarbu_versionalcool;
 
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -18,8 +19,6 @@ import java.util.ArrayList;
 
 public class Players extends AppCompatActivity {
 
-
-    //TODO save players list in application
     private ArrayList<String> listPlayers = new ArrayList<>();
     private String playerName;
     private ArrayAdapter<String> adapter;
@@ -30,6 +29,10 @@ public class Players extends AppCompatActivity {
         setContentView(R.layout.players);
 
         ListView listview = (ListView) findViewById(R.id.listView);
+
+        //We get the list of the players (if there is one)
+        Intent intent = getIntent();
+        listPlayers = intent.getStringArrayListExtra("listPlayers");
 
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
@@ -150,5 +153,29 @@ public class Players extends AppCompatActivity {
         });
 
         dialog.show();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        //We send back the list of the players
+        intent.putExtra("listPlayers", listPlayers);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent();
+                //We send back the list of the players
+                intent.putExtra("listPlayers", listPlayers);
+                setResult(RESULT_OK, intent);
+                finish();
+                break;
+        }
+        return true;
     }
 }
