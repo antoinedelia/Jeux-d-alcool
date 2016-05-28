@@ -2,7 +2,7 @@
     <string name="app_name">"Jeux d'alcool"</string>
     <string name="Barbu">Le Barbu</string>
     <string name="action_settings">Réglages</string>
-    <string name="action_retry">Nouveau</string>
+    <string name="action_retry">Nouveau jeu</string>
     <string name="action_cardsRemaining">51 cartes</string>
     <string name="card">carte</string>
     <string name="player">Joueur</string>
@@ -13,6 +13,10 @@
     <string name="rename">Renommer</string>
     <string name="delete">Supprimer</string>
     <string name="playerEmpty">Aucun joueur ajouté (vous n\'avez rien entré)</string>
+    <string name="noPlayer">Aucun joueur</string>
+    <string name="actualPlayer">Joueur actuel :</string>
+    <string name="action_addPlayers">Ajouter joueurs</string>
+    <string name="action_players">Informations des joueurs</string>
     <string-array name="rules">
         <item>Tout le monde boit % Tous les joueurs prennent leur verre et boivent une gorgée</item>
         <item>Boit deux gorgées % Le joueur ayant tiré la carte doit boire deux gorgées</item>

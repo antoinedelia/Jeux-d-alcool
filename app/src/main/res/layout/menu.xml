@@ -7,45 +7,22 @@
 
     <ImageButton
         android:id="@+id/imageBarbu"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_alignLeft="@+id/imagePlayers"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/imagePlayers"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:background="#00ffffff"
         android:contentDescription="@string/Barbu"
         android:scaleType="fitXY"
-        android:src="@drawable/barbu" />
+        android:src="@drawable/barbu"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imageBarbu"
-        android:layout_alignStart="@+id/imageBarbu"
-        android:layout_below="@+id/imageBarbu"
         android:text="@string/Barbu"
-        android:textAlignment="center" />
-
-    <ImageButton
-        android:id="@+id/imagePlayers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:background="#00ffffff"
-        android:contentDescription="@string/players"
-        android:src="@drawable/players" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/imagePlayers"
-        android:layout_alignStart="@+id/imagePlayers"
-        android:layout_below="@+id/imagePlayers"
-        android:text="@string/players"
-        android:textAlignment="center" />
-
+        android:gravity="center"
+        android:layout_below="@+id/imageBarbu"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

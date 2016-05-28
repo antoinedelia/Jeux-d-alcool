@@ -1,16 +1,24 @@
 package com.antoinedelia.lebarbu_versionalcool;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -26,6 +34,10 @@ public class Barbu extends AppCompatActivity {
     private String rules;
     private String[] textRules;
     private ArrayList<String> listPlayers = new ArrayList<>();
+    private int numberPlayers = 0;
+    private int numberActualPlayer = 0;
+    //List with details (number of sips...)
+    private ArrayList<String> listPlayersWithDetails = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +48,14 @@ public class Barbu extends AppCompatActivity {
 
         Intent intent = getIntent();
         listPlayers = intent.getStringArrayListExtra("listPlayers");
+        numberPlayers = listPlayers.size();
+        if(numberPlayers != 0){
+            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            nameActualPlayer.setText(actualPlayer);
+        }
+
+        listPlayersWithDetails = listPlayers;
         deck = new Deck();
         card = deck.getNextCard();
         textRules = getResources().getStringArray(R.array.rules);
@@ -55,9 +75,9 @@ public class Barbu extends AppCompatActivity {
         //TextView textView = (TextView) findViewById(R.id.textViewRules);
 
 
-        final ImageView imageViewCarte = (ImageView) findViewById(R.id.imageViewCarte);
+        final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getKey(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-        imageViewCarte.setImageResource(resourceId);
+        imageViewCard.setImageResource(resourceId);
 
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
         textViewRules.setText(rules.substring(0, rules.lastIndexOf("%")));
@@ -72,16 +92,27 @@ public class Barbu extends AppCompatActivity {
             }
         });
 
-        imageViewCarte.setOnClickListener(new View.OnClickListener() {
+        imageViewCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int cardsLeft = deck.getRemainingCards();
+                //TODO End game if card == null + show scoreboard
                 if (cardsLeft > 0) {
+                    numberActualPlayer++;
+                    if(numberActualPlayer == numberPlayers)
+                    {
+                        numberActualPlayer = 0;
+                    }
+                    if(numberPlayers != 0){
+                        final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+                        final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                        nameActualPlayer.setText(actualPlayer);
+                    }
+
                     card = deck.getNextCard();
-                    //TODO End game if card == null + show scoreboard
                     rules = textRules[card.getValue().getNumVal()];
                     int resourceId = Barbu.this.getResources().getIdentifier(card.getKey(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                    imageViewCarte.setImageResource(resourceId);
+                    imageViewCard.setImageResource(resourceId);
 
                     textViewRules.setText(rules.substring(0, rules.lastIndexOf("%")));
                     rulesDetails = rules.substring(rules.lastIndexOf("%") + 2, rules.length());
@@ -90,7 +121,7 @@ public class Barbu extends AppCompatActivity {
                     String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
                     item.setTitle(String.valueOf(remainingCards) + " " + cards);
                 } else {
-                    imageViewCarte.clearAnimation();
+                    imageViewCard.clearAnimation();
                     textViewRules.clearAnimation();
                     newGame();
                 }
@@ -103,7 +134,7 @@ public class Barbu extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         this.menu = menu;
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_barbu, menu);
         item = menu.findItem(R.id.action_cardsRemaining);
         retry = menu.findItem(R.id.action_retry);
         return true;
@@ -122,6 +153,31 @@ public class Barbu extends AppCompatActivity {
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
+            case R.id.action_infoPlayers:
+                if(numberPlayers != 0) {
+                    //We show the information about the players
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setIcon(R.drawable.barbu);
+                    builder.setTitle(getResources().getString(R.string.action_players));
+
+                    ListView playersList = new ListView(this);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listPlayers);
+                    playersList.setAdapter(arrayAdapter);
+
+                    builder.setView(playersList);
+                    builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    final Dialog dialog = builder.create();
+                    dialog.show();
+                }
+                else {
+                    Toast.makeText(Barbu.this, getResources().getString(R.string.noPlayer),Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
         return true;
     }
@@ -130,6 +186,14 @@ public class Barbu extends AppCompatActivity {
         deck = new Deck();
         card = deck.getNextCard();
         rules = textRules[card.getValue().getNumVal()];
+        numberPlayers = listPlayers.size();
+        numberActualPlayer = 0;
+        if(numberPlayers != 0){
+            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            nameActualPlayer.setText(actualPlayer);
+        }
+        listPlayersWithDetails = listPlayers;
         final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getKey(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         imageViewCard.setImageResource(resourceId);
