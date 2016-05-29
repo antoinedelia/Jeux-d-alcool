@@ -49,7 +49,7 @@ public class Barbu extends AppCompatActivity {
         Intent intent = getIntent();
         listPlayers = intent.getStringArrayListExtra("listPlayers");
         numberPlayers = listPlayers.size();
-        if(numberPlayers != 0){
+        if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
             nameActualPlayer.setText(actualPlayer);
@@ -86,9 +86,17 @@ public class Barbu extends AppCompatActivity {
         linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Barbu.this, Rules.class);
-                intent.putExtra("textRulesDetails", rulesDetails);
-                startActivity(intent);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Barbu.this);
+                builder.setMessage(rulesDetails)
+                        .setTitle(getResources().getString(R.string.ruleCard));
+
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User clicked OK button
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
@@ -96,14 +104,12 @@ public class Barbu extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int cardsLeft = deck.getRemainingCards();
-                //TODO End game if card == null + show scoreboard
                 if (cardsLeft > 0) {
                     numberActualPlayer++;
-                    if(numberActualPlayer == numberPlayers)
-                    {
+                    if (numberActualPlayer == numberPlayers) {
                         numberActualPlayer = 0;
                     }
-                    if(numberPlayers != 0){
+                    if (numberPlayers != 0) {
                         final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
                         final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
                         nameActualPlayer.setText(actualPlayer);
@@ -121,6 +127,7 @@ public class Barbu extends AppCompatActivity {
                     String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
                     item.setTitle(String.valueOf(remainingCards) + " " + cards);
                 } else {
+                    //TODO End game + show scoreboard via Alert Dialog
                     imageViewCard.clearAnimation();
                     textViewRules.clearAnimation();
                     newGame();
@@ -154,7 +161,7 @@ public class Barbu extends AppCompatActivity {
                 finish();
                 break;
             case R.id.action_infoPlayers:
-                if(numberPlayers != 0) {
+                if (numberPlayers != 0) {
                     //We show the information about the players
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setIcon(R.drawable.barbu);
@@ -173,9 +180,8 @@ public class Barbu extends AppCompatActivity {
                     });
                     final Dialog dialog = builder.create();
                     dialog.show();
-                }
-                else {
-                    Toast.makeText(Barbu.this, getResources().getString(R.string.noPlayer),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Barbu.this, getResources().getString(R.string.noPlayer), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -188,7 +194,7 @@ public class Barbu extends AppCompatActivity {
         rules = textRules[card.getValue().getNumVal()];
         numberPlayers = listPlayers.size();
         numberActualPlayer = 0;
-        if(numberPlayers != 0){
+        if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
             nameActualPlayer.setText(actualPlayer);

@@ -45,13 +45,6 @@
                 android:value="com.antoinedelia.lebarbu_versionalcool.Menu" />
         </activity>
 
-        <activity
-            android:name=".Rules"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.RulesTheme">
-
-        </activity>
     </application>
 
 </manifest>

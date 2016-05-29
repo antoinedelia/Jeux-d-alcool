@@ -17,20 +17,21 @@
     <string name="actualPlayer">Joueur actuel :</string>
     <string name="action_addPlayers">Ajouter joueurs</string>
     <string name="action_players">Informations des joueurs</string>
+    <string name="ruleCard">Règle pour cette carte : </string>
     <string-array name="rules">
-        <item>Tout le monde boit % Tous les joueurs prennent leur verre et boivent une gorgée</item>
-        <item>Boit deux gorgées % Le joueur ayant tiré la carte doit boire deux gorgées</item>
-        <item>Boit trois gorgées % Le joueur ayant tiré la carte doit boire trois gorgées</item>
-        <item>Boit quatre gorgées % Le joueur ayant tiré la carte doit boire quatre gorgées</item>
-        <item>Boit cinq gorgées % Le joueur ayant tiré la carte doit boire cinq gorgées</item>
-        <item>Boit six gorgées % Le joueur ayant tiré la carte doit boire six gorgées</item>
-        <item>"J'ai déjà / Je n'ai jamais % Le joueur ayant tiré la carte doit dire quelque chose qu'il a déjà ou n'a jamais fait. Tous les autres joueurs doivent boire une gorgée s'ils ne se trouvent pas dans le cas du joueur"</item>
-        <item>"Dans ma valise % Le joueur ayant tiré la carte commence le jeu en disant \"Dans ma valise, j'ai \" et ajoute un objet ou une personne. Le joueur suivant doit compléter la valise et ainsi de suite"</item>
-        <item>"Les rimes % Le joueur ayant tiré la carte prononce un mot. Les autres joueurs devront dire un mot rimant avec celui du premier joueur jusqu'à ce que l'un d'entre eux se trompe"</item>
-        <item>"Les thèmes % Le joueur ayant tiré la carte choisi un thème (ex : les marques d'alcool). Chaque joueur doit compléter ce thème"</item>
-        <item>Snake eyes % Le joueur ayant tiré la carte peut dire \"Snake eyes !\" si un joueur le regarde dans les yeux. Ce joueur boit ainsi une gorgée</item>
-        <item>La reine des questions % Toute personne répondant à une question de la reine des questions doit boire une gorgée</item>
-        <item>"Invente une règle% Le joueur ayant tiré la carte doit créer une règle qui s'appliquera jusqu'à la fin du jeu ou jusqu'à ce qu'un joueur annule sa règle en tirant un autre roi"</item>
+        <item>Tout le monde boit % Tous les joueurs prennent leur verre et boivent une gorgée.</item>
+        <item>Boit deux gorgées % Le joueur ayant tiré la carte doit boire deux gorgées.</item>
+        <item>Boit trois gorgées % Le joueur ayant tiré la carte doit boire trois gorgées.</item>
+        <item>Boit quatre gorgées % Le joueur ayant tiré la carte doit boire quatre gorgées.</item>
+        <item>Boit cinq gorgées % Le joueur ayant tiré la carte doit boire cinq gorgées.</item>
+        <item>Boit six gorgées % Le joueur ayant tiré la carte doit boire six gorgées.</item>
+        <item>"J'ai déjà / Je n'ai jamais % Le joueur ayant tiré la carte doit dire quelque chose qu'il a déjà ou n'a jamais fait. Tous les autres joueurs doivent boire une gorgée s'ils ne se trouvent pas dans le cas du joueur."</item>
+        <item>"Dans ma valise % Le joueur ayant tiré la carte commence le jeu en disant \"Dans ma valise, j'ai \" et ajoute un objet ou une personne. Le joueur suivant doit compléter la valise et ainsi de suite."</item>
+        <item>"Les rimes % Le joueur ayant tiré la carte prononce un mot. Les autres joueurs devront dire un mot rimant avec celui du premier joueur jusqu'à ce que l'un d'entre eux se trompe."</item>
+        <item>"Les thèmes % Le joueur ayant tiré la carte choisi un thème (ex : les marques d'alcool). Chaque joueur doit compléter ce thème."</item>
+        <item>Snake eyes % Le joueur ayant tiré la carte peut dire \"Snake eyes !\" si un joueur le regarde dans les yeux. Ce joueur boit ainsi une gorgée.</item>
+        <item>La reine des questions % Toute personne répondant à une question de la reine des questions doit boire une gorgée.</item>
+        <item>"Invente une règle% Le joueur ayant tiré la carte doit créer une règle qui s'appliquera jusqu'à la fin du jeu ou jusqu'à ce qu'un joueur annule sa règle en tirant un autre roi."</item>
     </string-array>
 
 </resources>
