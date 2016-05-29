@@ -127,10 +127,29 @@ public class Barbu extends AppCompatActivity {
                     String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
                     item.setTitle(String.valueOf(remainingCards) + " " + cards);
                 } else {
-                    //TODO End game + show scoreboard via Alert Dialog
-                    imageViewCard.clearAnimation();
-                    textViewRules.clearAnimation();
-                    newGame();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Barbu.this);
+                    builder.setMessage(getResources().getString(R.string.restartGame))
+                            .setTitle(getResources().getString(R.string.gameOver));
+
+                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent();
+                            intent.putExtra("listPlayers", listPlayers);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    });
+
+                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            imageViewCard.clearAnimation();
+                            textViewRules.clearAnimation();
+                            newGame();
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
                 }
             }
         });

@@ -7,8 +7,12 @@
     <string name="card">carte</string>
     <string name="player">Joueur</string>
     <string name="players">Joueurs</string>
+    <string name="gameOver">Jeu terminé</string>
+    <string name="restartGame">Voulez-vous rejouer ?</string>
     <string name="addPlayer">Ajouter un joueur</string>
     <string name="ok">OK</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
     <string name="cancel">Annuler</string>
     <string name="rename">Renommer</string>
     <string name="delete">Supprimer</string>

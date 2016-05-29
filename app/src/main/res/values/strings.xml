@@ -7,8 +7,12 @@
     <string name="card">card</string>
     <string name="player">Player</string>
     <string name="players">Players</string>
+    <string name="gameOver">Game over</string>
+    <string name="restartGame">Would you like to play again?</string>
     <string name="addPlayer">Add a player</string>
     <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="cancel">Cancel</string>
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
