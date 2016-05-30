@@ -2,22 +2,22 @@ package com.antoinedelia.lebarbu_versionalcool;
 
 public class Card {
 
-    private Enum<Deck.Cards> name;
+    private Deck.Cards name;
     private String path;
     private Rule rule;
 
-    public Card(Enum<Deck.Cards> nameCard, String pathCard, Rule ruleCard)
+    public Card(Deck.Cards nameCard, String pathCard, Rule ruleCard)
     {
         name = nameCard;
         path = pathCard;
         rule = ruleCard;
     }
 
-    public Enum<Deck.Cards> getName() {
+    public Deck.Cards getName() {
         return name;
     }
 
-    public void setName(Enum<Deck.Cards> name) {
+    public void setName(Deck.Cards name) {
         this.name = name;
     }
 

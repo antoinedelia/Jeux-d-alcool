@@ -22,6 +22,8 @@
     <string name="action_addPlayers">Ajouter joueurs</string>
     <string name="action_players">Informations des joueurs</string>
     <string name="ruleCard">Règle pour cette carte : </string>
+    <string name="sip">gorgée</string>
+    <string name="drank">a bu</string>
     <string-array name="rulesSmallBarbu">
         <item>Tout le monde boit</item>
         <item>Boit deux gorgées</item>

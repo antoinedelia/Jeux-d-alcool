@@ -9,12 +9,6 @@ public class Player implements Parcelable {
     private int numberSips;
     private String specialTrait;
 
-    public Player(){
-        name = "";
-        numberSips = 0;
-        specialTrait = "";
-    }
-
     public Player(String namePlayer){
         name = namePlayer;
         numberSips = 0;

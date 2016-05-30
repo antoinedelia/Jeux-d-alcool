@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BarbuActivity extends AppCompatActivity {
 
@@ -43,11 +45,6 @@ public class BarbuActivity extends AppCompatActivity {
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
         numberPlayers = listPlayers.size();
-        if (numberPlayers != 0) {
-            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
-            nameActualPlayer.setText(actualPlayer);
-        }
 
         deck = new Deck("Barbu", this);
         card = deck.getNextCard();
@@ -74,6 +71,15 @@ public class BarbuActivity extends AppCompatActivity {
         textViewRules.setText(card.getRule().getSmallRule());
         rulesDetails = card.getRule().getLongRule();
 
+        if (numberPlayers != 0) {
+            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            nameActualPlayer.setText(actualPlayer);
+            for (int i = 0; i < listPlayers.size(); i++)
+                listPlayers.get(i).setSpecialTrait("");
+            checkSipsAndSpecial();
+        }
+
         //Click on rule
         linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,64 +98,66 @@ public class BarbuActivity extends AppCompatActivity {
             }
         });
 
+        card = deck.getNextCard();
+
         //Click on card
         imageViewCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int cardsLeft = deck.getRemainingCards();
-                if (cardsLeft > 0) {
-                    numberActualPlayer++;
-                    if (numberActualPlayer == numberPlayers) {
-                        numberActualPlayer = 0;
-                    }
+                 @Override
+                 public void onClick(View v) {
+                     int cardsLeft = deck.getRemainingCards();
+                     if (cardsLeft > 0) {
+                         numberActualPlayer++;
+                         if (numberActualPlayer == numberPlayers) {
+                             numberActualPlayer = 0;
+                         }
 
-                    card = deck.getNextCard();
-                    int resourceId = BarbuActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                    imageViewCard.setImageResource(resourceId);
+                         card = deck.getNextCard();
+                         int resourceId = BarbuActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                         imageViewCard.setImageResource(resourceId);
 
-                    textViewRules.setText(card.getRule().getSmallRule());
-                    rulesDetails = card.getRule().getLongRule();
+                         textViewRules.setText(card.getRule().getSmallRule());
+                         rulesDetails = card.getRule().getLongRule();
 
-                    int remainingCards = deck.getRemainingCards();
-                    String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
-                    item.setTitle(String.valueOf(remainingCards) + " " + cards);
+                         int remainingCards = deck.getRemainingCards();
+                         String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
+                         item.setTitle(String.valueOf(remainingCards) + " " + cards);
 
-                    if (numberPlayers > 0) {
-                        final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-                        final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
-                        nameActualPlayer.setText(actualPlayer);
-//                        if(card.getValue() == Deck.Cards.ACE)
-//                        {
-//
-//                        }
-                    }
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(BarbuActivity.this);
-                    builder.setMessage(getResources().getString(R.string.restartGame))
-                            .setTitle(getResources().getString(R.string.gameOver));
+                         if (numberPlayers > 0) {
+                             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+                             final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                             nameActualPlayer.setText(actualPlayer);
+                             checkSipsAndSpecial();
+                         }
+                     } else
 
-                    builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent();
-                            intent.putParcelableArrayListExtra("listPlayers", listPlayers);
-                            setResult(RESULT_OK, intent);
-                            finish();
-                        }
-                    });
+                     {
+                         AlertDialog.Builder builder = new AlertDialog.Builder(BarbuActivity.this);
+                         builder.setMessage(getResources().getString(R.string.restartGame))
+                                 .setTitle(getResources().getString(R.string.gameOver));
 
-                    builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            imageViewCard.clearAnimation();
-                            textViewRules.clearAnimation();
-                            newGame();
-                        }
-                    });
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                }
-            }
-        });
+                         builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                             @Override
+                             public void onClick(DialogInterface dialog, int which) {
+                                 Intent intent = new Intent();
+                                 intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+                                 setResult(RESULT_OK, intent);
+                                 finish();
+                             }
+                         });
+
+                         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                             public void onClick(DialogInterface dialog, int id) {
+                                 imageViewCard.clearAnimation();
+                                 textViewRules.clearAnimation();
+                                 newGame();
+                             }
+                         });
+                         AlertDialog dialog = builder.create();
+                         dialog.show();
+                     }
+                 }
+             }
+        );
     }
 
 
@@ -184,13 +192,12 @@ public class BarbuActivity extends AppCompatActivity {
                     builder.setTitle(getResources().getString(R.string.action_players));
 
                     List<String> playersWithInfo = new ArrayList<>();
-                    for (int i = 0; i < listPlayers.size(); i++)
-                    {
+                    for (int i = 0; i < listPlayers.size(); i++) {
                         //TODO finish info players
-                        String textSip = " gorgée" + (listPlayers.get(i).getNumberSips()>1 ? "s" : "");
-                        String textSpecialTrait = (listPlayers.get(i).getSpecialTrait().isEmpty() ? "" : "("+listPlayers.get(i).getSpecialTrait()+")");
-                        String textToDisplay = listPlayers.get(i).getName() + " a bu " + listPlayers.get(i).getNumberSips() + textSip + textSpecialTrait;
-                        playersWithInfo.add(textToDisplay);
+                        String textSip = getResources().getString(R.string.sip) + (listPlayers.get(i).getNumberSips() > 1 ? "s" : "");
+                        String textSpecialTrait = ((listPlayers.get(i).getSpecialTrait().isEmpty() || listPlayers.get(i).getSpecialTrait().equals(" ")) ? "" : " (" + listPlayers.get(i).getSpecialTrait().trim() + ")");
+                        String textToDisplay = listPlayers.get(i).getName() + " " + getResources().getString(R.string.drank) + " " + listPlayers.get(i).getNumberSips() + " " + textSip + textSpecialTrait;
+                        playersWithInfo.add(textToDisplay.trim());
                     }
                     ListView playersList = new ListView(this);
                     ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, playersWithInfo);
@@ -218,11 +225,6 @@ public class BarbuActivity extends AppCompatActivity {
         card = deck.getNextCard();
         numberPlayers = listPlayers.size();
         numberActualPlayer = 0;
-        if (numberPlayers != 0) {
-            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
-            nameActualPlayer.setText(actualPlayer);
-        }
         final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         imageViewCard.setImageResource(resourceId);
@@ -232,6 +234,15 @@ public class BarbuActivity extends AppCompatActivity {
         int remainingCards = deck.getRemainingCards();
         String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
         item.setTitle(String.valueOf(remainingCards) + " " + cards);
+        if (numberPlayers != 0) {
+            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            nameActualPlayer.setText(actualPlayer);
+            listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
+            for (int i = 0; i < listPlayers.size(); i++)
+                listPlayers.get(i).setSpecialTrait("");
+            checkSipsAndSpecial();
+        }
     }
 
     @Override
@@ -241,5 +252,31 @@ public class BarbuActivity extends AppCompatActivity {
         intent.putParcelableArrayListExtra("listPlayers", listPlayers);
         setResult(RESULT_OK, intent);
         finish();
+    }
+
+    public void checkSipsAndSpecial() {
+        if (card.getName() == Deck.Cards.ACE) {
+            for (int i = 0; i < listPlayers.size(); i++)
+                listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + 1);
+        }
+        if (card.getName() == Deck.Cards.TWO || card.getName() == Deck.Cards.THREE || card.getName() == Deck.Cards.FOUR || card.getName() == Deck.Cards.FIVE || card.getName() == Deck.Cards.SIX) {
+            listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + card.getName().getNumVal() + 1);
+        }
+        if (card.getName() == Deck.Cards.JACK) {
+            for (int i = 0; i < listPlayers.size(); i++)
+                if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()])) {
+                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()], ""));
+                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                }
+            listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()]);
+        }
+        if (card.getName() == Deck.Cards.QUEEN) {
+            for (int i = 0; i < listPlayers.size(); i++)
+                if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()])) {
+                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()], ""));
+                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                }
+            listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()]);
+        }
     }
 }
