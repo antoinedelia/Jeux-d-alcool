@@ -8,10 +8,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -32,6 +35,7 @@ public class BarbuActivity extends AppCompatActivity {
     private Deck deck = null;
     private Card card;
     private ArrayList<Player> listPlayers = new ArrayList<>();
+    private ArrayList<String> listRules = new ArrayList<>();
     private int numberPlayers = 0;
     private int numberActualPlayer = 0;
 
@@ -77,8 +81,8 @@ public class BarbuActivity extends AppCompatActivity {
             nameActualPlayer.setText(actualPlayer);
             for (int i = 0; i < listPlayers.size(); i++)
                 listPlayers.get(i).setSpecialTrait("");
-            checkSipsAndSpecial();
         }
+        checkSipsAndSpecial();
 
         //Click on rule
         linearLayoutRules.setOnClickListener(new View.OnClickListener() {
@@ -126,8 +130,8 @@ public class BarbuActivity extends AppCompatActivity {
                              final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
                              final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
                              nameActualPlayer.setText(actualPlayer);
-                             checkSipsAndSpecial();
                          }
+                         checkSipsAndSpecial();
                      } else
 
                      {
@@ -193,7 +197,6 @@ public class BarbuActivity extends AppCompatActivity {
 
                     List<String> playersWithInfo = new ArrayList<>();
                     for (int i = 0; i < listPlayers.size(); i++) {
-                        //TODO finish info players
                         String textSip = getResources().getString(R.string.sip) + (listPlayers.get(i).getNumberSips() > 1 ? "s" : "");
                         String textSpecialTrait = ((listPlayers.get(i).getSpecialTrait().isEmpty() || listPlayers.get(i).getSpecialTrait().equals(" ")) ? "" : " (" + listPlayers.get(i).getSpecialTrait().trim() + ")");
                         String textToDisplay = listPlayers.get(i).getName() + " " + getResources().getString(R.string.drank) + " " + listPlayers.get(i).getNumberSips() + " " + textSip + textSpecialTrait;
@@ -214,6 +217,30 @@ public class BarbuActivity extends AppCompatActivity {
                     dialog.show();
                 } else {
                     Toast.makeText(BarbuActivity.this, getResources().getString(R.string.noPlayer), Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.action_infoRules:
+                if (listRules.size() != 0) {
+                    //We show the information about the players
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setIcon(R.drawable.barbu);
+                    builder.setTitle(getResources().getString(R.string.action_rules));
+
+                    ListView rulesList = new ListView(this);
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listRules);
+                    rulesList.setAdapter(arrayAdapter);
+
+                    builder.setView(rulesList);
+                    builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    final Dialog dialog = builder.create();
+                    dialog.show();
+                } else {
+                    Toast.makeText(BarbuActivity.this, getResources().getString(R.string.noRule), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -241,8 +268,8 @@ public class BarbuActivity extends AppCompatActivity {
             listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
             for (int i = 0; i < listPlayers.size(); i++)
                 listPlayers.get(i).setSpecialTrait("");
-            checkSipsAndSpecial();
         }
+        checkSipsAndSpecial();
     }
 
     @Override
@@ -255,28 +282,79 @@ public class BarbuActivity extends AppCompatActivity {
     }
 
     public void checkSipsAndSpecial() {
-        if (card.getName() == Deck.Cards.ACE) {
-            for (int i = 0; i < listPlayers.size(); i++)
-                listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + 1);
+        //Check if ACE to give all player one sip
+        if(numberPlayers > 0)
+        {
+            if (card.getName() == Deck.Cards.ACE) {
+                for (int i = 0; i < listPlayers.size(); i++)
+                    listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + 1);
+            }
+            //Check cards to give the current player the according number of sips
+            if (card.getName() == Deck.Cards.TWO || card.getName() == Deck.Cards.THREE || card.getName() == Deck.Cards.FOUR || card.getName() == Deck.Cards.FIVE || card.getName() == Deck.Cards.SIX) {
+                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + card.getName().getNumVal() + 1);
+            }
+            //Check if JACK to give player the Snake eyes trait
+            if (card.getName() == Deck.Cards.JACK) {
+                for (int i = 0; i < listPlayers.size(); i++)
+                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()])) {
+                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()], ""));
+                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                    }
+                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()]);
+            }
+            //Check if QUEEN to give player the Question's queen trait
+            if (card.getName() == Deck.Cards.QUEEN) {
+                for (int i = 0; i < listPlayers.size(); i++)
+                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()])) {
+                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()], ""));
+                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                    }
+                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()]);
+            }
         }
-        if (card.getName() == Deck.Cards.TWO || card.getName() == Deck.Cards.THREE || card.getName() == Deck.Cards.FOUR || card.getName() == Deck.Cards.FIVE || card.getName() == Deck.Cards.SIX) {
-            listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + card.getName().getNumVal() + 1);
-        }
-        if (card.getName() == Deck.Cards.JACK) {
-            for (int i = 0; i < listPlayers.size(); i++)
-                if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()])) {
-                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()], ""));
-                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+
+        //Check if KING to add a new rule
+        if (card.getName() == Deck.Cards.KING) {
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            builder.setTitle(getResources().getString(R.string.addRule));
+            final EditText input = new EditText(this);
+            input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+            builder.setView(input);
+
+            // Set up the buttons
+            builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
                 }
-            listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()]);
-        }
-        if (card.getName() == Deck.Cards.QUEEN) {
-            for (int i = 0; i < listPlayers.size(); i++)
-                if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()])) {
-                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()], ""));
-                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+            });
+
+            final android.app.AlertDialog dialog = builder.create();
+            input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if (hasFocus) {
+                        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    }
                 }
-            listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()]);
+            });
+
+            dialog.setCancelable(false);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.show();
+
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Boolean wantToCloseDialog = (input.getText().toString().trim().isEmpty());
+                    // if EditText is empty disable closing on positive button
+                    if (!wantToCloseDialog)
+                    {
+                        listRules.add(input.getText().toString().trim());
+                        dialog.dismiss();
+                    }
+                }
+            });
         }
     }
 }
