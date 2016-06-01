@@ -36,6 +36,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
     private ArrayList<String> listRules = new ArrayList<>();
     private int numberPlayers = 0;
     private int numberActualPlayer = 0;
+    private boolean isKingImageLoaded = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,62 +102,63 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         card = deck.getNextCard();
 
         //Click on card
-        imageViewCard.setOnClickListener(new View.OnClickListener() {
-                                             @Override
-                                             public void onClick(View v) {
-                                                 int cardsLeft = deck.getRemainingCards();
-                                                 if (cardsLeft > 0) {
-                                                     numberActualPlayer++;
-                                                     if (numberActualPlayer == numberPlayers) {
-                                                         numberActualPlayer = 0;
-                                                     }
+        imageViewCard.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(!isKingImageLoaded)
+                            return;
+                        int cardsLeft = deck.getRemainingCards();
+                        if (cardsLeft > 0) {
+                            numberActualPlayer++;
+                            if (numberActualPlayer == numberPlayers) {
+                                numberActualPlayer = 0;
+                            }
 
-                                                     card = deck.getNextCard();
-                                                     int resourceId = CircleOfDeathActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                                                     imageViewCard.setImageResource(resourceId);
+                            card = deck.getNextCard();
+                            int resourceId = CircleOfDeathActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                            imageViewCard.setImageResource(resourceId);
 
-                                                     textViewRules.setText(card.getRule().getSmallRule());
-                                                     rulesDetails = card.getRule().getLongRule();
+                            textViewRules.setText(card.getRule().getSmallRule());
+                            rulesDetails = card.getRule().getLongRule();
 
-                                                     int remainingCards = deck.getRemainingCards();
-                                                     String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
-                                                     item.setTitle(String.valueOf(remainingCards) + " " + cards);
+                            int remainingCards = deck.getRemainingCards();
+                            String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
+                            item.setTitle(String.valueOf(remainingCards) + " " + cards);
 
-                                                     if (numberPlayers > 0) {
-                                                         final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-                                                         final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
-                                                         nameActualPlayer.setText(actualPlayer);
-                                                     }
-                                                     checkSipsAndSpecial();
-                                                 } else
+                            if (numberPlayers > 0) {
+                                final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+                                final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                                nameActualPlayer.setText(actualPlayer);
+                            }
+                            checkSipsAndSpecial();
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(CircleOfDeathActivity.this);
+                            builder.setMessage(getResources().getString(R.string.restartGame))
+                                    .setTitle(getResources().getString(R.string.gameOver));
 
-                                                 {
-                                                     AlertDialog.Builder builder = new AlertDialog.Builder(CircleOfDeathActivity.this);
-                                                     builder.setMessage(getResources().getString(R.string.restartGame))
-                                                             .setTitle(getResources().getString(R.string.gameOver));
+                            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent();
+                                    intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+                                    setResult(RESULT_OK, intent);
+                                    finish();
+                                }
+                            });
 
-                                                     builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                                         @Override
-                                                         public void onClick(DialogInterface dialog, int which) {
-                                                             Intent intent = new Intent();
-                                                             intent.putParcelableArrayListExtra("listPlayers", listPlayers);
-                                                             setResult(RESULT_OK, intent);
-                                                             finish();
-                                                         }
-                                                     });
-
-                                                     builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                                         public void onClick(DialogInterface dialog, int id) {
-                                                             imageViewCard.clearAnimation();
-                                                             textViewRules.clearAnimation();
-                                                             newGame();
-                                                         }
-                                                     });
-                                                     AlertDialog dialog = builder.create();
-                                                     dialog.show();
-                                                 }
-                                             }
-                                         }
+                            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    imageViewCard.clearAnimation();
+                                    textViewRules.clearAnimation();
+                                    newGame();
+                                }
+                            });
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                        }
+                    }
+                }
         );
     }
 
@@ -310,6 +312,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
 
         //Check if KING to add a new rule
         if (card.getName() == Deck.Cards.KING) {
+            isKingImageLoaded = false;
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
             builder.setMessage(getResources().getString(R.string.helpRuleCircleOfDeath));
             builder.setTitle(getResources().getString(R.string.addRule));
@@ -347,6 +350,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                     if (!wantToCloseDialog) {
                         listRules.add(input.getText().toString().trim());
                         dialog.dismiss();
+                        isKingImageLoaded = true;
                     }
                 }
             });
