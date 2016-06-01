@@ -1,5 +1,6 @@
 package com.antoinedelia.lebarbu_versionalcool;
 
+
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,46 +10,51 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CircleOfDeathActivity extends AppCompatActivity {
+public class BizkitActivity extends AppCompatActivity {
 
     private Menu menu;
     private MenuItem item;
     private MenuItem retry;
-    private String rulesDetails;
-    private Deck deck = null;
-    private Card card;
     private ArrayList<Player> listPlayers = new ArrayList<>();
     private ArrayList<String> listRules = new ArrayList<>();
+    private String rulesDetails;
+    private Dice diceOne;
+    private Dice diceTwo;
     private int numberPlayers = 0;
     private int numberActualPlayer = 0;
-    private boolean isKingImageLoaded = true;
+    private boolean isTwelve = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.circle_of_death);
+        setContentView(R.layout.bizkit);
 
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
         numberPlayers = listPlayers.size();
 
-        deck = new Deck("CircleOfDeath", this);
-        card = deck.getNextCard();
+        for (int i = 0; i < listPlayers.size(); i++)
+            listPlayers.get(i).setSpecialTrait("");
+
+        diceOne = new Dice(this);
+        diceTwo = new Dice(this);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -60,13 +66,17 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
 
-        final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
-        int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-        imageViewCard.setImageResource(resourceId);
+        final ImageView imageViewDiceOne = (ImageView) findViewById(R.id.imageViewDiceOne);
+        int resourceIdOne = this.getResources().getIdentifier(diceOne.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        imageViewDiceOne.setImageResource(resourceIdOne);
+
+        final ImageView imageViewDiceTwo = (ImageView) findViewById(R.id.imageViewDiceTwo);
+        int resourceIdTwo = this.getResources().getIdentifier(diceTwo.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        imageViewDiceTwo.setImageResource(resourceIdTwo);
 
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
-        textViewRules.setText(card.getRule().getSmallRule());
-        rulesDetails = card.getRule().getLongRule();
+        textViewRules.setText(getResources().getStringArray(R.array.rulesSmallBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2]);
+        rulesDetails = getResources().getStringArray(R.array.rulesLongBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2];
 
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
@@ -82,8 +92,11 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CircleOfDeathActivity.this);
-                builder.setMessage(rulesDetails)
+                String doubleText = " ";
+                if(diceOne.getValue() == diceTwo.getValue())
+                    doubleText += getResources().getString(R.string.doubleText) + " " + diceOne.getValue() + " " + getResources().getString(R.string.sip) + (diceOne.getValue() != 1 ? "s." : ".");
+                AlertDialog.Builder builder = new AlertDialog.Builder(BizkitActivity.this);
+                builder.setMessage(rulesDetails + doubleText)
                         .setTitle(getResources().getString(R.string.ruleCard));
 
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -96,86 +109,52 @@ public class CircleOfDeathActivity extends AppCompatActivity {
             }
         });
 
-        card = deck.getNextCard();
-
-        //Click on card
-        imageViewCard.setOnClickListener(
+        //Click on the dice
+        final RelativeLayout relativeLayoutDice = (RelativeLayout) findViewById(R.id.containerImageDice);
+        relativeLayoutDice.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(!isKingImageLoaded)
+                        if(!isTwelve){
                             return;
-                        int cardsLeft = deck.getRemainingCards();
-                        if (cardsLeft > 0) {
-                            numberActualPlayer++;
-                            if (numberActualPlayer == numberPlayers) {
-                                numberActualPlayer = 0;
-                            }
-
-                            card = deck.getNextCard();
-                            int resourceId = CircleOfDeathActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            imageViewCard.setImageResource(resourceId);
-
-                            textViewRules.setText(card.getRule().getSmallRule());
-                            rulesDetails = card.getRule().getLongRule();
-
-                            int remainingCards = deck.getRemainingCards();
-                            String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
-                            item.setTitle(String.valueOf(remainingCards) + " " + cards);
-
-                            if (numberPlayers > 0) {
-                                final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-                                final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
-                                nameActualPlayer.setText(actualPlayer);
-                            }
-                            checkSipsAndSpecial();
-                        } else {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(CircleOfDeathActivity.this);
-                            builder.setMessage(getResources().getString(R.string.restartGame))
-                                    .setTitle(getResources().getString(R.string.gameOver));
-
-                            builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    Intent intent = new Intent();
-                                    intent.putParcelableArrayListExtra("listPlayers", listPlayers);
-                                    setResult(RESULT_OK, intent);
-                                    finish();
-                                }
-                            });
-
-                            builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    imageViewCard.clearAnimation();
-                                    textViewRules.clearAnimation();
-                                    newGame();
-                                }
-                            });
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
                         }
+                        numberActualPlayer++;
+                        if (numberActualPlayer == numberPlayers) {
+                            numberActualPlayer = 0;
+                        }
+
+                        diceOne.roll();
+                        diceTwo.roll();
+                        int resourceIdOne = BizkitActivity.this.getResources().getIdentifier(diceOne.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                        imageViewDiceOne.setImageResource(resourceIdOne);
+                        int resourceIdTwo = BizkitActivity.this.getResources().getIdentifier(diceTwo.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                        imageViewDiceTwo.setImageResource(resourceIdTwo);
+
+                        textViewRules.setText(getResources().getStringArray(R.array.rulesSmallBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2]);
+                        rulesDetails = getResources().getStringArray(R.array.rulesLongBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2];
+
+                        if (numberPlayers > 0) {
+                            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+                            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                            nameActualPlayer.setText(actualPlayer);
+                        }
+                        checkSipsAndSpecial();
                     }
                 }
         );
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         this.menu = menu;
-        getMenuInflater().inflate(R.menu.menu_circle_of_death, menu);
-        item = menu.findItem(R.id.action_cardsRemaining);
-        retry = menu.findItem(R.id.action_retry);
+        getMenuInflater().inflate(R.menu.menu_bizkit, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_retry:
-                newGame();
-                break;
             case android.R.id.home:
                 Intent intent = new Intent();
                 //We send back the list of the players
@@ -211,7 +190,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                     final Dialog dialog = builder.create();
                     dialog.show();
                 } else {
-                    Toast.makeText(CircleOfDeathActivity.this, getResources().getString(R.string.noPlayer), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BizkitActivity.this, getResources().getString(R.string.noPlayer), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.action_infoRules:
@@ -235,83 +214,66 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                     final Dialog dialog = builder.create();
                     dialog.show();
                 } else {
-                    Toast.makeText(CircleOfDeathActivity.this, getResources().getString(R.string.noRule), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BizkitActivity.this, getResources().getString(R.string.noRule), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
         return true;
     }
 
-    private void newGame() {
-        deck = new Deck("CircleOfDeath", this);
-        card = deck.getNextCard();
-        numberPlayers = listPlayers.size();
-        numberActualPlayer = 0;
-        final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
-        int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-        imageViewCard.setImageResource(resourceId);
-        final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
-        textViewRules.setText(card.getRule().getSmallRule());
-        rulesDetails = card.getRule().getLongRule();
-        int remainingCards = deck.getRemainingCards();
-        String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
-        item.setTitle(String.valueOf(remainingCards) + " " + cards);
-        if (numberPlayers != 0) {
-            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
-            nameActualPlayer.setText(actualPlayer);
-            listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
-            for (int i = 0; i < listPlayers.size(); i++)
-                listPlayers.get(i).setSpecialTrait("");
-        }
-        checkSipsAndSpecial();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent();
-        //We send back the list of the players
-        intent.putParcelableArrayListExtra("listPlayers", listPlayers);
-        setResult(RESULT_OK, intent);
-        finish();
-    }
-
+    //TODO for later, give player sip (the actual player choose)
     public void checkSipsAndSpecial() {
-        //Check if ACE to give all player one sip
+        int sumOfDice = diceOne.getValue() + diceTwo.getValue();
+
         if (numberPlayers > 0) {
-            if (card.getName() == Deck.Cards.ACE) {
+            //Player drinks
+            if(sumOfDice == 5 || sumOfDice == 10)
+                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() +1);
+            //Previous player drinks
+            if(sumOfDice == 4 || sumOfDice == 9)
+            {
+                if(numberActualPlayer > 0)
+                    listPlayers.get(numberActualPlayer-1).setNumberSips(listPlayers.get(numberActualPlayer-1).getNumberSips()+1);
+                else
+                    listPlayers.get(listPlayers.size()-1).setNumberSips(listPlayers.get(listPlayers.size()-1).getNumberSips()+1);
+            }
+            //Next player drinks
+            if(sumOfDice == 6 || sumOfDice == 11)
+            {
+                if(numberActualPlayer < listPlayers.size()-1)
+                    listPlayers.get(numberActualPlayer+1).setNumberSips(listPlayers.get(numberActualPlayer+1).getNumberSips()+1);
+                else
+                    listPlayers.get(0).setNumberSips(listPlayers.get(0).getNumberSips()+1);
+            }
+            //Everyone drinks
+            if(sumOfDice == 8)
                 for (int i = 0; i < listPlayers.size(); i++)
                     listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + 1);
-            }
-            //Check cards to give the current player the according number of sips
-            if (card.getName() == Deck.Cards.TWO || card.getName() == Deck.Cards.THREE || card.getName() == Deck.Cards.FOUR || card.getName() == Deck.Cards.FIVE || card.getName() == Deck.Cards.SIX) {
-                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + card.getName().getNumVal() + 1);
-            }
-            //Check if JACK to give player the Snake eyes trait
-            if (card.getName() == Deck.Cards.JACK) {
+            //Check if three to give player the Biscuit trait
+            if (sumOfDice == 3) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.JACK.getNumVal()])) {
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.JACK.getNumVal()], ""));
+                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBizkit)[1])) {
+                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBizkit)[1], ""));
                         listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
                     }
-                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.JACK.getNumVal()]);
+                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBizkit)[1]);
+                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() +1);
             }
-            //Check if QUEEN to give player the Question's queen trait
-            if (card.getName() == Deck.Cards.QUEEN) {
+            //Check if a dice is three
+            if(diceOne.getValue() == 3 || diceTwo.getValue() == 3)
+            {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.QUEEN.getNumVal()])) {
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.QUEEN.getNumVal()], ""));
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBizkit)[1])) {
+                        listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + ((diceOne.getValue() == 3 && diceTwo.getValue() == 3) ? 2 :1));
                     }
-                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.QUEEN.getNumVal()]);
             }
         }
 
-        //Check if KING to add a new rule
-        if (card.getName() == Deck.Cards.KING) {
-            isKingImageLoaded = false;
+        //Check if twelve to add a new rule and and Great Master
+        if (sumOfDice == 12) {
+            isTwelve = false;
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-            builder.setMessage(getResources().getString(R.string.helpRuleCircleOfDeath));
+            builder.setMessage(getResources().getString(R.string.helpRuleBizkit));
             builder.setTitle(getResources().getString(R.string.addRule));
             final EditText input = new EditText(this);
             input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
@@ -347,7 +309,16 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                     if (!wantToCloseDialog) {
                         listRules.add(input.getText().toString().trim());
                         dialog.dismiss();
-                        isKingImageLoaded = true;
+                        isTwelve = true;
+                        if(!listPlayers.isEmpty())
+                        {
+                            for (int i = 0; i < listPlayers.size(); i++)
+                                if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBizkit)[10])) {
+                                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBizkit)[10], ""));
+                                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                                }
+                            listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBizkit)[10]);
+                        }
                     }
                 }
             });

@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">"Jeux d'alcool"</string>
     <string name="circleOfDeath">Le Barbu</string>
+    <string name="bizkit">Le bizkit</string>
     <string name="action_settings">Réglages</string>
     <string name="action_retry">Nouveau jeu</string>
     <string name="action_cardsRemaining">51 cartes</string>
     <string name="action_rules">Règles</string>
     <string name="card">carte</string>
+    <string name="dice">dé</string>
     <string name="player">Joueur</string>
     <string name="players">Joueurs</string>
     <string name="gameOver">Jeu terminé</string>
@@ -28,7 +30,9 @@
     <string name="ruleCard">Règle pour cette carte : </string>
     <string name="sip">gorgée</string>
     <string name="drank">a bu</string>
+    <string name="doubleText">Vous avez fait un double, vous pouvez donner</string>
     <string name="helpRuleCircleOfDeath">Vous avez pioché un roi, vous devez créer une règle.\n\nExemples :\n- Vous ne pouvez pas dire le verbe \"boire\".\n- Buffalo (boire avec la main gauche).</string>
+    <string name="helpRuleBizkit">Vous avez fait un double six, vous devez créer une règle.\n\nExemples :\n- Vous ne pouvez pas dire le verbe \"boire\".\n- Buffalo (boire avec la main gauche).</string>
     <string-array name="rulesSmallCircleOfDeath">
         <item>Tout le monde boit</item>
         <item>Boit deux gorgées</item>
@@ -58,6 +62,33 @@
         <item>Le joueur ayant tiré la carte peut dire \"Snake eyes !\" si un joueur le regarde dans les yeux. Ce joueur boit ainsi une gorgée.</item>
         <item>Toute personne répondant à une question de la reine des questions doit boire une gorgée.</item>
         <item>"Le joueur ayant tiré la carte doit créer une règle qui s'appliquera jusqu'à la fin du jeu ou jusqu'à ce qu'un joueur annule sa règle en tirant un autre roi."</item>
+    </string-array>
+
+    <string-array name="rulesSmallBizkit">
+        <item>Donne une gorgée</item>
+        <item>Biscuit</item>
+        <item>Joueur précédent</item>
+        <item>Boit une gorgée</item>
+        <item>Joueur suivant</item>
+        <item>Bizkit</item>
+        <item>Gorgée du peuple</item>
+        <item>Joueur précédent</item>
+        <item>Boit une gorgée</item>
+        <item>Joueur suivant</item>
+        <item>Grand Maître</item>
+    </string-array>
+    <string-array name="rulesLongBizkit">
+        <item>Vous choisissez un joueur. Il doit boire une gorgée.</item>
+        <item>"Le joueur actuel est le \"Biscuit\". Chaque fois que la face d'un des dés est un trois, il doit boire une gorgée jusqu'à ce qu'un autre joueur prenne sa place. Il doit aussi boire une gorgée maintenant."</item>
+        <item>Le joueur précédent doit boire une gorgée.</item>
+        <item>Le joueur actuel doit boire une gorgée.</item>
+        <item>Le joueur suivant doit boire une gorgée.</item>
+        <item>Tous les joueurs doivent mettre leur pouce sur le front et crier \"Bizkit\" ! Le dernier boit une gorgée.</item>
+        <item>Tous les joueurs boivent une gorgée.</item>
+        <item>Le joueur précédent doit boire une gorgée.</item>
+        <item>Le joueur actuel doit boire une gorgée.</item>
+        <item>Le joueur suivant doit boire une gorgée.</item>
+        <item>Le joueur actuel est le "Grand Maître". Tout le monde doit l\'appeler ainsi, sinon il faut boire une gorgée. Il choisit aussi une règle pour la durée du jeu.</item>
     </string-array>
 
 </resources>

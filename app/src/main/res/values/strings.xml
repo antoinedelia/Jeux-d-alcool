@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">Drinking games</string>
     <string name="circleOfDeath">Circle of death</string>
+    <string name="bizkit">Bizkit</string>
     <string name="action_settings">Settings</string>
     <string name="action_retry">New game</string>
     <string name="action_cardsRemaining">51 cards</string>
     <string name="action_rules">Rules</string>
     <string name="card">card</string>
+    <string name="dice">dice</string>
     <string name="player">Player</string>
     <string name="players">Players</string>
     <string name="gameOver">Game over</string>
@@ -28,7 +30,9 @@
     <string name="ruleCard">Rule for this card: </string>
     <string name="sip">sip</string>
     <string name="drank">drank</string>
+    <string name="doubleText">Since you did a double, you can give a player</string>
     <string name="helpRuleCircleOfDeath">You draw a king, you must choose a rule.\n\nPopular rules:\n- You can\'t say the verb \"drink\".\n- Buffalo (you must drink with your left hand).</string>
+    <string name="helpRuleBizkit">You just did a twelve, you must choose a rule.\n\nPopular rules:\n- You can\'t say the verb \"drink\".\n- Buffalo (you must drink with your left hand).</string>
     <string-array name="rulesSmallCircleOfDeath">
         <item>Everyone drinks</item>
         <item>Drink two sips</item>
@@ -58,6 +62,33 @@
         <item>The player who draws this card can say \"Snake eyes !\" if he looks right into the eyes of another player. That player must drink one sip.</item>
         <item>The player who draws this card tries to get people to answer his question. If one of them answer, the player must drink (this applies until another player draws a queen).</item>
         <item>The player who draws this card make up a new rule until the end of the game.</item>
+    </string-array>
+
+    <string-array name="rulesSmallBizkit">
+        <item>Give a sip</item>
+        <item>Biscuit</item>
+        <item>Previous player</item>
+        <item>You drink a sip</item>
+        <item>Next player</item>
+        <item>Bizkit</item>
+        <item>Everyone drinks</item>
+        <item>Previous player</item>
+        <item>You drink a sip</item>
+        <item>Next player</item>
+        <item>Great Master</item>
+    </string-array>
+    <string-array name="rulesLongBizkit">
+        <item>You choose a player. He must drink a sip.</item>
+        <item>The current player is the \"Biscuit\". Whenever the number three appears on a dice, he must drink a sip until another player take his place. Also he must drink a sip right now.</item>
+        <item>The player that played before you must drink a sip.</item>
+        <item>The current player must drink a sip.</item>
+        <item>The next player must drink a sip.</item>
+        <item>Everyone must put their thumb on their forehand and yell \"Bizkit\"!. The last one must drink a sip.</item>
+        <item>All the players must drink a sip</item>
+        <item>The player that played before you must drink a sip.</item>
+        <item>The current player must drink a sip.</item>
+        <item>The next player must drink a sip.</item>
+        <item>The current player is the "Great Master". Everyone must call him this way otherwise they must drink a sip. He also create a new rule for this game.</item>
     </string-array>
 
 </resources>

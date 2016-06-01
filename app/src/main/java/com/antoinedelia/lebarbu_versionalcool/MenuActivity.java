@@ -32,11 +32,32 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        final TextView textView = (TextView) findViewById(R.id.textView);
-        textView.setOnClickListener(new View.OnClickListener() {
+        final ImageView imageBizkit = (ImageView) findViewById(R.id.imageBizkit);
+
+        imageBizkit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, BizkitActivity.class);
+                intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        final TextView textViewCircleOfDeath = (TextView) findViewById(R.id.textViewCircleOfDeath);
+        textViewCircleOfDeath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, CircleOfDeathActivity.class);
+                intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+                startActivityForResult(intent, 0);
+            }
+        });
+
+        final TextView textViewBizkit = (TextView) findViewById(R.id.textViewBizkit);
+        textViewBizkit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, BizkitActivity.class);
                 intent.putParcelableArrayListExtra("listPlayers", listPlayers);
                 startActivityForResult(intent, 0);
             }
