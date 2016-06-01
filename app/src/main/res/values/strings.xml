@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Drinking games</string>
-    <string name="Barbu">Barbu</string>
+    <string name="circleOfDeath">Circle of death</string>
     <string name="action_settings">Settings</string>
     <string name="action_retry">New game</string>
     <string name="action_cardsRemaining">51 cards</string>
@@ -15,6 +15,7 @@
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="help">Help</string>
     <string name="cancel">Cancel</string>
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
@@ -27,7 +28,8 @@
     <string name="ruleCard">Rule for this card: </string>
     <string name="sip">sip</string>
     <string name="drank">drank</string>
-    <string-array name="rulesSmallBarbu">
+    <string name="helpRuleCircleOfDeath">You draw a king, you must choose a rule.\n\nPopular rules:\n- You can\'t say the verb \"drink\".\n- Buffalo (you must drink with your left hand).</string>
+    <string-array name="rulesSmallCircleOfDeath">
         <item>Everyone drinks</item>
         <item>Drink two sips</item>
         <item>Drink three sips</item>
@@ -39,10 +41,10 @@
         <item>Rhymes</item>
         <item>Themes</item>
         <item>Snake eyes</item>
-        <item>"Questions' queen"</item>
+        <item>Question master</item>
         <item>Make up a rule</item>
     </string-array>
-    <string-array name="rulesLongBarbu">
+    <string-array name="rulesLongCircleOfDeath">
         <item>All players must drink a sip.</item>
         <item>The player who draws this card must drink two sips.</item>
         <item>The player who draws this card must drink three sips.</item>
@@ -54,7 +56,7 @@
         <item>The player who draws this card say a word. The other players must say another word rhyming with the first one until one of them fail.</item>
         <item>The player who draws this card choose a theme (ex : brands). Every player must choose a valid word.</item>
         <item>The player who draws this card can say \"Snake eyes !\" if he looks right into the eyes of another player. That player must drink one sip.</item>
-        <item>If a player answers the queen, he must drink a sip.</item>
+        <item>The player who draws this card tries to get people to answer his question. If one of them answer, the player must drink (this applies until another player draws a queen).</item>
         <item>The player who draws this card make up a new rule until the end of the game.</item>
     </string-array>
 

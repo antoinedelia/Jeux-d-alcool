@@ -82,10 +82,10 @@ public class Deck {
 
     public Rule getRule(String typeRule, Cards typeCard) {
         switch (typeRule) {
-            case "Barbu":
-                return new RuleBarbu(typeCard, context);
+            case "CircleOfDeath":
+                return new RuleCircleOfDeath(typeCard, context);
         }
-        return new RuleBarbu(typeCard, context);
+        return new RuleCircleOfDeath(typeCard, context);
     }
 
     public int getRemainingCards() {

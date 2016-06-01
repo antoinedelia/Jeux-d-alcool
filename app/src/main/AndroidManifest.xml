@@ -24,9 +24,9 @@
         </activity>
 
         <activity
-            android:name=".BarbuActivity"
+            android:name=".CircleOfDeathActivity"
             android:configChanges="orientation"
-            android:label="@string/Barbu"
+            android:label="@string/circleOfDeath"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data

@@ -6,13 +6,13 @@
         android:orientation="vertical">
 
     <ImageButton
-        android:id="@+id/imageBarbu"
+        android:id="@+id/imageCircleOfDeath"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:background="#00ffffff"
-        android:contentDescription="@string/Barbu"
+        android:contentDescription="@string/circleOfDeath"
         android:scaleType="fitXY"
-        android:src="@drawable/barbu"
+        android:src="@drawable/circle_of_fire"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -20,9 +20,9 @@
         android:id="@+id/textView"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="@string/Barbu"
+        android:text="@string/circleOfDeath"
         android:gravity="center"
-        android:layout_below="@+id/imageBarbu"
+        android:layout_below="@+id/imageCircleOfDeath"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

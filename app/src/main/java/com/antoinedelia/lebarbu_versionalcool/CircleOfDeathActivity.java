@@ -23,10 +23,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class BarbuActivity extends AppCompatActivity {
+public class CircleOfDeathActivity extends AppCompatActivity {
 
     private Menu menu;
     private MenuItem item;
@@ -42,15 +40,13 @@ public class BarbuActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.barbu);
-        //Change language (dev only)
-        //LocaleHelper.setLocale(this, "en");
+        setContentView(R.layout.circle_of_death);
 
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
         numberPlayers = listPlayers.size();
 
-        deck = new Deck("Barbu", this);
+        deck = new Deck("CircleOfDeath", this);
         card = deck.getNextCard();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -88,7 +84,7 @@ public class BarbuActivity extends AppCompatActivity {
         linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(BarbuActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(CircleOfDeathActivity.this);
                 builder.setMessage(rulesDetails)
                         .setTitle(getResources().getString(R.string.ruleCard));
 
@@ -106,61 +102,61 @@ public class BarbuActivity extends AppCompatActivity {
 
         //Click on card
         imageViewCard.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     int cardsLeft = deck.getRemainingCards();
-                     if (cardsLeft > 0) {
-                         numberActualPlayer++;
-                         if (numberActualPlayer == numberPlayers) {
-                             numberActualPlayer = 0;
-                         }
+                                             @Override
+                                             public void onClick(View v) {
+                                                 int cardsLeft = deck.getRemainingCards();
+                                                 if (cardsLeft > 0) {
+                                                     numberActualPlayer++;
+                                                     if (numberActualPlayer == numberPlayers) {
+                                                         numberActualPlayer = 0;
+                                                     }
 
-                         card = deck.getNextCard();
-                         int resourceId = BarbuActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                         imageViewCard.setImageResource(resourceId);
+                                                     card = deck.getNextCard();
+                                                     int resourceId = CircleOfDeathActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                                                     imageViewCard.setImageResource(resourceId);
 
-                         textViewRules.setText(card.getRule().getSmallRule());
-                         rulesDetails = card.getRule().getLongRule();
+                                                     textViewRules.setText(card.getRule().getSmallRule());
+                                                     rulesDetails = card.getRule().getLongRule();
 
-                         int remainingCards = deck.getRemainingCards();
-                         String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
-                         item.setTitle(String.valueOf(remainingCards) + " " + cards);
+                                                     int remainingCards = deck.getRemainingCards();
+                                                     String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
+                                                     item.setTitle(String.valueOf(remainingCards) + " " + cards);
 
-                         if (numberPlayers > 0) {
-                             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-                             final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
-                             nameActualPlayer.setText(actualPlayer);
-                         }
-                         checkSipsAndSpecial();
-                     } else
+                                                     if (numberPlayers > 0) {
+                                                         final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+                                                         final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                                                         nameActualPlayer.setText(actualPlayer);
+                                                     }
+                                                     checkSipsAndSpecial();
+                                                 } else
 
-                     {
-                         AlertDialog.Builder builder = new AlertDialog.Builder(BarbuActivity.this);
-                         builder.setMessage(getResources().getString(R.string.restartGame))
-                                 .setTitle(getResources().getString(R.string.gameOver));
+                                                 {
+                                                     AlertDialog.Builder builder = new AlertDialog.Builder(CircleOfDeathActivity.this);
+                                                     builder.setMessage(getResources().getString(R.string.restartGame))
+                                                             .setTitle(getResources().getString(R.string.gameOver));
 
-                         builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                             @Override
-                             public void onClick(DialogInterface dialog, int which) {
-                                 Intent intent = new Intent();
-                                 intent.putParcelableArrayListExtra("listPlayers", listPlayers);
-                                 setResult(RESULT_OK, intent);
-                                 finish();
-                             }
-                         });
+                                                     builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                                         @Override
+                                                         public void onClick(DialogInterface dialog, int which) {
+                                                             Intent intent = new Intent();
+                                                             intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+                                                             setResult(RESULT_OK, intent);
+                                                             finish();
+                                                         }
+                                                     });
 
-                         builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                             public void onClick(DialogInterface dialog, int id) {
-                                 imageViewCard.clearAnimation();
-                                 textViewRules.clearAnimation();
-                                 newGame();
-                             }
-                         });
-                         AlertDialog dialog = builder.create();
-                         dialog.show();
-                     }
-                 }
-             }
+                                                     builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                                         public void onClick(DialogInterface dialog, int id) {
+                                                             imageViewCard.clearAnimation();
+                                                             textViewRules.clearAnimation();
+                                                             newGame();
+                                                         }
+                                                     });
+                                                     AlertDialog dialog = builder.create();
+                                                     dialog.show();
+                                                 }
+                                             }
+                                         }
         );
     }
 
@@ -169,7 +165,7 @@ public class BarbuActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         this.menu = menu;
-        getMenuInflater().inflate(R.menu.menu_barbu, menu);
+        getMenuInflater().inflate(R.menu.menu_circle_of_death, menu);
         item = menu.findItem(R.id.action_cardsRemaining);
         retry = menu.findItem(R.id.action_retry);
         return true;
@@ -192,7 +188,7 @@ public class BarbuActivity extends AppCompatActivity {
                 if (numberPlayers != 0) {
                     //We show the information about the players
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setIcon(R.drawable.barbu);
+                    builder.setIcon(R.drawable.circle_of_fire);
                     builder.setTitle(getResources().getString(R.string.action_players));
 
                     List<String> playersWithInfo = new ArrayList<>();
@@ -216,14 +212,14 @@ public class BarbuActivity extends AppCompatActivity {
                     final Dialog dialog = builder.create();
                     dialog.show();
                 } else {
-                    Toast.makeText(BarbuActivity.this, getResources().getString(R.string.noPlayer), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CircleOfDeathActivity.this, getResources().getString(R.string.noPlayer), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.action_infoRules:
                 if (listRules.size() != 0) {
                     //We show the information about the players
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setIcon(R.drawable.barbu);
+                    builder.setIcon(R.drawable.circle_of_fire);
                     builder.setTitle(getResources().getString(R.string.action_rules));
 
                     ListView rulesList = new ListView(this);
@@ -240,7 +236,7 @@ public class BarbuActivity extends AppCompatActivity {
                     final Dialog dialog = builder.create();
                     dialog.show();
                 } else {
-                    Toast.makeText(BarbuActivity.this, getResources().getString(R.string.noRule), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CircleOfDeathActivity.this, getResources().getString(R.string.noRule), Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -248,7 +244,7 @@ public class BarbuActivity extends AppCompatActivity {
     }
 
     private void newGame() {
-        deck = new Deck("Barbu", this);
+        deck = new Deck("CircleOfDeath", this);
         card = deck.getNextCard();
         numberPlayers = listPlayers.size();
         numberActualPlayer = 0;
@@ -283,8 +279,7 @@ public class BarbuActivity extends AppCompatActivity {
 
     public void checkSipsAndSpecial() {
         //Check if ACE to give all player one sip
-        if(numberPlayers > 0)
-        {
+        if (numberPlayers > 0) {
             if (card.getName() == Deck.Cards.ACE) {
                 for (int i = 0; i < listPlayers.size(); i++)
                     listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + 1);
@@ -296,26 +291,27 @@ public class BarbuActivity extends AppCompatActivity {
             //Check if JACK to give player the Snake eyes trait
             if (card.getName() == Deck.Cards.JACK) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()])) {
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()], ""));
+                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.JACK.getNumVal()])) {
+                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.JACK.getNumVal()], ""));
                         listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
                     }
-                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.JACK.getNumVal()]);
+                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.JACK.getNumVal()]);
             }
             //Check if QUEEN to give player the Question's queen trait
             if (card.getName() == Deck.Cards.QUEEN) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()])) {
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()], ""));
+                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.QUEEN.getNumVal()])) {
+                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.QUEEN.getNumVal()], ""));
                         listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
                     }
-                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBarbu)[Deck.Cards.QUEEN.getNumVal()]);
+                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.QUEEN.getNumVal()]);
             }
         }
 
         //Check if KING to add a new rule
         if (card.getName() == Deck.Cards.KING) {
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+            builder.setMessage(getResources().getString(R.string.helpRuleCircleOfDeath));
             builder.setTitle(getResources().getString(R.string.addRule));
             final EditText input = new EditText(this);
             input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
@@ -348,8 +344,7 @@ public class BarbuActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Boolean wantToCloseDialog = (input.getText().toString().trim().isEmpty());
                     // if EditText is empty disable closing on positive button
-                    if (!wantToCloseDialog)
-                    {
+                    if (!wantToCloseDialog) {
                         listRules.add(input.getText().toString().trim());
                         dialog.dismiss();
                     }

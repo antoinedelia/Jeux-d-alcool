@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">"Jeux d'alcool"</string>
-    <string name="Barbu">Le Barbu</string>
+    <string name="circleOfDeath">Le Barbu</string>
     <string name="action_settings">Réglages</string>
     <string name="action_retry">Nouveau jeu</string>
     <string name="action_cardsRemaining">51 cartes</string>
@@ -15,6 +15,7 @@
     <string name="ok">OK</string>
     <string name="yes">Oui</string>
     <string name="no">Non</string>
+    <string name="help">Aide</string>
     <string name="cancel">Annuler</string>
     <string name="rename">Renommer</string>
     <string name="delete">Supprimer</string>
@@ -27,7 +28,8 @@
     <string name="ruleCard">Règle pour cette carte : </string>
     <string name="sip">gorgée</string>
     <string name="drank">a bu</string>
-    <string-array name="rulesSmallBarbu">
+    <string name="helpRuleCircleOfDeath">Vous avez pioché un roi, vous devez créer une règle.\n\nExemples :\n- Vous ne pouvez pas dire le verbe \"boire\".\n- Buffalo (boire avec la main gauche).</string>
+    <string-array name="rulesSmallCircleOfDeath">
         <item>Tout le monde boit</item>
         <item>Boit deux gorgées</item>
         <item>Boit trois gorgéess</item>
@@ -42,7 +44,7 @@
         <item>La reine des questions</item>
         <item>Invente une règle</item>
     </string-array>
-    <string-array name="rulesLongBarbu">
+    <string-array name="rulesLongCircleOfDeath">
         <item>Tous les joueurs prennent leur verre et boivent une gorgée.</item>
         <item>Le joueur ayant tiré la carte doit boire deux gorgées.</item>
         <item>Le joueur ayant tiré la carte doit boire trois gorgées.</item>

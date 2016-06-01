@@ -21,12 +21,12 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.menu);
 
-        final ImageView imageBarbu = (ImageView) findViewById(R.id.imageBarbu);
+        final ImageView imageCircleOfDeath = (ImageView) findViewById(R.id.imageCircleOfDeath);
 
-        imageBarbu.setOnClickListener(new View.OnClickListener() {
+        imageCircleOfDeath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, BarbuActivity.class);
+                Intent intent = new Intent(MenuActivity.this, CircleOfDeathActivity.class);
                 intent.putParcelableArrayListExtra("listPlayers", listPlayers);
                 startActivityForResult(intent, 0);
             }
@@ -36,7 +36,7 @@ public class MenuActivity extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuActivity.this, BarbuActivity.class);
+                Intent intent = new Intent(MenuActivity.this, CircleOfDeathActivity.class);
                 intent.putParcelableArrayListExtra("listPlayers", listPlayers);
                 startActivityForResult(intent, 0);
             }
