@@ -97,7 +97,7 @@ public class BizkitActivity extends AppCompatActivity {
                     doubleText += getResources().getString(R.string.doubleText) + " " + diceOne.getValue() + " " + getResources().getString(R.string.sip) + (diceOne.getValue() != 1 ? "s." : ".");
                 AlertDialog.Builder builder = new AlertDialog.Builder(BizkitActivity.this);
                 builder.setMessage(rulesDetails + doubleText)
-                        .setTitle(getResources().getString(R.string.ruleCard));
+                        .setTitle(getResources().getString(R.string.ruleDice));
 
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

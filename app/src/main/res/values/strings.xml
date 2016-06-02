@@ -28,6 +28,7 @@
     <string name="action_addPlayers">Add players</string>
     <string name="action_players">Info about players</string>
     <string name="ruleCard">Rule for this card: </string>
+    <string name="ruleDice">Rule for this outcome: </string>
     <string name="sip">sip</string>
     <string name="drank">drank</string>
     <string name="doubleText">Since you did a double, you can give a player</string>

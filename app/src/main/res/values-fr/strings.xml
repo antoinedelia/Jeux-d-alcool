@@ -28,6 +28,7 @@
     <string name="action_addPlayers">Ajouter joueurs</string>
     <string name="action_players">Informations des joueurs</string>
     <string name="ruleCard">Règle pour cette carte : </string>
+    <string name="ruleDice">Règle pour ce tirage : </string>
     <string name="sip">gorgée</string>
     <string name="drank">a bu</string>
     <string name="doubleText">Vous avez fait un double, vous pouvez donner</string>
