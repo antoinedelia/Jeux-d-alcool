@@ -6,6 +6,11 @@
     <string name="action_retry">Nouveau jeu</string>
     <string name="action_cardsRemaining">51 cartes</string>
     <string name="action_rules">Règles</string>
+    <string name="skip">Passer</string>
+    <string name="done">Terminer</string>
+    <string name="tutorialWelcome">Bienvenue dans l\'application "Jeux d'alcool" ! Amusez-vous mais buvez avec modération.</string>
+    <string name="tutorialPlayers">Vous pouvez ajouter des joueurs en cliquant sur cet icône dans le menu.</string>
+    <string name="tutorialRules">A tout moment, vous pouvez cliquer sur cette barre afin d\'obtenir une explication sur la règle en cours.</string>
     <string name="card">carte</string>
     <string name="dice">dé</string>
     <string name="player">Joueur</string>
@@ -21,6 +26,7 @@
     <string name="cancel">Annuler</string>
     <string name="rename">Renommer</string>
     <string name="delete">Supprimer</string>
+    <string name="tutorial">Tutoriel</string>
     <string name="playerEmpty">Aucun joueur ajouté (vous n\'avez rien entré)</string>
     <string name="noPlayer">Aucun joueur</string>
     <string name="noRule">Aucune règle</string>
@@ -37,7 +43,7 @@
     <string-array name="rulesSmallCircleOfDeath">
         <item>Tout le monde boit</item>
         <item>Boit deux gorgées</item>
-        <item>Boit trois gorgéess</item>
+        <item>Boit trois gorgées</item>
         <item>Boit quatre gorgées</item>
         <item>Boit cinq gorgées</item>
         <item>Boit six gorgées</item>

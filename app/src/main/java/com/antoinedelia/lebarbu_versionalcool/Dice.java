@@ -9,7 +9,7 @@ public class Dice {
     private int value;
     private String path;
 
-    public Dice(Context context)
+    public Dice()
     {
         roll();
     }

@@ -45,6 +45,9 @@
                 android:value=".MenuActivity" />
         </activity>
 
+        <activity android:name="com.antoinedelia.lebarbu_versionalcool.TutorialActivity"
+            android:label="@string/tutorial" />
+
         <activity
             android:name=".PlayersActivity"
             android:configChanges="orientation"

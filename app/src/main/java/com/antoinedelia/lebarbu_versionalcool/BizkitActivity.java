@@ -28,9 +28,6 @@ import java.util.List;
 
 public class BizkitActivity extends AppCompatActivity {
 
-    private Menu menu;
-    private MenuItem item;
-    private MenuItem retry;
     private ArrayList<Player> listPlayers = new ArrayList<>();
     private ArrayList<String> listRules = new ArrayList<>();
     private String rulesDetails;
@@ -52,8 +49,8 @@ public class BizkitActivity extends AppCompatActivity {
         for (int i = 0; i < listPlayers.size(); i++)
             listPlayers.get(i).setSpecialTrait("");
 
-        diceOne = new Dice(this);
-        diceTwo = new Dice(this);
+        diceOne = new Dice();
+        diceTwo = new Dice();
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -68,20 +65,24 @@ public class BizkitActivity extends AppCompatActivity {
 
         final ImageView imageViewDiceOne = (ImageView) findViewById(R.id.imageViewDiceOne);
         int resourceIdOne = this.getResources().getIdentifier(diceOne.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        if(imageViewDiceOne != null)
         imageViewDiceOne.setImageResource(resourceIdOne);
 
         final ImageView imageViewDiceTwo = (ImageView) findViewById(R.id.imageViewDiceTwo);
         int resourceIdTwo = this.getResources().getIdentifier(diceTwo.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        if(imageViewDiceTwo != null)
         imageViewDiceTwo.setImageResource(resourceIdTwo);
 
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
+        if(textViewRules != null)
         textViewRules.setText(getResources().getStringArray(R.array.rulesSmallBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2]);
         rulesDetails = getResources().getStringArray(R.array.rulesLongBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2];
 
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
-            nameActualPlayer.setText(actualPlayer);
+            if(nameActualPlayer != null)
+                nameActualPlayer.setText(actualPlayer);
             for (int i = 0; i < listPlayers.size(); i++)
                 listPlayers.get(i).setSpecialTrait("");
         }
@@ -89,65 +90,70 @@ public class BizkitActivity extends AppCompatActivity {
 
         //Click on rule
         LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
-        linearLayoutRules.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String doubleText = " ";
-                if(diceOne.getValue() == diceTwo.getValue())
-                    doubleText += getResources().getString(R.string.doubleText) + " " + diceOne.getValue() + " " + getResources().getString(R.string.sip) + (diceOne.getValue() != 1 ? "s." : ".");
-                AlertDialog.Builder builder = new AlertDialog.Builder(BizkitActivity.this);
-                builder.setMessage(rulesDetails + doubleText)
-                        .setTitle(getResources().getString(R.string.ruleDice));
+        if (linearLayoutRules != null)
+            linearLayoutRules.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String doubleText = " ";
+                    if (diceOne.getValue() == diceTwo.getValue())
+                        doubleText += getResources().getString(R.string.doubleText) + " " + diceOne.getValue() + " " + getResources().getString(R.string.sip) + (diceOne.getValue() != 1 ? "s." : ".");
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BizkitActivity.this);
+                    builder.setMessage(rulesDetails + doubleText)
+                            .setTitle(getResources().getString(R.string.ruleDice));
 
-                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
+                    builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            // User clicked OK button
+                        }
+                    });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+            });
 
         //Click on the dice
         final RelativeLayout relativeLayoutDice = (RelativeLayout) findViewById(R.id.containerImageDice);
-        relativeLayoutDice.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if(!isTwelve){
-                            return;
-                        }
-                        numberActualPlayer++;
-                        if (numberActualPlayer == numberPlayers) {
-                            numberActualPlayer = 0;
-                        }
+        if (relativeLayoutDice != null)
+            relativeLayoutDice.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!isTwelve) {
+                                return;
+                            }
+                            numberActualPlayer++;
+                            if (numberActualPlayer == numberPlayers) {
+                                numberActualPlayer = 0;
+                            }
 
-                        diceOne.roll();
-                        diceTwo.roll();
-                        int resourceIdOne = BizkitActivity.this.getResources().getIdentifier(diceOne.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                        imageViewDiceOne.setImageResource(resourceIdOne);
-                        int resourceIdTwo = BizkitActivity.this.getResources().getIdentifier(diceTwo.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                        imageViewDiceTwo.setImageResource(resourceIdTwo);
+                            diceOne.roll();
+                            diceTwo.roll();
+                            int resourceIdOne = BizkitActivity.this.getResources().getIdentifier(diceOne.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                            if(imageViewDiceOne != null)
+                            imageViewDiceOne.setImageResource(resourceIdOne);
+                            int resourceIdTwo = BizkitActivity.this.getResources().getIdentifier(diceTwo.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                            if(imageViewDiceTwo != null)
+                            imageViewDiceTwo.setImageResource(resourceIdTwo);
 
-                        textViewRules.setText(getResources().getStringArray(R.array.rulesSmallBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2]);
-                        rulesDetails = getResources().getStringArray(R.array.rulesLongBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2];
+                            if(textViewRules != null)
+                            textViewRules.setText(getResources().getStringArray(R.array.rulesSmallBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2]);
+                            rulesDetails = getResources().getStringArray(R.array.rulesLongBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2];
 
-                        if (numberPlayers > 0) {
-                            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-                            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
-                            nameActualPlayer.setText(actualPlayer);
+                            if (numberPlayers > 0) {
+                                final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+                                final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                                if (nameActualPlayer != null)
+                                    nameActualPlayer.setText(actualPlayer);
+                            }
+                            checkSipsAndSpecial();
                         }
-                        checkSipsAndSpecial();
                     }
-                }
-        );
+            );
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_bizkit, menu);
         return true;
     }
@@ -227,26 +233,24 @@ public class BizkitActivity extends AppCompatActivity {
 
         if (numberPlayers > 0) {
             //Player drinks
-            if(sumOfDice == 5 || sumOfDice == 10)
-                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() +1);
+            if (sumOfDice == 5 || sumOfDice == 10)
+                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
             //Previous player drinks
-            if(sumOfDice == 4 || sumOfDice == 9)
-            {
-                if(numberActualPlayer > 0)
-                    listPlayers.get(numberActualPlayer-1).setNumberSips(listPlayers.get(numberActualPlayer-1).getNumberSips()+1);
+            if (sumOfDice == 4 || sumOfDice == 9) {
+                if (numberActualPlayer > 0)
+                    listPlayers.get(numberActualPlayer - 1).setNumberSips(listPlayers.get(numberActualPlayer - 1).getNumberSips() + 1);
                 else
-                    listPlayers.get(listPlayers.size()-1).setNumberSips(listPlayers.get(listPlayers.size()-1).getNumberSips()+1);
+                    listPlayers.get(listPlayers.size() - 1).setNumberSips(listPlayers.get(listPlayers.size() - 1).getNumberSips() + 1);
             }
             //Next player drinks
-            if(sumOfDice == 6 || sumOfDice == 11)
-            {
-                if(numberActualPlayer < listPlayers.size()-1)
-                    listPlayers.get(numberActualPlayer+1).setNumberSips(listPlayers.get(numberActualPlayer+1).getNumberSips()+1);
+            if (sumOfDice == 6 || sumOfDice == 11) {
+                if (numberActualPlayer < listPlayers.size() - 1)
+                    listPlayers.get(numberActualPlayer + 1).setNumberSips(listPlayers.get(numberActualPlayer + 1).getNumberSips() + 1);
                 else
-                    listPlayers.get(0).setNumberSips(listPlayers.get(0).getNumberSips()+1);
+                    listPlayers.get(0).setNumberSips(listPlayers.get(0).getNumberSips() + 1);
             }
             //Everyone drinks
-            if(sumOfDice == 8)
+            if (sumOfDice == 8)
                 for (int i = 0; i < listPlayers.size(); i++)
                     listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + 1);
             //Check if three to give player the Biscuit trait
@@ -257,14 +261,13 @@ public class BizkitActivity extends AppCompatActivity {
                         listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
                     }
                 listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBizkit)[1]);
-                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() +1);
+                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
             }
             //Check if a dice is three
-            if(diceOne.getValue() == 3 || diceTwo.getValue() == 3)
-            {
+            if (diceOne.getValue() == 3 || diceTwo.getValue() == 3) {
                 for (int i = 0; i < listPlayers.size(); i++)
                     if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBizkit)[1])) {
-                        listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + ((diceOne.getValue() == 3 && diceTwo.getValue() == 3) ? 2 :1));
+                        listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + ((diceOne.getValue() == 3 && diceTwo.getValue() == 3) ? 2 : 1));
                     }
             }
         }
@@ -310,8 +313,7 @@ public class BizkitActivity extends AppCompatActivity {
                         listRules.add(input.getText().toString().trim());
                         dialog.dismiss();
                         isTwelve = true;
-                        if(!listPlayers.isEmpty())
-                        {
+                        if (!listPlayers.isEmpty()) {
                             for (int i = 0; i < listPlayers.size(); i++)
                                 if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBizkit)[10])) {
                                     listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBizkit)[10], ""));

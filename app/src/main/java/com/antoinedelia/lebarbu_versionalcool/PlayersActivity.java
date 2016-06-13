@@ -36,78 +36,80 @@ public class PlayersActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
                 listPlayers);
-        listview.setAdapter(adapter);
+        if (listview != null) {
+            listview.setAdapter(adapter);
 
-        //Delete player
-        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(PlayersActivity.this);
-                builder.setTitle(getResources().getString(R.string.delete) + " " + listPlayers.get(position).getName() + "?");
+            //Delete player
+            listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                @Override
+                public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PlayersActivity.this);
+                    builder.setTitle(getResources().getString(R.string.delete) + " " + listPlayers.get(position).getName() + "?");
 
-                // Set up the buttons
-                builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        listPlayers.remove(position);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-                builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                final AlertDialog dialog = builder.create();
-                dialog.show();
-                return true;
-            }
-        });
-
-        //Rename player
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(PlayersActivity.this);
-                builder.setTitle(getResources().getString(R.string.rename));
-                final EditText input = new EditText(PlayersActivity.this);
-                input.setText(listPlayers.get(position).getName());
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                input.setSelection(input.getText().length());
-                builder.setView(input);
-
-                // Set up the buttons
-                builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Player player = new Player(input.getText().toString());
-                        //If name is blank, remove it
-                        if(!player.getName().isEmpty())
-                            listPlayers.set(position, player);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-                builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-
-                final AlertDialog dialog = builder.create();
-                input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (hasFocus) {
-                            dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    // Set up the buttons
+                    builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            listPlayers.remove(position);
+                            adapter.notifyDataSetChanged();
                         }
-                    }
-                });
-                dialog.show();
-            }
-        });
+                    });
+                    builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    final AlertDialog dialog = builder.create();
+                    dialog.show();
+                    return true;
+                }
+            });
+
+            //Rename player
+            listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PlayersActivity.this);
+                    builder.setTitle(getResources().getString(R.string.rename));
+                    final EditText input = new EditText(PlayersActivity.this);
+                    input.setText(listPlayers.get(position).getName());
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    input.setSelection(input.getText().length());
+                    builder.setView(input);
+
+                    // Set up the buttons
+                    builder.setPositiveButton(getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Player player = new Player(input.getText().toString());
+                            //If name is blank, remove it
+                            if (!player.getName().isEmpty())
+                                listPlayers.set(position, player);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+                    final AlertDialog dialog = builder.create();
+                    input.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                        @Override
+                        public void onFocusChange(View v, boolean hasFocus) {
+                            if (hasFocus) {
+                                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                            }
+                        }
+                    });
+                    dialog.show();
+                }
+            });
+        }
     }
 
     public void addPlayer(View v) {
@@ -123,14 +125,11 @@ public class PlayersActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Player player = new Player(input.getText().toString());
                 //Check if player's name isn't empty
-                if(!player.getName().isEmpty())
-                {
+                if (!player.getName().isEmpty()) {
                     listPlayers.add(player);
                     adapter.notifyDataSetChanged();
-                }
-                else
-                {
-                    Toast.makeText(PlayersActivity.this, getResources().getString(R.string.playerEmpty),Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(PlayersActivity.this, getResources().getString(R.string.playerEmpty), Toast.LENGTH_SHORT).show();
                 }
             }
         });

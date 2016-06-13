@@ -26,9 +26,7 @@ import java.util.List;
 
 public class CircleOfDeathActivity extends AppCompatActivity {
 
-    private Menu menu;
     private MenuItem item;
-    private MenuItem retry;
     private String rulesDetails;
     private Deck deck = null;
     private Card card;
@@ -62,15 +60,18 @@ public class CircleOfDeathActivity extends AppCompatActivity {
 
         final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        if(imageViewCard != null)
         imageViewCard.setImageResource(resourceId);
 
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
+        if(textViewRules != null)
         textViewRules.setText(card.getRule().getSmallRule());
         rulesDetails = card.getRule().getLongRule();
 
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            if(nameActualPlayer != null)
             nameActualPlayer.setText(actualPlayer);
             for (int i = 0; i < listPlayers.size(); i++)
                 listPlayers.get(i).setSpecialTrait("");
@@ -79,6 +80,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
 
         //Click on rule
         LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
+        if(linearLayoutRules != null)
         linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,6 +101,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         card = deck.getNextCard();
 
         //Click on card
+        if(imageViewCard != null)
         imageViewCard.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -116,6 +119,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                             int resourceId = CircleOfDeathActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
                             imageViewCard.setImageResource(resourceId);
 
+                            if(textViewRules != null)
                             textViewRules.setText(card.getRule().getSmallRule());
                             rulesDetails = card.getRule().getLongRule();
 
@@ -126,6 +130,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                             if (numberPlayers > 0) {
                                 final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
                                 final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                                if(nameActualPlayer != null)
                                 nameActualPlayer.setText(actualPlayer);
                             }
                             checkSipsAndSpecial();
@@ -147,6 +152,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                             builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     imageViewCard.clearAnimation();
+                                    if(textViewRules != null)
                                     textViewRules.clearAnimation();
                                     newGame();
                                 }
@@ -163,10 +169,8 @@ public class CircleOfDeathActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        this.menu = menu;
         getMenuInflater().inflate(R.menu.menu_circle_of_death, menu);
         item = menu.findItem(R.id.action_cardsRemaining);
-        retry = menu.findItem(R.id.action_retry);
         return true;
     }
 
@@ -249,8 +253,10 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         numberActualPlayer = 0;
         final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        if(imageViewCard != null)
         imageViewCard.setImageResource(resourceId);
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
+        if(textViewRules != null)
         textViewRules.setText(card.getRule().getSmallRule());
         rulesDetails = card.getRule().getLongRule();
         int remainingCards = deck.getRemainingCards();
@@ -259,6 +265,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            if(nameActualPlayer != null)
             nameActualPlayer.setText(actualPlayer);
             listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
             for (int i = 0; i < listPlayers.size(); i++)

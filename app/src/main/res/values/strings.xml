@@ -6,6 +6,11 @@
     <string name="action_retry">New game</string>
     <string name="action_cardsRemaining">51 cards</string>
     <string name="action_rules">Rules</string>
+    <string name="skip">Skip</string>
+    <string name="done">Done</string>
+    <string name="tutorialWelcome">Welcome to the application "Drinking games"! Have fun, but remember to drink responsibly.</string>
+    <string name="tutorialPlayers">You can add players by clicking this icon on the menu.</string>
+    <string name="tutorialRules">At any time, you can click on this bar to display the rule.</string>
     <string name="card">card</string>
     <string name="dice">dice</string>
     <string name="player">Player</string>
@@ -21,6 +26,7 @@
     <string name="cancel">Cancel</string>
     <string name="rename">Rename</string>
     <string name="delete">Delete</string>
+    <string name="tutorial">Tutorial</string>
     <string name="playerEmpty">No player added (you did not enter anything)</string>
     <string name="noPlayer">No player</string>
     <string name="noRule">No rule</string>
