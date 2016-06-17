@@ -57,4 +57,30 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true" />
 
+    <ImageButton
+        android:id="@+id/imageAroundTheWorldRoundOne"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="#00ffffff"
+        android:contentDescription="@string/aroundTheWorldRoundOne"
+        android:scaleType="fitXY"
+        android:src="@drawable/around_the_world_round_one"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textViewAroundTheWorldRoundOne"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/aroundTheWorldRoundOne"
+        android:gravity="center"
+        android:layout_alignStart="@+id/imageAroundTheWorldRoundOne"
+        android:layout_alignEnd="@+id/imageAroundTheWorldRoundOne"
+        android:layout_alignRight="@+id/imageAroundTheWorldRoundOne"
+        android:layout_alignLeft="@+id/imageAroundTheWorldRoundOne"
+        android:layout_below="@+id/imageAroundTheWorldRoundOne"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true" />
+
 </RelativeLayout>

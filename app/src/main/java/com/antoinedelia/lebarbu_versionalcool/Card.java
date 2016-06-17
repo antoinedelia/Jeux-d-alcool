@@ -5,12 +5,14 @@ public class Card {
     private Deck.Cards name;
     private String path;
     private Rule rule;
+    private Deck.SuitCards suit;
 
-    public Card(Deck.Cards nameCard, String pathCard, Rule ruleCard)
+    public Card(Deck.Cards nameCard, String pathCard, Rule ruleCard, Deck.SuitCards suitCard)
     {
         name = nameCard;
         path = pathCard;
         rule = ruleCard;
+        suit = suitCard;
     }
 
     public Deck.Cards getName() {
@@ -37,5 +39,8 @@ public class Card {
         this.rule = rule;
     }
 
+    public Deck.SuitCards getSuit(){ return suit; }
+
+    public void setSuit(Deck.SuitCards suit) { this.suit = suit; }
 
 }

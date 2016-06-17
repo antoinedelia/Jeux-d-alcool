@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".AroundTheWorldRoundOneActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context=".AroundTheWorldRoundOneActivity"
+                tools:showIn="@layout/around_the_world_round_one_red_or_black">
+
+                <TextView
+                    android:id="@+id/nameActualPlayer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:gravity="center_horizontal"
+                    android:textColor="#000000" />
+
+                <!--Display card-->
+                <LinearLayout
+                    android:id="@+id/containerImageCard"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/containerRound">
+
+                    <ImageView
+                        android:id="@+id/imageViewCarte"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="20dp"
+                        android:contentDescription="@string/card"
+                        android:padding="10dp"
+                        android:scaleType="centerInside" />
+                </LinearLayout>
+
+                <!--Display red or black-->
+                <LinearLayout
+                    android:id="@+id/containerImageRedOrBlack"
+                    android:visibility="visible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/containerRound">
+
+                    <ImageView
+                        android:id="@+id/imageViewRed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/red"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/red"/>
+
+                    <ImageView
+                        android:id="@+id/imageViewBlack"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/black"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/black"/>
+                </LinearLayout>
+
+                <!--Display more or less-->
+                <LinearLayout
+                    android:id="@+id/containerImageMoreOrLess"
+                    android:visibility="invisible"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/containerRound">
+
+                    <ImageView
+                        android:id="@+id/imageViewLess"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/less"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/less"/>
+
+                    <ImageView
+                        android:id="@+id/imageViewMore"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/more"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/more"/>
+                </LinearLayout>
+
+                <!--Display between or outside-->
+                <LinearLayout
+                    android:id="@+id/containerImageBetweenOrOutside"
+                    android:visibility="invisible"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/containerRound">
+
+                    <ImageView
+                        android:id="@+id/imageViewBetween"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/between"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/between"/>
+
+                    <ImageView
+                        android:id="@+id/imageViewOutside"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/outside"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/outside"/>
+                </LinearLayout>
+
+                <!--Display same or different-->
+                <LinearLayout
+                    android:id="@+id/containerImageSameOrDifferent"
+                    android:visibility="invisible"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/containerRound">
+
+                    <ImageView
+                        android:id="@+id/imageViewSame"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/same"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/same"/>
+
+                    <ImageView
+                        android:id="@+id/imageViewDifferent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/different"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/different"/>
+                </LinearLayout>
+
+                <!--TODO resize images-->
+                <!--Display hearts, spades, diamonds or clubs-->
+                <LinearLayout
+                    android:id="@+id/containerImageSuitChoice"
+                    android:visibility="invisible"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_above="@+id/containerRound">
+
+                    <ImageView
+                        android:id="@+id/imageViewHearts"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/hearts"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ace_of_hearts"/>
+
+                    <ImageView
+                        android:id="@+id/imageViewSpades"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/spades"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ace_of_spades"/>
+
+                    <ImageView
+                        android:id="@+id/imageViewDiamonds"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/diamonds"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ace_of_diamonds"/>
+
+                    <ImageView
+                        android:id="@+id/imageViewClubs"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/clubs"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ace_of_clubs"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/containerRound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_alignEnd="@+id/containerImageCard"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/containerImageCard"
+                    android:layout_centerHorizontal="true"
+                    android:layout_above="@+id/containerRules">
+
+                    <TextView
+                        android:id="@+id/questionRound"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:textColor="#000000"
+                        android:text="@string/aroundTheWorldRoundOnePartOne"
+                        android:layout_gravity="center"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/containerRules"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignEnd="@+id/containerImageCard"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignRight="@+id/containerImageCard"
+                    android:layout_centerInParent="true">
+
+                    <ImageView
+                        android:id="@+id/cardOne"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cardOne"
+                        android:src="@drawable/unknown_card" />
+
+                    <ImageView
+                        android:id="@+id/cardTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cardTwo"
+                        android:src="@drawable/unknown_card" />
+
+                    <ImageView
+                        android:id="@+id/cardThree"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cardThree"
+                        android:src="@drawable/unknown_card" />
+
+                    <ImageView
+                        android:id="@+id/cardFour"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cardFour"
+                        android:src="@drawable/unknown_card" />
+
+                    <ImageView
+                        android:id="@+id/cardFive"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/cardFive"
+                        android:src="@drawable/unknown_card" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/toolbar_dropshadow" />
+        </FrameLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+</android.support.design.widget.CoordinatorLayout>

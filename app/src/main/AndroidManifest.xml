@@ -35,6 +35,17 @@
         </activity>
 
         <activity
+            android:name=".AroundTheWorldRoundOneActivity"
+            android:configChanges="orientation"
+            android:label="@string/aroundTheWorldRoundOne"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MenuActivity" />
+        </activity>
+
+        <activity
             android:name=".BizkitActivity"
             android:configChanges="orientation"
             android:label="@string/bizkit"

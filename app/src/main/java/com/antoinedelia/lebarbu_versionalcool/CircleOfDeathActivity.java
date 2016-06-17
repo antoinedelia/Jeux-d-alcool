@@ -248,7 +248,6 @@ public class CircleOfDeathActivity extends AppCompatActivity {
 
     private void newGame() {
         deck = new Deck("CircleOfDeath", this);
-        card = deck.getNextCard();
         numberPlayers = listPlayers.size();
         numberActualPlayer = 0;
         final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
@@ -259,6 +258,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         if(textViewRules != null)
         textViewRules.setText(card.getRule().getSmallRule());
         rulesDetails = card.getRule().getLongRule();
+        card = deck.getNextCard();
         int remainingCards = deck.getRemainingCards();
         String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
         item.setTitle(String.valueOf(remainingCards) + " " + cards);
