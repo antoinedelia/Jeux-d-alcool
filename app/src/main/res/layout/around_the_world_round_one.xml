@@ -35,7 +35,7 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 tools:context=".AroundTheWorldRoundOneActivity"
-                tools:showIn="@layout/around_the_world_round_one_red_or_black">
+                tools:showIn="@layout/around_the_world_round_one">
 
                 <TextView
                     android:id="@+id/nameActualPlayer"
@@ -123,7 +123,6 @@
                         android:id="@+id/imageViewLess"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/less"
                         android:padding="10dp"
@@ -131,10 +130,19 @@
                         android:src="@drawable/less"/>
 
                     <ImageView
+                        android:id="@+id/imageViewEquals1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/equals"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/equals"/>
+
+                    <ImageView
                         android:id="@+id/imageViewMore"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/more"
                         android:padding="10dp"
@@ -159,7 +167,6 @@
                         android:id="@+id/imageViewBetween"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/between"
                         android:padding="10dp"
@@ -167,10 +174,19 @@
                         android:src="@drawable/between"/>
 
                     <ImageView
+                        android:id="@+id/imageViewEquals2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:contentDescription="@string/equals"
+                        android:padding="10dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/equals"/>
+
+                    <ImageView
                         android:id="@+id/imageViewOutside"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/outside"
                         android:padding="10dp"
@@ -214,7 +230,6 @@
                         android:src="@drawable/different"/>
                 </LinearLayout>
 
-                <!--TODO resize images-->
                 <!--Display hearts, spades, diamonds or clubs-->
                 <LinearLayout
                     android:id="@+id/containerImageSuitChoice"
@@ -235,7 +250,6 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/hearts"
-                        android:padding="10dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ace_of_hearts"/>
 
@@ -246,7 +260,6 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/spades"
-                        android:padding="10dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ace_of_spades"/>
 
@@ -257,7 +270,6 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/diamonds"
-                        android:padding="10dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ace_of_diamonds"/>
 
@@ -268,7 +280,6 @@
                         android:layout_margin="10dp"
                         android:layout_weight="1"
                         android:contentDescription="@string/clubs"
-                        android:padding="10dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/ace_of_clubs"/>
                 </LinearLayout>

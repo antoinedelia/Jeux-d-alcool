@@ -7,6 +7,7 @@
     <string name="action_retry">New game</string>
     <string name="action_cardsRemaining">51 cards</string>
     <string name="action_rules">Rules</string>
+    <string name="action_help">Help</string>
     <string name="skip">Skip</string>
     <string name="done">Done</string>
     <string name="less">Less</string>
@@ -38,7 +39,10 @@
     <string name="action_players">Info about players</string>
     <string name="ruleCard">Rule for this card: </string>
     <string name="ruleDice">Rule for this outcome: </string>
+    <string name="youDrink">You drink</string>
+    <string name="youGive">You give</string>
     <string name="sip">sip</string>
+    <string name="equals">Equals</string>
     <string name="drank">drank</string>
     <string name="cardOne">Card one</string>
     <string name="cardTwo">Card two</string>
@@ -55,6 +59,13 @@
     <string name="outside">Outside</string>
     <string name="same">Same</string>
     <string name="different">Different</string>
+    <string name="helpAroundTheWorldRoundOne">Help for \"Around the world (round one)\"</string>
+    <string name="aroundTheWorldRoundOneSteps">Each player must make a prediction about the card to be drawn on their turn. If the player guesses correctly, they may give a sip. If their guess is incorrect they must instead take a sip.</string>
+    <string name="aroundTheWorldRoundOneStepsPartOne">The player must predict the color of the card draw, \"red\" (hearts and diamonds) or \"black\" (clubs and spades).</string>
+    <string name="aroundTheWorldRoundOneStepsPartTwo">The player must predict whether the value of the card drawn will be \"higher\" or \"lower\" than the first card. A third option is \"same\". Caution: the ace count as the lowest card.</string>
+    <string name="aroundTheWorldRoundOneStepsPartThree">The player predicts whether the value of the card drawn will be between the values of the first two cards, \"in\", or outside of those values, \"out\". There is a third option of \"same\".</string>
+    <string name="aroundTheWorldRoundOneStepsPartFour">For the fourth card, the player must predict the suit of the card drawn by saying he either has the suit or has not.</string>
+    <string name="aroundTheWorldRoundOneStepsPartFive">"The fifth card's question is not (directly) related to the cards drawn before it. Rather, the player simply predicts which suit the card will be."</string>
     <string name="playerEmptyAroundTheWorld">You must add players to play this game</string>
     <string name="doubleText">Since you did a double, you can give a player</string>
     <string name="helpRuleCircleOfDeath">You draw a king, you must choose a rule.\n\nPopular rules:\n- You can\'t say the verb \"drink\".\n- Buffalo (you must drink with your left hand).</string>

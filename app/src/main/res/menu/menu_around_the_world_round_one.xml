@@ -4,21 +4,15 @@
     tools:context="com.antoinedelia.lebarbu_versionalcool.MainActivity">
 
     <item
-        android:id="@+id/action_retry"
-        android:icon="@drawable/refresh"
-        android:orderInCategory="100"
-        android:title="@string/action_retry"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_infoPlayers"
         android:icon="@drawable/players"
         android:orderInCategory="100"
         android:title="@string/action_players"
         app:showAsAction="always" />
     <item
-        android:id="@+id/action_infoRules"
-        android:icon="@drawable/rules"
+        android:id="@+id/action_help"
+        android:icon="@drawable/help"
         android:orderInCategory="100"
-        android:title="@string/action_rules"
+        android:title="@string/action_help"
         app:showAsAction="ifRoom" />
 </menu>

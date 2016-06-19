@@ -46,6 +46,12 @@
         </activity>
 
         <activity
+            android:name=".TutorialActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
+            android:label="@string/tutorial" />
+
+        <activity
             android:name=".BizkitActivity"
             android:configChanges="orientation"
             android:label="@string/bizkit"
@@ -56,8 +62,11 @@
                 android:value=".MenuActivity" />
         </activity>
 
-        <activity android:name="com.antoinedelia.lebarbu_versionalcool.TutorialActivity"
-            android:label="@string/tutorial" />
+        <activity
+            android:name=".AroundTheWorldRoundOneHelpActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
+            android:label="@string/helpAroundTheWorldRoundOne" />
 
         <activity
             android:name=".PlayersActivity"

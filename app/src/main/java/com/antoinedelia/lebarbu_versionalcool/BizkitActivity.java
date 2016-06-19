@@ -172,7 +172,7 @@ public class BizkitActivity extends AppCompatActivity {
                 if (numberPlayers != 0) {
                     //We show the information about the players
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setIcon(R.drawable.circle_of_fire);
+                    builder.setIcon(R.drawable.dice);
                     builder.setTitle(getResources().getString(R.string.action_players));
 
                     List<String> playersWithInfo = new ArrayList<>();
@@ -203,7 +203,7 @@ public class BizkitActivity extends AppCompatActivity {
                 if (listRules.size() != 0) {
                     //We show the information about the players
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setIcon(R.drawable.circle_of_fire);
+                    builder.setIcon(R.drawable.dice);
                     builder.setTitle(getResources().getString(R.string.action_rules));
 
                     ListView rulesList = new ListView(this);

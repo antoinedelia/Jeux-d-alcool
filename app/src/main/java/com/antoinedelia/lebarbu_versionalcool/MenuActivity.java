@@ -117,6 +117,17 @@ public class MenuActivity extends AppCompatActivity {
                 }
             });
 
+        final ImageView imageTutorial = (ImageView) findViewById(R.id.imageTutorial);
+        if(imageTutorial != null)
+            imageTutorial.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MenuActivity.this, TutorialActivity.class);
+                    intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+                    startActivityForResult(intent, 0);
+                }
+            });
+
         final TextView textViewCircleOfDeath = (TextView) findViewById(R.id.textViewCircleOfDeath);
         if(textViewCircleOfDeath != null)
         textViewCircleOfDeath.setOnClickListener(new View.OnClickListener() {
@@ -144,7 +155,46 @@ public class MenuActivity extends AppCompatActivity {
             textViewAroundTheWorldRoundOne.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(MenuActivity.this, AroundTheWorldRoundOneActivity.class);
+                    if(listPlayers.isEmpty())
+                    {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MenuActivity.this);
+                        builder.setIcon(R.drawable.around_the_world_round_one);
+                        builder.setTitle(getResources().getString(R.string.noPlayer));
+                        builder.setMessage(getResources().getString(R.string.playerEmptyAroundTheWorld));
+
+                        builder.setNegativeButton(getResources().getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+
+                        builder.setPositiveButton(getResources().getString(R.string.addPlayer), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                Intent intent = new Intent(MenuActivity.this, PlayersActivity.class);
+                                intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+                                startActivityForResult(intent, 0);
+                            }
+                        });
+                        final Dialog dialog = builder.create();
+                        dialog.show();
+                    }
+                    else {
+                        Intent intent = new Intent(MenuActivity.this, AroundTheWorldRoundOneActivity.class);
+                        intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+                        startActivityForResult(intent, 0);
+                    }
+                }
+            });
+
+        final TextView textViewTutorial = (TextView) findViewById(R.id.textViewTutorial);
+        if(textViewTutorial != null)
+            textViewTutorial.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MenuActivity.this, TutorialActivity.class);
                     intent.putParcelableArrayListExtra("listPlayers", listPlayers);
                     startActivityForResult(intent, 0);
                 }

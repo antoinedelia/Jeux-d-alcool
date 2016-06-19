@@ -20,11 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
 
+    private static int DELAY_TIME = 300;
     private Deck deck = null;
     private Card card;
     private ArrayList<Player> listPlayers = new ArrayList<>();
@@ -32,12 +34,11 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
     private int numberActualPlayer = 0;
     private int round = 0;
     private long lastClickTime = 0;
-    private static int DELAY_TIME = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.around_the_world_round_one_red_or_black);
+        setContentView(R.layout.around_the_world_round_one);
 
         final LinearLayout linearLayoutCard = (LinearLayout) findViewById(R.id.containerImageCard);
         final LinearLayout linearLayoutRedOrBlack = (LinearLayout) findViewById(R.id.containerImageRedOrBlack);
@@ -46,17 +47,15 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
         final LinearLayout linearLayoutSameOrDifferent = (LinearLayout) findViewById(R.id.containerImageSameOrDifferent);
         final LinearLayout linearLayoutSuitChoice = (LinearLayout) findViewById(R.id.containerImageSuitChoice);
 
-        if(linearLayoutCard != null)
+        if (linearLayoutCard != null)
             linearLayoutCard.setVisibility(View.INVISIBLE);
 
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
         numberPlayers = listPlayers.size();
 
-        for(int i = 0; i < numberPlayers; i++)
-        {
-            for(int j = 0; j < 5; j++)
-            {
+        for (int i = 0; i < numberPlayers; i++) {
+            for (int j = 0; j < 5; j++) {
                 listPlayers.get(i).getCards().add(j, new Card(null, "unknown_card", null, null));
             }
         }
@@ -88,7 +87,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if(imageViewCard.getVisibility() == View.INVISIBLE)
+                            if (imageViewCard.getVisibility() == View.INVISIBLE)
                                 return;
                             if (SystemClock.elapsedRealtime() - lastClickTime < DELAY_TIME) {
                                 return;
@@ -99,13 +98,10 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                                 numberActualPlayer++;
                                 if (numberActualPlayer == numberPlayers) {
                                     numberActualPlayer = 0;
-                                    if(round < 4)
-                                    {
+                                    if (round < 4) {
                                         round++;
                                         changeRound();
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         AlertDialog.Builder builder = new AlertDialog.Builder(AroundTheWorldRoundOneActivity.this);
                                         builder.setIcon(R.drawable.around_the_world_round_one);
                                         builder.setMessage(getResources().getString(R.string.gameOver)).setTitle(getResources().getString(R.string.gameOver));
@@ -117,37 +113,20 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                                                 finish();
                                             }
                                         });
+                                        builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                            @Override
+                                            public void onDismiss(DialogInterface dialog) {
+                                                dialog.dismiss();
+                                                finish();
+                                            }
+                                        });
                                         final Dialog dialog = builder.create();
                                         dialog.show();
                                     }
 
                                 }
 
-                                if(round == 0)
-                                {
-                                    if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.INVISIBLE);
-                                    if(linearLayoutRedOrBlack != null) linearLayoutRedOrBlack.setVisibility(View.VISIBLE);
-                                }
-                                if(round == 1)
-                                {
-                                    if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.INVISIBLE);
-                                    if(linearLayoutMoreOrLess != null) linearLayoutMoreOrLess.setVisibility(View.VISIBLE);
-                                }
-                                if(round == 2)
-                                {
-                                    if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.INVISIBLE);
-                                    if(linearLayoutBetweenOrOutside != null) linearLayoutBetweenOrOutside.setVisibility(View.VISIBLE);
-                                }
-                                if(round == 3)
-                                {
-                                    if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.INVISIBLE);
-                                    if(linearLayoutSameOrDifferent != null) linearLayoutSameOrDifferent.setVisibility(View.VISIBLE);
-                                }
-                                if(round == 4)
-                                {
-                                    if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.INVISIBLE);
-                                    if(linearLayoutSuitChoice != null) linearLayoutSuitChoice.setVisibility(View.VISIBLE);
-                                }
+                                changeViews();
 
                                 if (numberPlayers > 0) {
                                     final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
@@ -155,7 +134,6 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                                     if (nameActualPlayer != null)
                                         nameActualPlayer.setText(actualPlayer);
                                 }
-                                checkSips();
                                 refreshCards();
                             } else {
                                 newGame();
@@ -177,13 +155,16 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewRed.getVisibility() == View.INVISIBLE)
+                            if (imageViewRed.getVisibility() == View.INVISIBLE)
                                 return;
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutRedOrBlack != null) linearLayoutRedOrBlack.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutRedOrBlack != null)
+                                linearLayoutRedOrBlack.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.red));
                         }
                     }
             );
@@ -201,14 +182,17 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewBlack.getVisibility() == View.INVISIBLE) {
+                            if (imageViewBlack.getVisibility() == View.INVISIBLE) {
                                 return;
                             }
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutRedOrBlack != null) linearLayoutRedOrBlack.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutRedOrBlack != null)
+                                linearLayoutRedOrBlack.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.black));
                         }
                     }
             );
@@ -226,13 +210,16 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewLess.getVisibility() == View.INVISIBLE)
+                            if (imageViewLess.getVisibility() == View.INVISIBLE)
                                 return;
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutMoreOrLess != null) linearLayoutMoreOrLess.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutMoreOrLess != null)
+                                linearLayoutMoreOrLess.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.less));
                         }
                     }
             );
@@ -250,14 +237,45 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewMore.getVisibility() == View.INVISIBLE) {
+                            if (imageViewMore.getVisibility() == View.INVISIBLE) {
                                 return;
                             }
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutMoreOrLess != null) linearLayoutMoreOrLess.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutMoreOrLess != null)
+                                linearLayoutMoreOrLess.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.more));
+                        }
+                    }
+            );
+
+        final ImageView imageViewEquals1 = (ImageView) findViewById(R.id.imageViewEquals1);
+        //Click on more
+        if (imageViewEquals1 != null)
+            imageViewEquals1.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (SystemClock.elapsedRealtime() - lastClickTime < DELAY_TIME) {
+                                return;
+                            }
+                            lastClickTime = SystemClock.elapsedRealtime();
+                            card = deck.getNextCard();
+                            int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            listPlayers.get(numberActualPlayer).getCards().set(round, card);
+                            refreshCards();
+                            if (imageViewEquals1.getVisibility() == View.INVISIBLE) {
+                                return;
+                            }
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutMoreOrLess != null)
+                                linearLayoutMoreOrLess.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.equals));
                         }
                     }
             );
@@ -275,13 +293,16 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewBetween.getVisibility() == View.INVISIBLE)
+                            if (imageViewBetween.getVisibility() == View.INVISIBLE)
                                 return;
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutBetweenOrOutside != null) linearLayoutBetweenOrOutside.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutBetweenOrOutside != null)
+                                linearLayoutBetweenOrOutside.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.between));
                         }
                     }
             );
@@ -299,14 +320,45 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewOutside.getVisibility() == View.INVISIBLE) {
+                            if (imageViewOutside.getVisibility() == View.INVISIBLE) {
                                 return;
                             }
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutBetweenOrOutside != null) linearLayoutBetweenOrOutside.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutBetweenOrOutside != null)
+                                linearLayoutBetweenOrOutside.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.outside));
+                        }
+                    }
+            );
+
+        final ImageView imageViewEquals2 = (ImageView) findViewById(R.id.imageViewEquals2);
+        //Click on outside
+        if (imageViewEquals2 != null)
+            imageViewEquals2.setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (SystemClock.elapsedRealtime() - lastClickTime < DELAY_TIME) {
+                                return;
+                            }
+                            lastClickTime = SystemClock.elapsedRealtime();
+                            card = deck.getNextCard();
+                            int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            listPlayers.get(numberActualPlayer).getCards().set(round, card);
+                            refreshCards();
+                            if (imageViewEquals2.getVisibility() == View.INVISIBLE) {
+                                return;
+                            }
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutBetweenOrOutside != null)
+                                linearLayoutBetweenOrOutside.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.equals));
                         }
                     }
             );
@@ -324,13 +376,16 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewSame.getVisibility() == View.INVISIBLE)
+                            if (imageViewSame.getVisibility() == View.INVISIBLE)
                                 return;
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutSameOrDifferent != null) linearLayoutSameOrDifferent .setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutSameOrDifferent != null)
+                                linearLayoutSameOrDifferent.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.same));
                         }
                     }
             );
@@ -348,14 +403,17 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewDifferent.getVisibility() == View.INVISIBLE) {
+                            if (imageViewDifferent.getVisibility() == View.INVISIBLE) {
                                 return;
                             }
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutSameOrDifferent != null) linearLayoutSameOrDifferent.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutSameOrDifferent != null)
+                                linearLayoutSameOrDifferent.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.different));
                         }
                     }
             );
@@ -373,13 +431,16 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewHearts.getVisibility() == View.INVISIBLE)
+                            if (imageViewHearts.getVisibility() == View.INVISIBLE)
                                 return;
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutSuitChoice != null) linearLayoutSuitChoice.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutSuitChoice != null)
+                                linearLayoutSuitChoice.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.hearts));
                         }
                     }
             );
@@ -397,14 +458,17 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewSpades.getVisibility() == View.INVISIBLE) {
+                            if (imageViewSpades.getVisibility() == View.INVISIBLE) {
                                 return;
                             }
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutSuitChoice != null) linearLayoutSuitChoice.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutSuitChoice != null)
+                                linearLayoutSuitChoice.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.spades));
                         }
                     }
             );
@@ -422,13 +486,16 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewDiamonds.getVisibility() == View.INVISIBLE)
+                            if (imageViewDiamonds.getVisibility() == View.INVISIBLE)
                                 return;
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutSuitChoice != null) linearLayoutSuitChoice.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutSuitChoice != null)
+                                linearLayoutSuitChoice.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.diamonds));
                         }
                     }
             );
@@ -446,14 +513,17 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if(imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
-                            if(imageViewClubs.getVisibility() == View.INVISIBLE) {
+                            if (imageViewClubs.getVisibility() == View.INVISIBLE) {
                                 return;
                             }
-                            if(linearLayoutCard != null) linearLayoutCard.setVisibility(View.VISIBLE);
-                            if(linearLayoutSuitChoice != null) linearLayoutSuitChoice.setVisibility(View.INVISIBLE);
+                            if (linearLayoutCard != null)
+                                linearLayoutCard.setVisibility(View.VISIBLE);
+                            if (linearLayoutSuitChoice != null)
+                                linearLayoutSuitChoice.setVisibility(View.INVISIBLE);
+                            checkSips(getResources().getString(R.string.clubs));
                         }
                     }
             );
@@ -468,82 +538,88 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
 
         TextView textViewQuestionRound = (TextView) findViewById(R.id.questionRound);
 
-        switch (round)
-        {
+        switch (round) {
             case 1:
-                if(linearLayoutRedOrBlack != null) linearLayoutRedOrBlack.setVisibility(View.INVISIBLE);
-                if(linearLayoutMoreOrLess != null) linearLayoutMoreOrLess.setVisibility(View.VISIBLE);
-                if(textViewQuestionRound != null) textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartTwo));
+                if (linearLayoutRedOrBlack != null)
+                    linearLayoutRedOrBlack.setVisibility(View.INVISIBLE);
+                if (linearLayoutMoreOrLess != null)
+                    linearLayoutMoreOrLess.setVisibility(View.VISIBLE);
+                if (textViewQuestionRound != null)
+                    textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartTwo));
                 final ImageView imageViewRed = (ImageView) findViewById(R.id.imageViewRed);
                 final ImageView imageViewBlack = (ImageView) findViewById(R.id.imageViewBlack);
-                if(imageViewRed != null) imageViewRed.setOnClickListener(null);
-                if(imageViewBlack != null) imageViewBlack.setOnClickListener(null);
+                if (imageViewRed != null) imageViewRed.setOnClickListener(null);
+                if (imageViewBlack != null) imageViewBlack.setOnClickListener(null);
                 return;
             case 2:
-                if(linearLayoutMoreOrLess != null) linearLayoutMoreOrLess.setVisibility(View.INVISIBLE);
-                if(linearLayoutBetweenOrOutside != null) linearLayoutBetweenOrOutside.setVisibility(View.VISIBLE);
-                if(textViewQuestionRound != null) textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartThree));
+                if (linearLayoutMoreOrLess != null)
+                    linearLayoutMoreOrLess.setVisibility(View.INVISIBLE);
+                if (linearLayoutBetweenOrOutside != null)
+                    linearLayoutBetweenOrOutside.setVisibility(View.VISIBLE);
+                if (textViewQuestionRound != null)
+                    textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartThree));
                 final ImageView imageViewLess = (ImageView) findViewById(R.id.imageViewLess);
                 final ImageView imageViewMore = (ImageView) findViewById(R.id.imageViewMore);
-                if(imageViewLess!= null) imageViewLess.setOnClickListener(null);
-                if(imageViewMore != null) imageViewMore.setOnClickListener(null);
+                if (imageViewLess != null) imageViewLess.setOnClickListener(null);
+                if (imageViewMore != null) imageViewMore.setOnClickListener(null);
                 return;
             case 3:
-                if(linearLayoutBetweenOrOutside != null) linearLayoutBetweenOrOutside.setVisibility(View.INVISIBLE);
-                if(linearLayoutSameOrDifferent != null) linearLayoutSameOrDifferent.setVisibility(View.VISIBLE);
-                if(textViewQuestionRound != null) textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartFour));
-                final ImageView imageViewBetween= (ImageView) findViewById(R.id.imageViewBetween);
+                if (linearLayoutBetweenOrOutside != null)
+                    linearLayoutBetweenOrOutside.setVisibility(View.INVISIBLE);
+                if (linearLayoutSameOrDifferent != null)
+                    linearLayoutSameOrDifferent.setVisibility(View.VISIBLE);
+                if (textViewQuestionRound != null)
+                    textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartFour));
+                final ImageView imageViewBetween = (ImageView) findViewById(R.id.imageViewBetween);
                 final ImageView imageViewOutside = (ImageView) findViewById(R.id.imageViewOutside);
-                if(imageViewBetween != null) imageViewBetween.setOnClickListener(null);
-                if(imageViewOutside != null) imageViewOutside.setOnClickListener(null);
+                if (imageViewBetween != null) imageViewBetween.setOnClickListener(null);
+                if (imageViewOutside != null) imageViewOutside.setOnClickListener(null);
                 return;
             case 4:
-                if(linearLayoutSameOrDifferent != null) linearLayoutSameOrDifferent.setVisibility(View.INVISIBLE);
-                if(linearLayoutSuitChoice != null) linearLayoutSuitChoice.setVisibility(View.VISIBLE);
-                if(textViewQuestionRound != null) textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartFive));
+                if (linearLayoutSameOrDifferent != null)
+                    linearLayoutSameOrDifferent.setVisibility(View.INVISIBLE);
+                if (linearLayoutSuitChoice != null)
+                    linearLayoutSuitChoice.setVisibility(View.VISIBLE);
+                if (textViewQuestionRound != null)
+                    textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartFive));
                 final ImageView imageViewSame = (ImageView) findViewById(R.id.imageViewSame);
                 final ImageView imageViewDifferent = (ImageView) findViewById(R.id.imageViewDifferent);
-                if(imageViewSame != null) imageViewSame.setOnClickListener(null);
-                if(imageViewDifferent != null) imageViewDifferent.setOnClickListener(null);
+                if (imageViewSame != null) imageViewSame.setOnClickListener(null);
+                if (imageViewDifferent != null) imageViewDifferent.setOnClickListener(null);
         }
     }
 
-    public void refreshCards(){
+    public void refreshCards() {
         final ImageView imageViewCardOne = (ImageView) findViewById(R.id.cardOne);
         final ImageView imageViewCardTwo = (ImageView) findViewById(R.id.cardTwo);
         final ImageView imageViewCardThree = (ImageView) findViewById(R.id.cardThree);
         final ImageView imageViewCardFour = (ImageView) findViewById(R.id.cardFour);
         final ImageView imageViewCardFive = (ImageView) findViewById(R.id.cardFive);
 
-        if(round >= 0)
-        {
-            int resourceId1 = this.getResources().getIdentifier("thumbnail_"+listPlayers.get(numberActualPlayer).getCards().get(0).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        if (round >= 0) {
+            int resourceId1 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(0).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
             Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId1);
-            if(imageViewCardOne != null) imageViewCardOne.setImageBitmap(icon);
+            if (imageViewCardOne != null) imageViewCardOne.setImageBitmap(icon);
         }
-        if(round >= 1)
-        {
-            int resourceId2 = this.getResources().getIdentifier("thumbnail_"+listPlayers.get(numberActualPlayer).getCards().get(1).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        if (round >= 1) {
+            int resourceId2 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(1).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
             Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId2);
-            if(imageViewCardTwo != null) imageViewCardTwo.setImageBitmap(icon);
+            if (imageViewCardTwo != null) imageViewCardTwo.setImageBitmap(icon);
         }
-        if(round >= 2)
-        {
-            int resourceId3 = this.getResources().getIdentifier("thumbnail_"+listPlayers.get(numberActualPlayer).getCards().get(2).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        if (round >= 2) {
+            int resourceId3 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(2).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
             Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId3);
-            if(imageViewCardThree != null) imageViewCardThree.setImageBitmap(icon);
+            if (imageViewCardThree != null) imageViewCardThree.setImageBitmap(icon);
         }
-        if(round >= 3)
-        {
-            int resourceId4 = this.getResources().getIdentifier("thumbnail_"+listPlayers.get(numberActualPlayer).getCards().get(3).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        if (round >= 3) {
+            int resourceId4 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(3).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
             Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId4);
-            if(imageViewCardFour != null) imageViewCardFour.setImageBitmap(icon);
+            if (imageViewCardFour != null) imageViewCardFour.setImageBitmap(icon);
         }
-        if(round >= 4)
-        {
-            int resourceId5 = this.getResources().getIdentifier("thumbnail_"+listPlayers.get(numberActualPlayer).getCards().get(4).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
+        if (round >= 4) {
+            int resourceId5 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(4).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
             Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId5);
-            if(imageViewCardFive != null) imageViewCardFive.setImageBitmap(icon);
+            if (imageViewCardFive != null) imageViewCardFive.setImageBitmap(icon);
         }
     }
 
@@ -558,9 +634,6 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_retry:
-                newGame();
-                break;
             case android.R.id.home:
                 Intent intent = new Intent();
                 //We send back the list of the players
@@ -598,8 +671,10 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     Toast.makeText(AroundTheWorldRoundOneActivity.this, getResources().getString(R.string.noPlayer), Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.action_infoRules:
-
+            case R.id.action_help:
+                Intent intentHelp = new Intent(AroundTheWorldRoundOneActivity.this, AroundTheWorldRoundOneHelpActivity.class);
+                intentHelp.putParcelableArrayListExtra("listPlayers", listPlayers);
+                startActivityForResult(intentHelp, 0);
                 break;
         }
         return true;
@@ -612,12 +687,10 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
         numberActualPlayer++;
         if (numberActualPlayer == numberPlayers) {
             numberActualPlayer = 0;
-            if(round < 4) {
+            if (round < 4) {
                 round++;
                 changeRound();
-            }
-            else
-            {
+            } else {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AroundTheWorldRoundOneActivity.this);
                 builder.setIcon(R.drawable.around_the_world_round_one);
                 builder.setMessage(getResources().getString(R.string.gameOver)).setTitle(getResources().getString(R.string.gameOver));
@@ -628,10 +701,18 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                         finish();
                     }
                 });
+                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
                 final Dialog dialog = builder.create();
                 dialog.show();
             }
         }
+        changeViews();
         final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if (imageViewCard != null)
@@ -643,8 +724,6 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                 nameActualPlayer.setText(actualPlayer);
             listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
         }
-
-        checkSips();
         refreshCards();
     }
 
@@ -657,18 +736,126 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
         finish();
     }
 
-    public void checkSips() {
-        //TODO handle win or lose
-        //Check if ACE to give all player one sip
+    public void checkSips(String choice) {
+        TextView textViewQuestionRound = (TextView) findViewById(R.id.questionRound);
+        String textToDisplay;
+        boolean lost = false;
+        boolean isDouble = false;
         if (numberPlayers > 0) {
-            if (card.getName() == Deck.Cards.ACE) {
-                for (int i = 0; i < listPlayers.size(); i++)
-                    listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + 1);
+            switch (round) {
+                case 0: //Red or black
+                    if (card.getSuit() == Deck.SuitCards.HEARTS || card.getSuit() == Deck.SuitCards.DIAMONDS) {
+                        if (choice.equals(getResources().getString(R.string.black)))
+                            lost = true;
+                    } else {
+                        if (choice.equals(getResources().getString(R.string.red)))
+                            lost = true;
+                    }
+                    break;
+                case 1: // More or less
+                    if (card.getName().getNumVal() > listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal()) {
+                        if (choice.equals(getResources().getString(R.string.less)))
+                            lost = true;
+                    } else if(card.getName().getNumVal() < listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal()) {
+                        if (choice.equals(getResources().getString(R.string.more)))
+                            lost = true;
+                    } else if (card.getName().getNumVal() == listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal()) {
+                        if(!choice.equals(getResources().getString(R.string.equals)))
+                            lost = true;
+                        isDouble = true;
+                    }
+                    break;
+                case 2: //Between or outside
+                    Card lowestCard = listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal() < listPlayers.get(numberActualPlayer).getCards().get(1).getName().getNumVal() ? listPlayers.get(numberActualPlayer).getCards().get(0) : listPlayers.get(numberActualPlayer).getCards().get(1);
+                    Card highestCard = listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal() > listPlayers.get(numberActualPlayer).getCards().get(1).getName().getNumVal() ? listPlayers.get(numberActualPlayer).getCards().get(0) : listPlayers.get(numberActualPlayer).getCards().get(1);
+                    if (card.getName().getNumVal() < lowestCard.getName().getNumVal() || card.getName().getNumVal() > highestCard.getName().getNumVal()) {
+                        if (choice.equals(getResources().getString(R.string.between)))
+                            lost = true;
+                    } else if(card.getName().getNumVal() > lowestCard.getName().getNumVal() && card.getName().getNumVal() < highestCard.getName().getNumVal()) {
+                        if (choice.equals(getResources().getString(R.string.outside)))
+                            lost = true;
+                    } else if (card.getName().getNumVal() == lowestCard.getName().getNumVal() || card.getName().getNumVal() == highestCard.getName().getNumVal()) {
+                        if(!choice.equals(getResources().getString(R.string.equals)))
+                            lost = true;
+                        isDouble = true;
+                    }
+                    break;
+                case 3: //Same or different
+                    List<Deck.SuitCards> listSuit = new ArrayList<>();
+                    for (Card card : listPlayers.get(numberActualPlayer).getCards()) {
+                        listSuit.add(card.getSuit());
+                    }
+                    if (listSuit.contains(card.getSuit())) {
+                        if (choice.equals(getResources().getString(R.string.different)))
+                            lost = true;
+                    } else {
+                        if (choice.equals(getResources().getString(R.string.same)))
+                            lost = true;
+                    }
+                    break;
+                case 4: //Hearts, spades, diamonds or clubs
+                    if (card.getSuit() == Deck.SuitCards.HEARTS) {
+                        if (!choice.equals(getResources().getString(R.string.hearts)))
+                            lost = true;
+                    } else if(card.getSuit() == Deck.SuitCards.DIAMONDS) {
+                        if (!choice.equals(getResources().getString(R.string.diamonds)))
+                            lost = true;
+                    } else if(card.getSuit() == Deck.SuitCards.SPADES) {
+                        if (!choice.equals(getResources().getString(R.string.spades)))
+                            lost = true;
+                    } else if(card.getSuit() == Deck.SuitCards.CLUBS) {
+                        if (!choice.equals(getResources().getString(R.string.clubs)))
+                            lost = true;
+                    }
+                    break;
             }
-            //Check cards to give the current player the according number of sips
-            if (card.getName() == Deck.Cards.TWO || card.getName() == Deck.Cards.THREE || card.getName() == Deck.Cards.FOUR || card.getName() == Deck.Cards.FIVE || card.getName() == Deck.Cards.SIX) {
-                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + card.getName().getNumVal() + 1);
+            if(lost) {
+                textToDisplay = getResources().getString(R.string.youDrink) + " " + ((round + 1) * (isDouble ? 2 : 1)) + " " + getResources().getString(R.string.sip) + (round < 1 ? "" : "s");
+                listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + ((round + 1) * (isDouble ? 2 : 1)));
             }
+            else
+                textToDisplay = getResources().getString(R.string.youGive) + " " + ((round + 1) * (isDouble ? 2 : 1)) + " " + getResources().getString(R.string.sip) + (round < 1 ? "" : "s");
+
+            if (textViewQuestionRound != null) textViewQuestionRound.setText(textToDisplay);
+        }
+    }
+
+    public void changeViews(){
+        final LinearLayout linearLayoutCard = (LinearLayout) findViewById(R.id.containerImageCard);
+        final LinearLayout linearLayoutRedOrBlack = (LinearLayout) findViewById(R.id.containerImageRedOrBlack);
+        final LinearLayout linearLayoutMoreOrLess = (LinearLayout) findViewById(R.id.containerImageMoreOrLess);
+        final LinearLayout linearLayoutBetweenOrOutside = (LinearLayout) findViewById(R.id.containerImageBetweenOrOutside);
+        final LinearLayout linearLayoutSameOrDifferent = (LinearLayout) findViewById(R.id.containerImageSameOrDifferent);
+        final LinearLayout linearLayoutSuitChoice = (LinearLayout) findViewById(R.id.containerImageSuitChoice);
+        if (round == 0) {
+            if (linearLayoutCard != null)
+                linearLayoutCard.setVisibility(View.INVISIBLE);
+            if (linearLayoutRedOrBlack != null)
+                linearLayoutRedOrBlack.setVisibility(View.VISIBLE);
+        }
+        if (round == 1) {
+            if (linearLayoutCard != null)
+                linearLayoutCard.setVisibility(View.INVISIBLE);
+            if (linearLayoutMoreOrLess != null)
+                linearLayoutMoreOrLess.setVisibility(View.VISIBLE);
+        }
+        if (round == 2) {
+            if (linearLayoutCard != null)
+                linearLayoutCard.setVisibility(View.INVISIBLE);
+            if (linearLayoutBetweenOrOutside != null)
+                linearLayoutBetweenOrOutside.setVisibility(View.VISIBLE);
+        }
+        if (round == 3) {
+            if (linearLayoutCard != null)
+                linearLayoutCard.setVisibility(View.INVISIBLE);
+            if (linearLayoutSameOrDifferent != null)
+                linearLayoutSameOrDifferent.setVisibility(View.VISIBLE);
+        }
+        if (round == 4) {
+            if (linearLayoutCard != null)
+                linearLayoutCard.setVisibility(View.INVISIBLE);
+            if (linearLayoutSuitChoice != null)
+                linearLayoutSuitChoice.setVisibility(View.VISIBLE);
         }
     }
 }
