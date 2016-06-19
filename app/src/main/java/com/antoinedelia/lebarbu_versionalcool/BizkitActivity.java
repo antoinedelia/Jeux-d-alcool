@@ -80,7 +80,7 @@ public class BizkitActivity extends AppCompatActivity {
 
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if(nameActualPlayer != null)
                 nameActualPlayer.setText(actualPlayer);
             for (int i = 0; i < listPlayers.size(); i++)
@@ -141,7 +141,7 @@ public class BizkitActivity extends AppCompatActivity {
 
                             if (numberPlayers > 0) {
                                 final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-                                final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                                final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
                                 if (nameActualPlayer != null)
                                     nameActualPlayer.setText(actualPlayer);
                             }

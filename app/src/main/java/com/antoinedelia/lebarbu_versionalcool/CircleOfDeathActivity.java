@@ -70,7 +70,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
 
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if(nameActualPlayer != null)
             nameActualPlayer.setText(actualPlayer);
             for (int i = 0; i < listPlayers.size(); i++)
@@ -129,7 +129,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
 
                             if (numberPlayers > 0) {
                                 final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-                                final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                                final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
                                 if(nameActualPlayer != null)
                                 nameActualPlayer.setText(actualPlayer);
                             }
@@ -264,7 +264,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         item.setTitle(String.valueOf(remainingCards) + " " + cards);
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if(nameActualPlayer != null)
             nameActualPlayer.setText(actualPlayer);
             listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);

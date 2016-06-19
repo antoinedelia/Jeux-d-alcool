@@ -34,7 +34,7 @@
     <string name="playerEmpty">Aucun joueur ajouté (vous n\'avez rien entré)</string>
     <string name="noPlayer">Aucun joueur</string>
     <string name="noRule">Aucune règle</string>
-    <string name="actualPlayer">Joueur actuel :</string>
+    <string name="currentPlayer">Joueur actuel :</string>
     <string name="action_addPlayers">Ajouter joueurs</string>
     <string name="action_players">Informations des joueurs</string>
     <string name="ruleCard">Règle pour cette carte : </string>

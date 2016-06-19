@@ -76,7 +76,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
 
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if (nameActualPlayer != null)
                 nameActualPlayer.setText(actualPlayer);
         }
@@ -130,7 +130,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
 
                                 if (numberPlayers > 0) {
                                     final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-                                    final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+                                    final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
                                     if (nameActualPlayer != null)
                                         nameActualPlayer.setText(actualPlayer);
                                 }
@@ -719,7 +719,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
             imageViewCard.setImageResource(resourceId);
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
-            final String actualPlayer = getResources().getString(R.string.actualPlayer) + " " + listPlayers.get(numberActualPlayer);
+            final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if (nameActualPlayer != null)
                 nameActualPlayer.setText(actualPlayer);
             listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);

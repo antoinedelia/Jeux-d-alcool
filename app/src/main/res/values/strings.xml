@@ -34,7 +34,7 @@
     <string name="playerEmpty">No player added (you did not enter anything)</string>
     <string name="noPlayer">No player</string>
     <string name="noRule">No rule</string>
-    <string name="actualPlayer">Actual player:</string>
+    <string name="currentPlayer">Current player:</string>
     <string name="action_addPlayers">Add players</string>
     <string name="action_players">Info about players</string>
     <string name="ruleCard">Rule for this card: </string>
