@@ -21,6 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if(imageViewCard != null)
-        imageViewCard.setImageResource(resourceId);
+            Picasso.with(this).load(resourceId).into(imageViewCard);
 
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
         if(textViewRules != null)
@@ -117,7 +119,8 @@ public class CircleOfDeathActivity extends AppCompatActivity {
 
                             card = deck.getNextCard();
                             int resourceId = CircleOfDeathActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            imageViewCard.setImageResource(resourceId);
+                            Picasso.with(CircleOfDeathActivity.this).load(resourceId).into(imageViewCard);
+
 
                             if(textViewRules != null)
                             textViewRules.setText(card.getRule().getSmallRule());
@@ -253,7 +256,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if(imageViewCard != null)
-        imageViewCard.setImageResource(resourceId);
+            Picasso.with(CircleOfDeathActivity.this).load(resourceId).into(imageViewCard);
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
         if(textViewRules != null)
         textViewRules.setText(card.getRule().getSmallRule());

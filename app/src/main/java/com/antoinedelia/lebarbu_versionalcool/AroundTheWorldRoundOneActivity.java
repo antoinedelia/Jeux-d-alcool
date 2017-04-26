@@ -21,6 +21,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,7 +157,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewRed.getVisibility() == View.INVISIBLE)
@@ -182,7 +184,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewBlack.getVisibility() == View.INVISIBLE) {
@@ -210,7 +212,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewLess.getVisibility() == View.INVISIBLE)
@@ -237,7 +239,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewMore.getVisibility() == View.INVISIBLE) {
@@ -265,7 +267,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewEquals1.getVisibility() == View.INVISIBLE) {
@@ -293,7 +295,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewBetween.getVisibility() == View.INVISIBLE)
@@ -320,7 +322,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewOutside.getVisibility() == View.INVISIBLE) {
@@ -348,7 +350,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewEquals2.getVisibility() == View.INVISIBLE) {
@@ -376,7 +378,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewSame.getVisibility() == View.INVISIBLE)
@@ -403,7 +405,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewDifferent.getVisibility() == View.INVISIBLE) {
@@ -431,7 +433,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewHearts.getVisibility() == View.INVISIBLE)
@@ -458,7 +460,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewSpades.getVisibility() == View.INVISIBLE) {
@@ -486,7 +488,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewDiamonds.getVisibility() == View.INVISIBLE)
@@ -513,7 +515,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                             lastClickTime = SystemClock.elapsedRealtime();
                             card = deck.getNextCard();
                             int resourceId = AroundTheWorldRoundOneActivity.this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-                            if (imageViewCard != null) imageViewCard.setImageResource(resourceId);
+                            if (imageViewCard != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
                             listPlayers.get(numberActualPlayer).getCards().set(round, card);
                             refreshCards();
                             if (imageViewClubs.getVisibility() == View.INVISIBLE) {
@@ -598,28 +600,23 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
 
         if (round >= 0) {
             int resourceId1 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(0).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-            Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId1);
-            if (imageViewCardOne != null) imageViewCardOne.setImageBitmap(icon);
+            if (imageViewCardOne != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId1).into(imageViewCardOne);
         }
         if (round >= 1) {
             int resourceId2 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(1).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-            Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId2);
-            if (imageViewCardTwo != null) imageViewCardTwo.setImageBitmap(icon);
+            if (imageViewCardTwo != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId2).into(imageViewCardTwo);
         }
         if (round >= 2) {
             int resourceId3 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(2).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-            Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId3);
-            if (imageViewCardThree != null) imageViewCardThree.setImageBitmap(icon);
+            if (imageViewCardThree != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId3).into(imageViewCardThree);
         }
         if (round >= 3) {
             int resourceId4 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(3).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-            Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId4);
-            if (imageViewCardFour != null) imageViewCardFour.setImageBitmap(icon);
+            if (imageViewCardFour != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId4).into(imageViewCardFour);
         }
         if (round >= 4) {
             int resourceId5 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(4).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
-            Bitmap icon = BitmapFactory.decodeResource(getResources(), resourceId5);
-            if (imageViewCardFive != null) imageViewCardFive.setImageBitmap(icon);
+            if (imageViewCardFive != null) Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId5).into(imageViewCardFive);
         }
     }
 
@@ -716,7 +713,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
         final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if (imageViewCard != null)
-            imageViewCard.setImageResource(resourceId);
+            Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);

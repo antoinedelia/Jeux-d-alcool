@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,12 +68,12 @@ public class BizkitActivity extends AppCompatActivity {
         final ImageView imageViewDiceOne = (ImageView) findViewById(R.id.imageViewDiceOne);
         int resourceIdOne = this.getResources().getIdentifier(diceOne.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if(imageViewDiceOne != null)
-        imageViewDiceOne.setImageResource(resourceIdOne);
+            Picasso.with(this).load(resourceIdOne).into(imageViewDiceOne);
 
         final ImageView imageViewDiceTwo = (ImageView) findViewById(R.id.imageViewDiceTwo);
         int resourceIdTwo = this.getResources().getIdentifier(diceTwo.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if(imageViewDiceTwo != null)
-        imageViewDiceTwo.setImageResource(resourceIdTwo);
+            Picasso.with(this).load(resourceIdTwo).into(imageViewDiceTwo);
 
         final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
         if(textViewRules != null)
@@ -130,10 +132,10 @@ public class BizkitActivity extends AppCompatActivity {
                             diceTwo.roll();
                             int resourceIdOne = BizkitActivity.this.getResources().getIdentifier(diceOne.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
                             if(imageViewDiceOne != null)
-                            imageViewDiceOne.setImageResource(resourceIdOne);
+                                Picasso.with(BizkitActivity.this).load(resourceIdOne).into(imageViewDiceOne);
                             int resourceIdTwo = BizkitActivity.this.getResources().getIdentifier(diceTwo.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
                             if(imageViewDiceTwo != null)
-                            imageViewDiceTwo.setImageResource(resourceIdTwo);
+                                Picasso.with(BizkitActivity.this).load(resourceIdTwo).into(imageViewDiceTwo);
 
                             if(textViewRules != null)
                             textViewRules.setText(getResources().getStringArray(R.array.rulesSmallBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2]);
