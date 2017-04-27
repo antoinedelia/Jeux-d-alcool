@@ -3,8 +3,6 @@ package com.antoinedelia.lebarbu_versionalcool;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
@@ -736,29 +734,29 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
     public void checkSips(String choice) {
         TextView textViewQuestionRound = (TextView) findViewById(R.id.questionRound);
         String textToDisplay;
-        boolean lost = false;
+        boolean win = false;
         boolean isDouble = false;
         if (numberPlayers > 0) {
             switch (round) {
                 case 0: //Red or black
                     if (card.getSuit() == Deck.SuitCards.HEARTS || card.getSuit() == Deck.SuitCards.DIAMONDS) {
-                        if (choice.equals(getResources().getString(R.string.black)))
-                            lost = true;
-                    } else {
                         if (choice.equals(getResources().getString(R.string.red)))
-                            lost = true;
+                            win = true;
+                    } else {
+                        if (choice.equals(getResources().getString(R.string.black)))
+                            win = true;
                     }
                     break;
                 case 1: // More or less
                     if (card.getName().getNumVal() > listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal()) {
-                        if (choice.equals(getResources().getString(R.string.less)))
-                            lost = true;
-                    } else if(card.getName().getNumVal() < listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal()) {
                         if (choice.equals(getResources().getString(R.string.more)))
-                            lost = true;
+                            win = true;
+                    } else if(card.getName().getNumVal() < listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal()) {
+                        if (choice.equals(getResources().getString(R.string.less)))
+                            win = true;
                     } else if (card.getName().getNumVal() == listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal()) {
-                        if(!choice.equals(getResources().getString(R.string.equals)))
-                            lost = true;
+                        if(choice.equals(getResources().getString(R.string.equals)))
+                            win = true;
                         isDouble = true;
                     }
                     break;
@@ -766,14 +764,14 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     Card lowestCard = listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal() < listPlayers.get(numberActualPlayer).getCards().get(1).getName().getNumVal() ? listPlayers.get(numberActualPlayer).getCards().get(0) : listPlayers.get(numberActualPlayer).getCards().get(1);
                     Card highestCard = listPlayers.get(numberActualPlayer).getCards().get(0).getName().getNumVal() > listPlayers.get(numberActualPlayer).getCards().get(1).getName().getNumVal() ? listPlayers.get(numberActualPlayer).getCards().get(0) : listPlayers.get(numberActualPlayer).getCards().get(1);
                     if (card.getName().getNumVal() < lowestCard.getName().getNumVal() || card.getName().getNumVal() > highestCard.getName().getNumVal()) {
-                        if (choice.equals(getResources().getString(R.string.between)))
-                            lost = true;
-                    } else if(card.getName().getNumVal() > lowestCard.getName().getNumVal() && card.getName().getNumVal() < highestCard.getName().getNumVal()) {
                         if (choice.equals(getResources().getString(R.string.outside)))
-                            lost = true;
+                            win = true;
+                    } else if(card.getName().getNumVal() > lowestCard.getName().getNumVal() && card.getName().getNumVal() < highestCard.getName().getNumVal()) {
+                        if (choice.equals(getResources().getString(R.string.between)))
+                            win = true;
                     } else if (card.getName().getNumVal() == lowestCard.getName().getNumVal() || card.getName().getNumVal() == highestCard.getName().getNumVal()) {
-                        if(!choice.equals(getResources().getString(R.string.equals)))
-                            lost = true;
+                        if(choice.equals(getResources().getString(R.string.equals)))
+                            win = true;
                         isDouble = true;
                     }
                     break;
@@ -783,30 +781,30 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                         listSuit.add(card.getSuit());
                     }
                     if (listSuit.contains(card.getSuit())) {
-                        if (choice.equals(getResources().getString(R.string.different)))
-                            lost = true;
-                    } else {
                         if (choice.equals(getResources().getString(R.string.same)))
-                            lost = true;
+                            win = true;
+                    } else {
+                        if (choice.equals(getResources().getString(R.string.different)))
+                            win = true;
                     }
                     break;
                 case 4: //Hearts, spades, diamonds or clubs
                     if (card.getSuit() == Deck.SuitCards.HEARTS) {
-                        if (!choice.equals(getResources().getString(R.string.hearts)))
-                            lost = true;
+                        if (choice.equals(getResources().getString(R.string.hearts)))
+                            win = true;
                     } else if(card.getSuit() == Deck.SuitCards.DIAMONDS) {
-                        if (!choice.equals(getResources().getString(R.string.diamonds)))
-                            lost = true;
+                        if (choice.equals(getResources().getString(R.string.diamonds)))
+                            win = true;
                     } else if(card.getSuit() == Deck.SuitCards.SPADES) {
-                        if (!choice.equals(getResources().getString(R.string.spades)))
-                            lost = true;
+                        if (choice.equals(getResources().getString(R.string.spades)))
+                            win = true;
                     } else if(card.getSuit() == Deck.SuitCards.CLUBS) {
-                        if (!choice.equals(getResources().getString(R.string.clubs)))
-                            lost = true;
+                        if (choice.equals(getResources().getString(R.string.clubs)))
+                            win = true;
                     }
                     break;
             }
-            if(lost) {
+            if(!win) {
                 textToDisplay = getResources().getString(R.string.youDrink) + " " + ((round + 1) * (isDouble ? 2 : 1)) + " " + getResources().getString(R.string.sip) + (round < 1 ? "" : "s");
                 listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + ((round + 1) * (isDouble ? 2 : 1)));
             }
@@ -824,35 +822,46 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
         final LinearLayout linearLayoutBetweenOrOutside = (LinearLayout) findViewById(R.id.containerImageBetweenOrOutside);
         final LinearLayout linearLayoutSameOrDifferent = (LinearLayout) findViewById(R.id.containerImageSameOrDifferent);
         final LinearLayout linearLayoutSuitChoice = (LinearLayout) findViewById(R.id.containerImageSuitChoice);
+        final TextView textViewQuestionRound = (TextView) findViewById(R.id.questionRound);
         if (round == 0) {
             if (linearLayoutCard != null)
                 linearLayoutCard.setVisibility(View.INVISIBLE);
             if (linearLayoutRedOrBlack != null)
                 linearLayoutRedOrBlack.setVisibility(View.VISIBLE);
+            if (textViewQuestionRound != null)
+                textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartOne));
         }
         if (round == 1) {
             if (linearLayoutCard != null)
                 linearLayoutCard.setVisibility(View.INVISIBLE);
             if (linearLayoutMoreOrLess != null)
                 linearLayoutMoreOrLess.setVisibility(View.VISIBLE);
+            if (textViewQuestionRound != null)
+                textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartTwo));
         }
         if (round == 2) {
             if (linearLayoutCard != null)
                 linearLayoutCard.setVisibility(View.INVISIBLE);
             if (linearLayoutBetweenOrOutside != null)
                 linearLayoutBetweenOrOutside.setVisibility(View.VISIBLE);
+            if (textViewQuestionRound != null)
+                textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartThree));
         }
         if (round == 3) {
             if (linearLayoutCard != null)
                 linearLayoutCard.setVisibility(View.INVISIBLE);
             if (linearLayoutSameOrDifferent != null)
                 linearLayoutSameOrDifferent.setVisibility(View.VISIBLE);
+            if (textViewQuestionRound != null)
+                textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartFour));
         }
         if (round == 4) {
             if (linearLayoutCard != null)
                 linearLayoutCard.setVisibility(View.INVISIBLE);
             if (linearLayoutSuitChoice != null)
                 linearLayoutSuitChoice.setVisibility(View.VISIBLE);
+            if (textViewQuestionRound != null)
+                textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartFive));
         }
     }
 }
