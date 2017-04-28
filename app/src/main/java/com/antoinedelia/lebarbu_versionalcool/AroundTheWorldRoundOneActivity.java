@@ -53,6 +53,8 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
         numberPlayers = listPlayers.size();
+        for(int i = 0; i < numberPlayers; i++)
+            listPlayers.get(i).setSpecialTrait(new ArrayList<Player.Trait>(2));
 
         for (int i = 0; i < numberPlayers; i++) {
             for (int j = 0; j < 5; j++) {

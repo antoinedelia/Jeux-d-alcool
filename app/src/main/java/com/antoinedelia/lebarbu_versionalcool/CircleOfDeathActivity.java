@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.webkit.WebStorage;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CircleOfDeathActivity extends AppCompatActivity {
@@ -46,6 +48,8 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
         numberPlayers = listPlayers.size();
+        for(int i = 0; i < numberPlayers; i++)
+            listPlayers.get(i).setSpecialTrait(new ArrayList<Player.Trait>(2));
 
         deck = new Deck("CircleOfDeath", this);
         card = deck.getNextCard();
@@ -75,8 +79,6 @@ public class CircleOfDeathActivity extends AppCompatActivity {
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if(nameActualPlayer != null)
             nameActualPlayer.setText(actualPlayer);
-            for (int i = 0; i < listPlayers.size(); i++)
-                listPlayers.get(i).setSpecialTrait("");
         }
         checkSipsAndSpecial();
 
@@ -200,8 +202,19 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                     List<String> playersWithInfo = new ArrayList<>();
                     for (int i = 0; i < listPlayers.size(); i++) {
                         String textSip = getResources().getString(R.string.sip) + (listPlayers.get(i).getNumberSips() > 1 ? "s" : "");
-                        String textSpecialTrait = ((listPlayers.get(i).getSpecialTrait().isEmpty() || listPlayers.get(i).getSpecialTrait().equals(" ")) ? "" : " (" + listPlayers.get(i).getSpecialTrait().trim() + ")");
-                        String textToDisplay = listPlayers.get(i).getName() + " " + getResources().getString(R.string.drank) + " " + listPlayers.get(i).getNumberSips() + " " + textSip + textSpecialTrait;
+                        String textSpecialTrait = "";
+                        for (int j = 0; j < listPlayers.get(i).getSpecialTrait().size(); j++) {
+                            if(j > 0) textSpecialTrait += " / ";
+                            switch (listPlayers.get(i).getSpecialTrait().get(j)){
+                                case QUEEN:
+                                    textSpecialTrait += getString(R.string.queen);
+                                    break;
+                                case SNAKE:
+                                    textSpecialTrait += getString(R.string.snake);
+                                    break;
+                            }
+                        }
+                        String textToDisplay = listPlayers.get(i).getName() + " " + getResources().getString(R.string.drank) + " " + listPlayers.get(i).getNumberSips() + " " + textSip + " - " + textSpecialTrait;
                         playersWithInfo.add(textToDisplay.trim());
                     }
                     ListView playersList = new ListView(this);
@@ -271,8 +284,6 @@ public class CircleOfDeathActivity extends AppCompatActivity {
             if(nameActualPlayer != null)
             nameActualPlayer.setText(actualPlayer);
             listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
-            for (int i = 0; i < listPlayers.size(); i++)
-                listPlayers.get(i).setSpecialTrait("");
         }
         checkSipsAndSpecial();
     }
@@ -300,20 +311,18 @@ public class CircleOfDeathActivity extends AppCompatActivity {
             //Check if JACK to give player the Snake eyes trait
             if (card.getName() == Deck.Cards.JACK) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.JACK.getNumVal()])) {
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.JACK.getNumVal()], ""));
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                    if (listPlayers.get(i).getSpecialTrait().contains(Player.Trait.SNAKE)) {
+                        listPlayers.get(i).getSpecialTrait().remove(Player.Trait.SNAKE);
                     }
-                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.JACK.getNumVal()]);
+                listPlayers.get(numberActualPlayer).getSpecialTrait().add((Player.Trait.SNAKE));
             }
             //Check if QUEEN to give player the Question's queen trait
             if (card.getName() == Deck.Cards.QUEEN) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.QUEEN.getNumVal()])) {
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.QUEEN.getNumVal()], ""));
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                    if (listPlayers.get(i).getSpecialTrait().contains(Player.Trait.QUEEN)) {
+                        listPlayers.get(i).getSpecialTrait().remove(Player.Trait.QUEEN);
                     }
-                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallCircleOfDeath)[Deck.Cards.QUEEN.getNumVal()]);
+                listPlayers.get(numberActualPlayer).getSpecialTrait().add(Player.Trait.QUEEN);
             }
         }
 

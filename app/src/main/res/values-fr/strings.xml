@@ -19,6 +19,10 @@
     <string name="dice">dé</string>
     <string name="player">Joueur</string>
     <string name="players">Joueurs</string>
+    <string name="master">Grand Maître</string>
+    <string name="queen">La reine des questions</string>
+    <string name="snake">Snake eyes</string>
+    <string name="biscuit">Biscuit</string>
     <string name="gameOver">Jeu terminé</string>
     <string name="restartGame">Voulez-vous rejouer ?</string>
     <string name="addPlayer">Ajouter un joueur</string>

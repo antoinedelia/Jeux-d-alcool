@@ -4,6 +4,7 @@ package com.antoinedelia.lebarbu_versionalcool;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BizkitActivity extends AppCompatActivity {
@@ -47,9 +49,8 @@ public class BizkitActivity extends AppCompatActivity {
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
         numberPlayers = listPlayers.size();
-
-        for (int i = 0; i < listPlayers.size(); i++)
-            listPlayers.get(i).setSpecialTrait("");
+        for(int i = 0; i < numberPlayers; i++)
+            listPlayers.get(i).setSpecialTrait(new ArrayList<Player.Trait>(2));
 
         diceOne = new Dice();
         diceTwo = new Dice();
@@ -85,8 +86,6 @@ public class BizkitActivity extends AppCompatActivity {
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if(nameActualPlayer != null)
                 nameActualPlayer.setText(actualPlayer);
-            for (int i = 0; i < listPlayers.size(); i++)
-                listPlayers.get(i).setSpecialTrait("");
         }
         checkSipsAndSpecial();
 
@@ -180,8 +179,19 @@ public class BizkitActivity extends AppCompatActivity {
                     List<String> playersWithInfo = new ArrayList<>();
                     for (int i = 0; i < listPlayers.size(); i++) {
                         String textSip = getResources().getString(R.string.sip) + (listPlayers.get(i).getNumberSips() > 1 ? "s" : "");
-                        String textSpecialTrait = ((listPlayers.get(i).getSpecialTrait().isEmpty() || listPlayers.get(i).getSpecialTrait().equals(" ")) ? "" : " (" + listPlayers.get(i).getSpecialTrait().trim() + ")");
-                        String textToDisplay = listPlayers.get(i).getName() + " " + getResources().getString(R.string.drank) + " " + listPlayers.get(i).getNumberSips() + " " + textSip + textSpecialTrait;
+                        String textSpecialTrait = "";
+                        for (int j = 0; j < listPlayers.get(i).getSpecialTrait().size(); j++) {
+                            if(j > 0) textSpecialTrait += " / ";
+                            switch (listPlayers.get(i).getSpecialTrait().get(j)){
+                                case BISCUIT:
+                                    textSpecialTrait += getString(R.string.biscuit);
+                                    break;
+                                case MASTER:
+                                    textSpecialTrait += getString(R.string.master);
+                                    break;
+                            }
+                        }
+                        String textToDisplay = listPlayers.get(i).getName() + " " + getResources().getString(R.string.drank) + " " + listPlayers.get(i).getNumberSips() + " " + textSip + " - " + textSpecialTrait;
                         playersWithInfo.add(textToDisplay.trim());
                     }
                     ListView playersList = new ListView(this);
@@ -258,17 +268,16 @@ public class BizkitActivity extends AppCompatActivity {
             //Check if three to give player the Biscuit trait
             if (sumOfDice == 3) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBizkit)[1])) {
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBizkit)[1], ""));
-                        listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                    if (listPlayers.get(i).getSpecialTrait().contains(Player.Trait.BISCUIT)) {
+                        listPlayers.get(i).getSpecialTrait().remove(Player.Trait.BISCUIT);
                     }
-                listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBizkit)[1]);
+                listPlayers.get(numberActualPlayer).getSpecialTrait().add(Player.Trait.BISCUIT);
                 listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
             }
             //Check if a dice is three
             if (diceOne.getValue() == 3 || diceTwo.getValue() == 3) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBizkit)[1])) {
+                    if (listPlayers.get(i).getSpecialTrait().contains(Player.Trait.BISCUIT)) {
                         listPlayers.get(i).setNumberSips(listPlayers.get(i).getNumberSips() + ((diceOne.getValue() == 3 && diceTwo.getValue() == 3) ? 2 : 1));
                     }
             }
@@ -317,11 +326,10 @@ public class BizkitActivity extends AppCompatActivity {
                         isTwelve = true;
                         if (!listPlayers.isEmpty()) {
                             for (int i = 0; i < listPlayers.size(); i++)
-                                if (listPlayers.get(i).getSpecialTrait().contains(getResources().getStringArray(R.array.rulesSmallBizkit)[10])) {
-                                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().replace(getResources().getStringArray(R.array.rulesSmallBizkit)[10], ""));
-                                    listPlayers.get(i).setSpecialTrait(listPlayers.get(i).getSpecialTrait().trim().replaceAll("[^A-Za-z ']+", ""));
+                                if (listPlayers.get(i).getSpecialTrait().contains(Player.Trait.MASTER)) {
+                                    listPlayers.get(i).getSpecialTrait().remove(Player.Trait.MASTER);
                                 }
-                            listPlayers.get(numberActualPlayer).setSpecialTrait((listPlayers.get(numberActualPlayer).getSpecialTrait().equals("") ? "" : listPlayers.get(numberActualPlayer).getSpecialTrait() + " / ") + getResources().getStringArray(R.array.rulesSmallBizkit)[10]);
+                            listPlayers.get(numberActualPlayer).getSpecialTrait().add(Player.Trait.MASTER);
                         }
                     }
                 }

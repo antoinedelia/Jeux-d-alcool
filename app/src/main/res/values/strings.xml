@@ -19,6 +19,10 @@
     <string name="dice">dice</string>
     <string name="player">Player</string>
     <string name="players">Players</string>
+    <string name="master">Great Master</string>
+    <string name="queen">Question\'s queen</string>
+    <string name="snake">Snake eyes</string>
+    <string name="biscuit">Biscuit</string>
     <string name="gameOver">Game over</string>
     <string name="restartGame">Would you like to play again?</string>
     <string name="addPlayer">Add a player</string>

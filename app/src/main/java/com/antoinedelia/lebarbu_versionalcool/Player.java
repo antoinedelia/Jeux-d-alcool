@@ -19,13 +19,13 @@ public class Player implements Parcelable {
     };
     private String name;
     private int numberSips;
-    private String specialTrait;
+    private List<Trait> specialTrait;
     private List<Card> listCards;
 
     public Player(String namePlayer) {
         name = namePlayer;
         numberSips = 0;
-        specialTrait = "";
+        specialTrait = new ArrayList<>();
         listCards = new ArrayList<>();
     }
 
@@ -33,7 +33,6 @@ public class Player implements Parcelable {
         // This order must match the order in writeToParcel()
         name = in.readString();
         numberSips = in.readInt();
-        specialTrait = in.readString();
         //TODO handle that
         //in.readTypedList(listCards, Card.CREATOR);
         // Continue doing this for the rest of your member data
@@ -55,11 +54,11 @@ public class Player implements Parcelable {
         numberSips = number;
     }
 
-    public String getSpecialTrait() {
+    public List<Trait> getSpecialTrait() {
         return specialTrait;
     }
 
-    public void setSpecialTrait(String trait) {
+    public void setSpecialTrait(List<Trait> trait) {
         specialTrait = trait;
     }
 
@@ -77,7 +76,6 @@ public class Player implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
         dest.writeInt(numberSips);
-        dest.writeString(specialTrait);
         //TODO handle that
         //dest.writeList(listCards);
     }
@@ -85,5 +83,27 @@ public class Player implements Parcelable {
     @Override
     public String toString() {
         return name;
+    }
+
+    public enum Trait{
+        MASTER(0),
+        QUEEN(1),
+        SNAKE(2),
+        BISCUIT(3);
+
+        private int numVal;
+
+        Trait(int num) {
+            this.numVal = num;
+        }
+
+        public int getNumVal() {
+            return numVal;
+        }
+    }
+
+    public boolean HasTrait()
+    {
+        return specialTrait.contains(Trait.MASTER) || specialTrait.contains(Trait.QUEEN) || specialTrait.contains(Trait.SNAKE) || specialTrait.contains(Trait.BISCUIT);
     }
 }
