@@ -3,8 +3,8 @@ package com.antoinedelia.lebarbu_versionalcool;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +16,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Objects;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class PlayersActivity extends AppCompatActivity {
 
@@ -27,12 +30,13 @@ public class PlayersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.players);
 
-        ListView listview = (ListView) findViewById(R.id.listView);
+        ListView listview = findViewById(R.id.listView);
 
         //We get the list of the players (if there is one)
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
 
+        assert listPlayers != null;
         adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
                 listPlayers);
@@ -102,7 +106,9 @@ public class PlayersActivity extends AppCompatActivity {
                         @Override
                         public void onFocusChange(View v, boolean hasFocus) {
                             if (hasFocus) {
-                                dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                    Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                                }
                             }
                         }
                     });
@@ -145,7 +151,9 @@ public class PlayersActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                    }
                 }
             }
         });
@@ -165,14 +173,12 @@ public class PlayersActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                Intent intent = new Intent();
-                //We send back the list of the players
-                intent.putParcelableArrayListExtra("listPlayers", listPlayers);
-                setResult(RESULT_OK, intent);
-                finish();
-                break;
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent();
+            //We send back the list of the players
+            intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+            setResult(RESULT_OK, intent);
+            finish();
         }
         return true;
     }

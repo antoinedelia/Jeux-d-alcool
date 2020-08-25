@@ -3,17 +3,13 @@ package com.antoinedelia.lebarbu_versionalcool;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.WindowManager;
-import android.webkit.WebStorage;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,8 +21,13 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class CircleOfDeathActivity extends AppCompatActivity {
 
@@ -47,14 +48,14 @@ public class CircleOfDeathActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
-        numberPlayers = listPlayers.size();
+        numberPlayers = listPlayers != null ? listPlayers.size() : 0;
         for(int i = 0; i < numberPlayers; i++)
             listPlayers.get(i).setSpecialTrait(new ArrayList<Player.Trait>(2));
 
         deck = new Deck("CircleOfDeath", this);
         card = deck.getNextCard();
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Get a support ActionBar corresponding to this toolbar
@@ -64,18 +65,18 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
 
-        final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
+        final ImageView imageViewCard = findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if(imageViewCard != null)
             Picasso.with(this).load(resourceId).into(imageViewCard);
 
-        final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
+        final TextView textViewRules = findViewById(R.id.textViewRules);
         if(textViewRules != null)
         textViewRules.setText(card.getRule().getSmallRule());
         rulesDetails = card.getRule().getLongRule();
 
         if (numberPlayers != 0) {
-            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+            final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if(nameActualPlayer != null)
             nameActualPlayer.setText(actualPlayer);
@@ -83,7 +84,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         checkSipsAndSpecial();
 
         //Click on rule
-        LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
+        LinearLayout linearLayoutRules = findViewById(R.id.containerRules);
         if(linearLayoutRules != null)
         linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,10 +131,10 @@ public class CircleOfDeathActivity extends AppCompatActivity {
 
                             int remainingCards = deck.getRemainingCards();
                             String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
-                            item.setTitle(String.valueOf(remainingCards) + " " + cards);
+                            item.setTitle(remainingCards + " " + cards);
 
                             if (numberPlayers > 0) {
-                                final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+                                final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
                                 final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
                                 if(nameActualPlayer != null)
                                 nameActualPlayer.setText(actualPlayer);
@@ -202,15 +203,15 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                     List<String> playersWithInfo = new ArrayList<>();
                     for (int i = 0; i < listPlayers.size(); i++) {
                         String textSip = getResources().getString(R.string.sip) + (listPlayers.get(i).getNumberSips() > 1 ? "s" : "");
-                        String textSpecialTrait = "";
+                        StringBuilder textSpecialTrait = new StringBuilder();
                         for (int j = 0; j < listPlayers.get(i).getSpecialTrait().size(); j++) {
-                            if(j > 0) textSpecialTrait += " / ";
+                            if(j > 0) textSpecialTrait.append(" / ");
                             switch (listPlayers.get(i).getSpecialTrait().get(j)){
                                 case QUEEN:
-                                    textSpecialTrait += getString(R.string.queen);
+                                    textSpecialTrait.append(getString(R.string.queen));
                                     break;
                                 case SNAKE:
-                                    textSpecialTrait += getString(R.string.snake);
+                                    textSpecialTrait.append(getString(R.string.snake));
                                     break;
                             }
                         }
@@ -266,20 +267,20 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         deck = new Deck("CircleOfDeath", this);
         numberPlayers = listPlayers.size();
         numberActualPlayer = 0;
-        final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
+        final ImageView imageViewCard = findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if(imageViewCard != null)
             Picasso.with(CircleOfDeathActivity.this).load(resourceId).into(imageViewCard);
-        final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
+        final TextView textViewRules = findViewById(R.id.textViewRules);
         if(textViewRules != null)
         textViewRules.setText(card.getRule().getSmallRule());
         rulesDetails = card.getRule().getLongRule();
         card = deck.getNextCard();
         int remainingCards = deck.getRemainingCards();
         String cards = getResources().getString(R.string.card) + (remainingCards > 1 ? "s" : "");
-        item.setTitle(String.valueOf(remainingCards) + " " + cards);
+        item.setTitle(remainingCards + " " + cards);
         if (numberPlayers != 0) {
-            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+            final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if(nameActualPlayer != null)
             nameActualPlayer.setText(actualPlayer);
@@ -311,17 +312,13 @@ public class CircleOfDeathActivity extends AppCompatActivity {
             //Check if JACK to give player the Snake eyes trait
             if (card.getName() == Deck.Cards.JACK) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(Player.Trait.SNAKE)) {
-                        listPlayers.get(i).getSpecialTrait().remove(Player.Trait.SNAKE);
-                    }
+                    listPlayers.get(i).getSpecialTrait().remove(Player.Trait.SNAKE);
                 listPlayers.get(numberActualPlayer).getSpecialTrait().add((Player.Trait.SNAKE));
             }
             //Check if QUEEN to give player the Question's queen trait
             if (card.getName() == Deck.Cards.QUEEN) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(Player.Trait.QUEEN)) {
-                        listPlayers.get(i).getSpecialTrait().remove(Player.Trait.QUEEN);
-                    }
+                    listPlayers.get(i).getSpecialTrait().remove(Player.Trait.QUEEN);
                 listPlayers.get(numberActualPlayer).getSpecialTrait().add(Player.Trait.QUEEN);
             }
         }
@@ -349,7 +346,9 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
-                        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        }
                     }
                 }
             });
@@ -361,7 +360,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Boolean wantToCloseDialog = (input.getText().toString().trim().isEmpty());
+                    boolean wantToCloseDialog = (input.getText().toString().trim().isEmpty());
                     // if EditText is empty disable closing on positive button
                     if (!wantToCloseDialog) {
                         listRules.add(input.getText().toString().trim());

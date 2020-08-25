@@ -6,14 +6,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
@@ -56,7 +57,7 @@ public class MenuActivity extends AppCompatActivity {
         // Start the thread
         t.start();
 
-        final ImageView imageCircleOfDeath = (ImageView) findViewById(R.id.imageCircleOfDeath);
+        final ImageView imageCircleOfDeath = findViewById(R.id.imageCircleOfDeath);
         if(imageCircleOfDeath != null)
         imageCircleOfDeath.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,7 +68,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        final ImageView imageBizkit = (ImageView) findViewById(R.id.imageBizkit);
+        final ImageView imageBizkit = findViewById(R.id.imageBizkit);
         if(imageBizkit != null)
         imageBizkit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +79,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        final ImageView imageAroundTheWorldRoundOne = (ImageView) findViewById(R.id.imageAroundTheWorldRoundOne);
+        final ImageView imageAroundTheWorldRoundOne = findViewById(R.id.imageAroundTheWorldRoundOne);
         if(imageAroundTheWorldRoundOne != null)
             imageAroundTheWorldRoundOne.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -117,7 +118,7 @@ public class MenuActivity extends AppCompatActivity {
                 }
             });
 
-        final ImageView imageTutorial = (ImageView) findViewById(R.id.imageTutorial);
+        final ImageView imageTutorial = findViewById(R.id.imageTutorial);
         if(imageTutorial != null)
             imageTutorial.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,7 +129,7 @@ public class MenuActivity extends AppCompatActivity {
                 }
             });
 
-        final TextView textViewCircleOfDeath = (TextView) findViewById(R.id.textViewCircleOfDeath);
+        final TextView textViewCircleOfDeath = findViewById(R.id.textViewCircleOfDeath);
         if(textViewCircleOfDeath != null)
         textViewCircleOfDeath.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +140,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        final TextView textViewBizkit = (TextView) findViewById(R.id.textViewBizkit);
+        final TextView textViewBizkit = findViewById(R.id.textViewBizkit);
         if(textViewBizkit != null)
         textViewBizkit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +151,7 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
 
-        final TextView textViewAroundTheWorldRoundOne = (TextView) findViewById(R.id.textViewAroundTheWorldRoundOne);
+        final TextView textViewAroundTheWorldRoundOne = findViewById(R.id.textViewAroundTheWorldRoundOne);
         if(textViewAroundTheWorldRoundOne != null)
             textViewAroundTheWorldRoundOne.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -189,7 +190,7 @@ public class MenuActivity extends AppCompatActivity {
                 }
             });
 
-        final TextView textViewTutorial = (TextView) findViewById(R.id.textViewTutorial);
+        final TextView textViewTutorial = findViewById(R.id.textViewTutorial);
         if(textViewTutorial != null)
             textViewTutorial.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -212,12 +213,11 @@ public class MenuActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_addPlayers:
-                Intent intent = new Intent(MenuActivity.this, PlayersActivity.class);
-                //We pass the list of the players (if there is one)
-                intent.putParcelableArrayListExtra("listPlayers", listPlayers);
-                startActivityForResult(intent, 1);
+        if (item.getItemId() == R.id.action_addPlayers) {
+            Intent intent = new Intent(MenuActivity.this, PlayersActivity.class);
+            //We pass the list of the players (if there is one)
+            intent.putParcelableArrayListExtra("listPlayers", listPlayers);
+            startActivityForResult(intent, 1);
         }
         return true;
     }

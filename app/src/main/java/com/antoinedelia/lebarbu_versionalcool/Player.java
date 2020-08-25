@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+
 public class Player implements Parcelable {
 
     public static final Parcelable.Creator<Player> CREATOR = new Parcelable.Creator<Player>() {
@@ -80,30 +82,21 @@ public class Player implements Parcelable {
         //dest.writeList(listCards);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return name;
     }
 
     public enum Trait{
-        MASTER(0),
-        QUEEN(1),
-        SNAKE(2),
-        BISCUIT(3);
+        MASTER(),
+        QUEEN(),
+        SNAKE(),
+        BISCUIT();
 
-        private int numVal;
-
-        Trait(int num) {
-            this.numVal = num;
+        Trait() {
         }
 
-        public int getNumVal() {
-            return numVal;
-        }
     }
 
-    public boolean HasTrait()
-    {
-        return specialTrait.contains(Trait.MASTER) || specialTrait.contains(Trait.QUEEN) || specialTrait.contains(Trait.SNAKE) || specialTrait.contains(Trait.BISCUIT);
-    }
 }

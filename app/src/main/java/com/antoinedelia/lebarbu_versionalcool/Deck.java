@@ -126,16 +126,10 @@ public class Deck {
     }
 
     public enum SuitCards {
-        HEARTS(0), SPADES(1), DIAMONDS(2), CLUBS(3);
+        HEARTS(), SPADES(), DIAMONDS(), CLUBS();
 
-        private int numVal;
-
-        SuitCards(int numVal) {
-            this.numVal = numVal;
+        SuitCards() {
         }
 
-        public int getNumVal() {
-            return numVal;
-        }
     }
 }

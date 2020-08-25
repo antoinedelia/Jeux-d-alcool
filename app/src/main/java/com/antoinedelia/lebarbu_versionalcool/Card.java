@@ -27,20 +27,10 @@ public class Card {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
-
     public Rule getRule() {
         return rule;
     }
 
-    public void setRule(Rule rule) {
-        this.rule = rule;
-    }
-
     public Deck.SuitCards getSuit(){ return suit; }
-
-    public void setSuit(Deck.SuitCards suit) { this.suit = suit; }
 
 }

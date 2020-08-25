@@ -1,7 +1,5 @@
 package com.antoinedelia.lebarbu_versionalcool;
 
-import android.content.Context;
-
 import java.util.Random;
 
 public class Dice {
@@ -43,15 +41,8 @@ public class Dice {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
-        this.path = path;
-    }
 }

@@ -4,12 +4,8 @@ package com.antoinedelia.lebarbu_versionalcool;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,8 +23,13 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class BizkitActivity extends AppCompatActivity {
 
@@ -48,7 +49,7 @@ public class BizkitActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
-        numberPlayers = listPlayers.size();
+        numberPlayers = listPlayers != null ? listPlayers.size() : 0;
         for(int i = 0; i < numberPlayers; i++)
             listPlayers.get(i).setSpecialTrait(new ArrayList<Player.Trait>(2));
 
@@ -56,7 +57,7 @@ public class BizkitActivity extends AppCompatActivity {
         diceTwo = new Dice();
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Get a support ActionBar corresponding to this toolbar
@@ -66,23 +67,23 @@ public class BizkitActivity extends AppCompatActivity {
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
 
-        final ImageView imageViewDiceOne = (ImageView) findViewById(R.id.imageViewDiceOne);
+        final ImageView imageViewDiceOne = findViewById(R.id.imageViewDiceOne);
         int resourceIdOne = this.getResources().getIdentifier(diceOne.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if(imageViewDiceOne != null)
             Picasso.with(this).load(resourceIdOne).into(imageViewDiceOne);
 
-        final ImageView imageViewDiceTwo = (ImageView) findViewById(R.id.imageViewDiceTwo);
+        final ImageView imageViewDiceTwo = findViewById(R.id.imageViewDiceTwo);
         int resourceIdTwo = this.getResources().getIdentifier(diceTwo.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if(imageViewDiceTwo != null)
             Picasso.with(this).load(resourceIdTwo).into(imageViewDiceTwo);
 
-        final TextView textViewRules = (TextView) findViewById(R.id.textViewRules);
+        final TextView textViewRules = findViewById(R.id.textViewRules);
         if(textViewRules != null)
         textViewRules.setText(getResources().getStringArray(R.array.rulesSmallBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2]);
         rulesDetails = getResources().getStringArray(R.array.rulesLongBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2];
 
         if (numberPlayers != 0) {
-            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+            final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if(nameActualPlayer != null)
                 nameActualPlayer.setText(actualPlayer);
@@ -90,7 +91,7 @@ public class BizkitActivity extends AppCompatActivity {
         checkSipsAndSpecial();
 
         //Click on rule
-        LinearLayout linearLayoutRules = (LinearLayout) findViewById(R.id.containerRules);
+        LinearLayout linearLayoutRules = findViewById(R.id.containerRules);
         if (linearLayoutRules != null)
             linearLayoutRules.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -113,7 +114,7 @@ public class BizkitActivity extends AppCompatActivity {
             });
 
         //Click on the dice
-        final RelativeLayout relativeLayoutDice = (RelativeLayout) findViewById(R.id.containerImageDice);
+        final RelativeLayout relativeLayoutDice = findViewById(R.id.containerImageDice);
         if (relativeLayoutDice != null)
             relativeLayoutDice.setOnClickListener(
                     new View.OnClickListener() {
@@ -141,7 +142,7 @@ public class BizkitActivity extends AppCompatActivity {
                             rulesDetails = getResources().getStringArray(R.array.rulesLongBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2];
 
                             if (numberPlayers > 0) {
-                                final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+                                final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
                                 final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
                                 if (nameActualPlayer != null)
                                     nameActualPlayer.setText(actualPlayer);
@@ -179,15 +180,15 @@ public class BizkitActivity extends AppCompatActivity {
                     List<String> playersWithInfo = new ArrayList<>();
                     for (int i = 0; i < listPlayers.size(); i++) {
                         String textSip = getResources().getString(R.string.sip) + (listPlayers.get(i).getNumberSips() > 1 ? "s" : "");
-                        String textSpecialTrait = "";
+                        StringBuilder textSpecialTrait = new StringBuilder();
                         for (int j = 0; j < listPlayers.get(i).getSpecialTrait().size(); j++) {
-                            if(j > 0) textSpecialTrait += " / ";
+                            if(j > 0) textSpecialTrait.append(" / ");
                             switch (listPlayers.get(i).getSpecialTrait().get(j)){
                                 case BISCUIT:
-                                    textSpecialTrait += getString(R.string.biscuit);
+                                    textSpecialTrait.append(getString(R.string.biscuit));
                                     break;
                                 case MASTER:
-                                    textSpecialTrait += getString(R.string.master);
+                                    textSpecialTrait.append(getString(R.string.master));
                                     break;
                             }
                         }
@@ -268,9 +269,7 @@ public class BizkitActivity extends AppCompatActivity {
             //Check if three to give player the Biscuit trait
             if (sumOfDice == 3) {
                 for (int i = 0; i < listPlayers.size(); i++)
-                    if (listPlayers.get(i).getSpecialTrait().contains(Player.Trait.BISCUIT)) {
-                        listPlayers.get(i).getSpecialTrait().remove(Player.Trait.BISCUIT);
-                    }
+                    listPlayers.get(i).getSpecialTrait().remove(Player.Trait.BISCUIT);
                 listPlayers.get(numberActualPlayer).getSpecialTrait().add(Player.Trait.BISCUIT);
                 listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
             }
@@ -306,7 +305,9 @@ public class BizkitActivity extends AppCompatActivity {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
-                        dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                            Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        }
                     }
                 }
             });
@@ -318,7 +319,7 @@ public class BizkitActivity extends AppCompatActivity {
             dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Boolean wantToCloseDialog = (input.getText().toString().trim().isEmpty());
+                    boolean wantToCloseDialog = (input.getText().toString().trim().isEmpty());
                     // if EditText is empty disable closing on positive button
                     if (!wantToCloseDialog) {
                         listRules.add(input.getText().toString().trim());
@@ -326,9 +327,7 @@ public class BizkitActivity extends AppCompatActivity {
                         isTwelve = true;
                         if (!listPlayers.isEmpty()) {
                             for (int i = 0; i < listPlayers.size(); i++)
-                                if (listPlayers.get(i).getSpecialTrait().contains(Player.Trait.MASTER)) {
-                                    listPlayers.get(i).getSpecialTrait().remove(Player.Trait.MASTER);
-                                }
+                                listPlayers.get(i).getSpecialTrait().remove(Player.Trait.MASTER);
                             listPlayers.get(numberActualPlayer).getSpecialTrait().add(Player.Trait.MASTER);
                         }
                     }

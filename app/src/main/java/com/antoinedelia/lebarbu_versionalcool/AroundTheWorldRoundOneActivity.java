@@ -5,10 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +19,11 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
 
@@ -40,19 +41,19 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.around_the_world_round_one);
 
-        final LinearLayout linearLayoutCard = (LinearLayout) findViewById(R.id.containerImageCard);
-        final LinearLayout linearLayoutRedOrBlack = (LinearLayout) findViewById(R.id.containerImageRedOrBlack);
-        final LinearLayout linearLayoutMoreOrLess = (LinearLayout) findViewById(R.id.containerImageMoreOrLess);
-        final LinearLayout linearLayoutBetweenOrOutside = (LinearLayout) findViewById(R.id.containerImageBetweenOrOutside);
-        final LinearLayout linearLayoutSameOrDifferent = (LinearLayout) findViewById(R.id.containerImageSameOrDifferent);
-        final LinearLayout linearLayoutSuitChoice = (LinearLayout) findViewById(R.id.containerImageSuitChoice);
+        final LinearLayout linearLayoutCard = findViewById(R.id.containerImageCard);
+        final LinearLayout linearLayoutRedOrBlack = findViewById(R.id.containerImageRedOrBlack);
+        final LinearLayout linearLayoutMoreOrLess = findViewById(R.id.containerImageMoreOrLess);
+        final LinearLayout linearLayoutBetweenOrOutside = findViewById(R.id.containerImageBetweenOrOutside);
+        final LinearLayout linearLayoutSameOrDifferent = findViewById(R.id.containerImageSameOrDifferent);
+        final LinearLayout linearLayoutSuitChoice = findViewById(R.id.containerImageSuitChoice);
 
         if (linearLayoutCard != null)
             linearLayoutCard.setVisibility(View.INVISIBLE);
 
         Intent intent = getIntent();
         listPlayers = intent.getParcelableArrayListExtra("listPlayers");
-        numberPlayers = listPlayers.size();
+        numberPlayers = listPlayers != null ? listPlayers.size() : 0;
         for(int i = 0; i < numberPlayers; i++)
             listPlayers.get(i).setSpecialTrait(new ArrayList<Player.Trait>(2));
 
@@ -64,7 +65,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
 
         deck = new Deck("AroundTheWorldRoundOne", this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Get a support ActionBar corresponding to this toolbar
@@ -74,10 +75,10 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
         if (ab != null)
             ab.setDisplayHomeAsUpEnabled(true);
 
-        final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
+        final ImageView imageViewCard = findViewById(R.id.imageViewCarte);
 
         if (numberPlayers != 0) {
-            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+            final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if (nameActualPlayer != null)
                 nameActualPlayer.setText(actualPlayer);
@@ -131,7 +132,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                                 changeViews();
 
                                 if (numberPlayers > 0) {
-                                    final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+                                    final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
                                     final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
                                     if (nameActualPlayer != null)
                                         nameActualPlayer.setText(actualPlayer);
@@ -144,7 +145,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewRed = (ImageView) findViewById(R.id.imageViewRed);
+        final ImageView imageViewRed = findViewById(R.id.imageViewRed);
         //Click on red
         if (imageViewRed != null)
             imageViewRed.setOnClickListener(
@@ -171,7 +172,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewBlack = (ImageView) findViewById(R.id.imageViewBlack);
+        final ImageView imageViewBlack = findViewById(R.id.imageViewBlack);
         //Click on black
         if (imageViewBlack != null)
             imageViewBlack.setOnClickListener(
@@ -199,7 +200,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewLess = (ImageView) findViewById(R.id.imageViewLess);
+        final ImageView imageViewLess = findViewById(R.id.imageViewLess);
         //Click on less
         if (imageViewLess != null)
             imageViewLess.setOnClickListener(
@@ -226,7 +227,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewMore = (ImageView) findViewById(R.id.imageViewMore);
+        final ImageView imageViewMore = findViewById(R.id.imageViewMore);
         //Click on more
         if (imageViewMore != null)
             imageViewMore.setOnClickListener(
@@ -254,7 +255,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewEquals1 = (ImageView) findViewById(R.id.imageViewEquals1);
+        final ImageView imageViewEquals1 = findViewById(R.id.imageViewEquals1);
         //Click on more
         if (imageViewEquals1 != null)
             imageViewEquals1.setOnClickListener(
@@ -282,7 +283,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewBetween = (ImageView) findViewById(R.id.imageViewBetween);
+        final ImageView imageViewBetween = findViewById(R.id.imageViewBetween);
         //Click on between
         if (imageViewBetween != null)
             imageViewBetween.setOnClickListener(
@@ -309,7 +310,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewOutside = (ImageView) findViewById(R.id.imageViewOutside);
+        final ImageView imageViewOutside = findViewById(R.id.imageViewOutside);
         //Click on outside
         if (imageViewOutside != null)
             imageViewOutside.setOnClickListener(
@@ -337,7 +338,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewEquals2 = (ImageView) findViewById(R.id.imageViewEquals2);
+        final ImageView imageViewEquals2 = findViewById(R.id.imageViewEquals2);
         //Click on outside
         if (imageViewEquals2 != null)
             imageViewEquals2.setOnClickListener(
@@ -365,7 +366,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewSame = (ImageView) findViewById(R.id.imageViewSame);
+        final ImageView imageViewSame = findViewById(R.id.imageViewSame);
         //Click on same
         if (imageViewSame != null)
             imageViewSame.setOnClickListener(
@@ -392,7 +393,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewDifferent = (ImageView) findViewById(R.id.imageViewDifferent);
+        final ImageView imageViewDifferent = findViewById(R.id.imageViewDifferent);
         //Click on different
         if (imageViewDifferent != null)
             imageViewDifferent.setOnClickListener(
@@ -420,7 +421,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewHearts = (ImageView) findViewById(R.id.imageViewHearts);
+        final ImageView imageViewHearts = findViewById(R.id.imageViewHearts);
         //Click on hearts
         if (imageViewHearts != null)
             imageViewHearts.setOnClickListener(
@@ -447,7 +448,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewSpades = (ImageView) findViewById(R.id.imageViewSpades);
+        final ImageView imageViewSpades = findViewById(R.id.imageViewSpades);
         //Click on spades
         if (imageViewSpades != null)
             imageViewSpades.setOnClickListener(
@@ -475,7 +476,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewDiamonds = (ImageView) findViewById(R.id.imageViewDiamonds);
+        final ImageView imageViewDiamonds = findViewById(R.id.imageViewDiamonds);
         //Click on diamonds
         if (imageViewDiamonds != null)
             imageViewDiamonds.setOnClickListener(
@@ -502,7 +503,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     }
             );
 
-        final ImageView imageViewClubs = (ImageView) findViewById(R.id.imageViewClubs);
+        final ImageView imageViewClubs = findViewById(R.id.imageViewClubs);
         //Click on clubs
         if (imageViewClubs != null)
             imageViewClubs.setOnClickListener(
@@ -532,13 +533,13 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
     }
 
     public void changeRound() {
-        LinearLayout linearLayoutRedOrBlack = (LinearLayout) findViewById(R.id.containerImageRedOrBlack);
-        LinearLayout linearLayoutMoreOrLess = (LinearLayout) findViewById(R.id.containerImageMoreOrLess);
-        LinearLayout linearLayoutBetweenOrOutside = (LinearLayout) findViewById(R.id.containerImageBetweenOrOutside);
-        LinearLayout linearLayoutSameOrDifferent = (LinearLayout) findViewById(R.id.containerImageSameOrDifferent);
-        LinearLayout linearLayoutSuitChoice = (LinearLayout) findViewById(R.id.containerImageSuitChoice);
+        LinearLayout linearLayoutRedOrBlack = findViewById(R.id.containerImageRedOrBlack);
+        LinearLayout linearLayoutMoreOrLess = findViewById(R.id.containerImageMoreOrLess);
+        LinearLayout linearLayoutBetweenOrOutside = findViewById(R.id.containerImageBetweenOrOutside);
+        LinearLayout linearLayoutSameOrDifferent = findViewById(R.id.containerImageSameOrDifferent);
+        LinearLayout linearLayoutSuitChoice = findViewById(R.id.containerImageSuitChoice);
 
-        TextView textViewQuestionRound = (TextView) findViewById(R.id.questionRound);
+        TextView textViewQuestionRound = findViewById(R.id.questionRound);
 
         switch (round) {
             case 1:
@@ -548,8 +549,8 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     linearLayoutMoreOrLess.setVisibility(View.VISIBLE);
                 if (textViewQuestionRound != null)
                     textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartTwo));
-                final ImageView imageViewRed = (ImageView) findViewById(R.id.imageViewRed);
-                final ImageView imageViewBlack = (ImageView) findViewById(R.id.imageViewBlack);
+                final ImageView imageViewRed = findViewById(R.id.imageViewRed);
+                final ImageView imageViewBlack = findViewById(R.id.imageViewBlack);
                 if (imageViewRed != null) imageViewRed.setOnClickListener(null);
                 if (imageViewBlack != null) imageViewBlack.setOnClickListener(null);
                 return;
@@ -560,8 +561,8 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     linearLayoutBetweenOrOutside.setVisibility(View.VISIBLE);
                 if (textViewQuestionRound != null)
                     textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartThree));
-                final ImageView imageViewLess = (ImageView) findViewById(R.id.imageViewLess);
-                final ImageView imageViewMore = (ImageView) findViewById(R.id.imageViewMore);
+                final ImageView imageViewLess = findViewById(R.id.imageViewLess);
+                final ImageView imageViewMore = findViewById(R.id.imageViewMore);
                 if (imageViewLess != null) imageViewLess.setOnClickListener(null);
                 if (imageViewMore != null) imageViewMore.setOnClickListener(null);
                 return;
@@ -572,8 +573,8 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     linearLayoutSameOrDifferent.setVisibility(View.VISIBLE);
                 if (textViewQuestionRound != null)
                     textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartFour));
-                final ImageView imageViewBetween = (ImageView) findViewById(R.id.imageViewBetween);
-                final ImageView imageViewOutside = (ImageView) findViewById(R.id.imageViewOutside);
+                final ImageView imageViewBetween = findViewById(R.id.imageViewBetween);
+                final ImageView imageViewOutside = findViewById(R.id.imageViewOutside);
                 if (imageViewBetween != null) imageViewBetween.setOnClickListener(null);
                 if (imageViewOutside != null) imageViewOutside.setOnClickListener(null);
                 return;
@@ -584,19 +585,19 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
                     linearLayoutSuitChoice.setVisibility(View.VISIBLE);
                 if (textViewQuestionRound != null)
                     textViewQuestionRound.setText(getResources().getString(R.string.aroundTheWorldRoundOnePartFive));
-                final ImageView imageViewSame = (ImageView) findViewById(R.id.imageViewSame);
-                final ImageView imageViewDifferent = (ImageView) findViewById(R.id.imageViewDifferent);
+                final ImageView imageViewSame = findViewById(R.id.imageViewSame);
+                final ImageView imageViewDifferent = findViewById(R.id.imageViewDifferent);
                 if (imageViewSame != null) imageViewSame.setOnClickListener(null);
                 if (imageViewDifferent != null) imageViewDifferent.setOnClickListener(null);
         }
     }
 
     public void refreshCards() {
-        final ImageView imageViewCardOne = (ImageView) findViewById(R.id.cardOne);
-        final ImageView imageViewCardTwo = (ImageView) findViewById(R.id.cardTwo);
-        final ImageView imageViewCardThree = (ImageView) findViewById(R.id.cardThree);
-        final ImageView imageViewCardFour = (ImageView) findViewById(R.id.cardFour);
-        final ImageView imageViewCardFive = (ImageView) findViewById(R.id.cardFive);
+        final ImageView imageViewCardOne = findViewById(R.id.cardOne);
+        final ImageView imageViewCardTwo = findViewById(R.id.cardTwo);
+        final ImageView imageViewCardThree = findViewById(R.id.cardThree);
+        final ImageView imageViewCardFour = findViewById(R.id.cardFour);
+        final ImageView imageViewCardFive = findViewById(R.id.cardFive);
 
         if (round >= 0) {
             int resourceId1 = this.getResources().getIdentifier("thumbnail_" + listPlayers.get(numberActualPlayer).getCards().get(0).getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
@@ -710,12 +711,12 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
             }
         }
         changeViews();
-        final ImageView imageViewCard = (ImageView) findViewById(R.id.imageViewCarte);
+        final ImageView imageViewCard = findViewById(R.id.imageViewCarte);
         int resourceId = this.getResources().getIdentifier(card.getPath(), "drawable", "com.antoinedelia.lebarbu_versionalcool");
         if (imageViewCard != null)
             Picasso.with(AroundTheWorldRoundOneActivity.this).load(resourceId).into(imageViewCard);
         if (numberPlayers != 0) {
-            final TextView nameActualPlayer = (TextView) findViewById(R.id.nameActualPlayer);
+            final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
             if (nameActualPlayer != null)
                 nameActualPlayer.setText(actualPlayer);
@@ -734,7 +735,7 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
     }
 
     public void checkSips(String choice) {
-        TextView textViewQuestionRound = (TextView) findViewById(R.id.questionRound);
+        TextView textViewQuestionRound = findViewById(R.id.questionRound);
         String textToDisplay;
         boolean win = false;
         boolean isDouble = false;
@@ -818,13 +819,13 @@ public class AroundTheWorldRoundOneActivity extends AppCompatActivity {
     }
 
     public void changeViews(){
-        final LinearLayout linearLayoutCard = (LinearLayout) findViewById(R.id.containerImageCard);
-        final LinearLayout linearLayoutRedOrBlack = (LinearLayout) findViewById(R.id.containerImageRedOrBlack);
-        final LinearLayout linearLayoutMoreOrLess = (LinearLayout) findViewById(R.id.containerImageMoreOrLess);
-        final LinearLayout linearLayoutBetweenOrOutside = (LinearLayout) findViewById(R.id.containerImageBetweenOrOutside);
-        final LinearLayout linearLayoutSameOrDifferent = (LinearLayout) findViewById(R.id.containerImageSameOrDifferent);
-        final LinearLayout linearLayoutSuitChoice = (LinearLayout) findViewById(R.id.containerImageSuitChoice);
-        final TextView textViewQuestionRound = (TextView) findViewById(R.id.questionRound);
+        final LinearLayout linearLayoutCard = findViewById(R.id.containerImageCard);
+        final LinearLayout linearLayoutRedOrBlack = findViewById(R.id.containerImageRedOrBlack);
+        final LinearLayout linearLayoutMoreOrLess = findViewById(R.id.containerImageMoreOrLess);
+        final LinearLayout linearLayoutBetweenOrOutside = findViewById(R.id.containerImageBetweenOrOutside);
+        final LinearLayout linearLayoutSameOrDifferent = findViewById(R.id.containerImageSameOrDifferent);
+        final LinearLayout linearLayoutSuitChoice = findViewById(R.id.containerImageSuitChoice);
+        final TextView textViewQuestionRound = findViewById(R.id.questionRound);
         if (round == 0) {
             if (linearLayoutCard != null)
                 linearLayoutCard.setVisibility(View.INVISIBLE);
