@@ -8,8 +8,8 @@ android {
         applicationId "com.antoinedelia.lebarbu_versionalcool"
         minSdkVersion 15
         targetSdkVersion 30
-        versionCode 16
-        versionName "1.6.2"
+        versionCode 17
+        versionName "1.6.3"
     }
     buildTypes {
         release {
