@@ -78,8 +78,7 @@ public class BizkitActivity extends AppCompatActivity {
             Picasso.with(this).load(resourceIdTwo).into(imageViewDiceTwo);
 
         final TextView textViewRules = findViewById(R.id.textViewRules);
-        if(textViewRules != null)
-        textViewRules.setText(getResources().getStringArray(R.array.rulesSmallBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2]);
+        if(textViewRules != null) textViewRules.setText(getResources().getStringArray(R.array.rulesSmallBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2]);
         rulesDetails = getResources().getStringArray(R.array.rulesLongBizkit)[(diceOne.getValue() + diceTwo.getValue()) - 2];
 
         if (numberPlayers != 0) {

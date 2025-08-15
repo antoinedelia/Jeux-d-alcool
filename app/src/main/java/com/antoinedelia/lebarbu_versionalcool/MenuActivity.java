@@ -58,8 +58,7 @@ public class MenuActivity extends AppCompatActivity {
         t.start();
 
         final ImageView imageCircleOfDeath = findViewById(R.id.imageCircleOfDeath);
-        if(imageCircleOfDeath != null)
-        imageCircleOfDeath.setOnClickListener(new View.OnClickListener() {
+        if(imageCircleOfDeath != null) imageCircleOfDeath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, CircleOfDeathActivity.class);
@@ -69,8 +68,7 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         final ImageView imageBizkit = findViewById(R.id.imageBizkit);
-        if(imageBizkit != null)
-        imageBizkit.setOnClickListener(new View.OnClickListener() {
+        if(imageBizkit != null) imageBizkit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, BizkitActivity.class);
@@ -130,8 +128,7 @@ public class MenuActivity extends AppCompatActivity {
             });
 
         final TextView textViewCircleOfDeath = findViewById(R.id.textViewCircleOfDeath);
-        if(textViewCircleOfDeath != null)
-        textViewCircleOfDeath.setOnClickListener(new View.OnClickListener() {
+        if(textViewCircleOfDeath != null) textViewCircleOfDeath.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, CircleOfDeathActivity.class);
@@ -141,8 +138,7 @@ public class MenuActivity extends AppCompatActivity {
         });
 
         final TextView textViewBizkit = findViewById(R.id.textViewBizkit);
-        if(textViewBizkit != null)
-        textViewBizkit.setOnClickListener(new View.OnClickListener() {
+        if(textViewBizkit != null) textViewBizkit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, BizkitActivity.class);

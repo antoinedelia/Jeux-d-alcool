@@ -4,8 +4,8 @@ import android.content.Context;
 
 public class RuleCircleOfDeath implements Rule{
 
-    private String smallRule;
-    private String longRule;
+    private final String smallRule;
+    private final String longRule;
 
 
     public RuleCircleOfDeath(Deck.Cards typeCard, Context context)
