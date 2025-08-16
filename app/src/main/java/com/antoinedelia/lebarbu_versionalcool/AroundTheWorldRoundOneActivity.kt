@@ -64,7 +64,7 @@ class AroundTheWorldRoundOneActivity : androidx.appcompat.app.AppCompatActivity(
         val imageViewCard = findViewById<android.widget.ImageView?>(R.id.imageViewCarte)
 
         if (numberPlayers != 0) {
-            val nameActualPlayer: TextView? = findViewById<TextView?>(R.id.nameActualPlayer)
+            val nameActualPlayer: TextView? = findViewById(R.id.nameActualPlayer)
             val actualPlayer =
                 getResources().getString(R.string.currentPlayer) + " " + listPlayers!![numberActualPlayer]
             nameActualPlayer?.text = actualPlayer
@@ -854,7 +854,7 @@ class AroundTheWorldRoundOneActivity : androidx.appcompat.app.AppCompatActivity(
                     getResources().getString(R.string.youDrink) + " " + ((round + 1) * (if (isDouble) 2 else 1)) + " " + getResources().getString(
                         R.string.sip
                     ) + (if (round < 1) "" else "s")
-                listPlayers!![numberActualPlayer]!!.numberSips = listPlayers!!.get(numberActualPlayer)!!
+                listPlayers!![numberActualPlayer]!!.numberSips = listPlayers!![numberActualPlayer]!!
                     .numberSips + ((round + 1) * (if (isDouble) 2 else 1))
             } else textToDisplay =
                 getResources().getString(R.string.youGive) + " " + ((round + 1) * (if (isDouble) 2 else 1)) + " " + getResources().getString(
