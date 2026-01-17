@@ -1,11 +1,12 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    compileSdkVersion 33
+    compileSdkVersion 36
 
     defaultConfig {
         applicationId "com.antoinedelia.lebarbu_versionalcool"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 33
         versionCode 18
         versionName "1.6.4"
@@ -17,11 +18,15 @@ android {
         }
     }
     namespace 'com.antoinedelia.lebarbu_versionalcool'
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core-ktx:1.17.0'
     testImplementation 'junit:junit:4.12'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.2.0'

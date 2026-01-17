@@ -71,22 +71,19 @@ public class CircleOfDeathActivity extends AppCompatActivity {
             Picasso.with(this).load(resourceId).into(imageViewCard);
 
         final TextView textViewRules = findViewById(R.id.textViewRules);
-        if(textViewRules != null)
-        textViewRules.setText(card.getRule().getSmallRule());
+        if(textViewRules != null) textViewRules.setText(card.getRule().getSmallRule());
         rulesDetails = card.getRule().getLongRule();
 
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
-            if(nameActualPlayer != null)
-            nameActualPlayer.setText(actualPlayer);
+            if(nameActualPlayer != null) nameActualPlayer.setText(actualPlayer);
         }
         checkSipsAndSpecial();
 
         //Click on rule
         LinearLayout linearLayoutRules = findViewById(R.id.containerRules);
-        if(linearLayoutRules != null)
-        linearLayoutRules.setOnClickListener(new View.OnClickListener() {
+        if(linearLayoutRules != null) linearLayoutRules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CircleOfDeathActivity.this);
@@ -106,8 +103,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         card = deck.getNextCard();
 
         //Click on card
-        if(imageViewCard != null)
-        imageViewCard.setOnClickListener(
+        if(imageViewCard != null) imageViewCard.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -125,8 +121,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                             Picasso.with(CircleOfDeathActivity.this).load(resourceId).into(imageViewCard);
 
 
-                            if(textViewRules != null)
-                            textViewRules.setText(card.getRule().getSmallRule());
+                            if(textViewRules != null) textViewRules.setText(card.getRule().getSmallRule());
                             rulesDetails = card.getRule().getLongRule();
 
                             int remainingCards = deck.getRemainingCards();
@@ -136,8 +131,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                             if (numberPlayers > 0) {
                                 final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
                                 final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
-                                if(nameActualPlayer != null)
-                                nameActualPlayer.setText(actualPlayer);
+                                if(nameActualPlayer != null) nameActualPlayer.setText(actualPlayer);
                             }
                             checkSipsAndSpecial();
                         } else {
@@ -158,8 +152,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                             builder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     imageViewCard.clearAnimation();
-                                    if(textViewRules != null)
-                                    textViewRules.clearAnimation();
+                                    if(textViewRules != null) textViewRules.clearAnimation();
                                     newGame();
                                 }
                             });
@@ -236,7 +229,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                 }
                 break;
             case R.id.action_infoRules:
-                if (listRules.size() != 0) {
+                if (listRules.isEmpty()) {
                     //We show the information about the players
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setIcon(R.drawable.circle_of_fire);
@@ -272,8 +265,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         if(imageViewCard != null)
             Picasso.with(CircleOfDeathActivity.this).load(resourceId).into(imageViewCard);
         final TextView textViewRules = findViewById(R.id.textViewRules);
-        if(textViewRules != null)
-        textViewRules.setText(card.getRule().getSmallRule());
+        if(textViewRules != null) textViewRules.setText(card.getRule().getSmallRule());
         rulesDetails = card.getRule().getLongRule();
         card = deck.getNextCard();
         int remainingCards = deck.getRemainingCards();
@@ -282,8 +274,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
         if (numberPlayers != 0) {
             final TextView nameActualPlayer = findViewById(R.id.nameActualPlayer);
             final String actualPlayer = getResources().getString(R.string.currentPlayer) + " " + listPlayers.get(numberActualPlayer);
-            if(nameActualPlayer != null)
-            nameActualPlayer.setText(actualPlayer);
+            if(nameActualPlayer != null) nameActualPlayer.setText(actualPlayer);
             listPlayers.get(numberActualPlayer).setNumberSips(listPlayers.get(numberActualPlayer).getNumberSips() + 1);
         }
         checkSipsAndSpecial();
@@ -346,9 +337,7 @@ public class CircleOfDeathActivity extends AppCompatActivity {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (hasFocus) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                            Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                        }
+                        Objects.requireNonNull(dialog.getWindow()).setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
                     }
                 }
             });

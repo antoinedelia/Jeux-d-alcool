@@ -114,7 +114,7 @@ public class Deck {
         NINE(8), TEN(9), JACK(10),
         QUEEN(11), KING(12);
 
-        private int numVal;
+        private final int numVal;
 
         Cards(int numVal) {
             this.numVal = numVal;
